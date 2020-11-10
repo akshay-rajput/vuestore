@@ -1,18 +1,30 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <TheNav msg="Welcome to Your Vue.js App"/>
+    
+    <div class="flex justify-evenly mx-auto my-24">
+      <div class="bg-orange-600 h-64 w-64 box-drops"></div>
+      <div class="bg-yellow-500 h-64 w-64 box-drops"></div>
+      <div class="bg-green-500 h-64 w-64 box-drops"></div>
+    </div>
+    <home-top-slider></home-top-slider>
+    <HomeProductList></HomeProductList>
+    <home-contact-form></home-contact-form>
+    
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TheNav from '@/components/TheNav.vue'
+import HomeTopSlider from '@/components/HomeTopSlider.vue'
+import HomeProductList from '@/components/HomeProductList.vue'
+import HomeContactForm from '@/components/HomeContactForm.vue'
 
 export default {
   name: 'Home',
   components: {
-    TheNav
+    HomeTopSlider,
+    HomeProductList,
+    HomeContactForm,
   }
 }
 </script>
