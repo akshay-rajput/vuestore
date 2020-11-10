@@ -1,11 +1,21 @@
 <template>
-  <div class="maincontainer">
+  <div class="maincontainer container mx-auto">
     <!-- <span class="text-gray-700">This is navbar.... </span>     -->
-    <div id="nav">
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/product">Product</router-link> | 
-      <router-link to="/cart">Cart</router-link>
-    </div>
+    <nav id="navbar">
+      <div class="flex">
+        <div class="navlogo">
+          <router-link to="/">
+            <a class="">
+              <img src="../assets/ghost_logo_black.png" alt="VueStore Logo" class="">
+            </a>
+          </router-link>
+        </div>
+        <div class="navlinks">
+          <router-link to="/product">Product</router-link> | 
+          <router-link to="/cart">Cart</router-link>
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -20,16 +30,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.navlogo img{
+  height: 50px;
 }
 </style>

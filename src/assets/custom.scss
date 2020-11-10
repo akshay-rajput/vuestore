@@ -1,0 +1,15 @@
+$page-bg: #fffff3;
+$primary: #a288a6;
+$accent: #2a9d8f;
+$linkcolor: #502274;
+
+body{
+    background-color: $page-bg;
+}
+
+.box-drops{
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(-45deg);
+}
+    
+

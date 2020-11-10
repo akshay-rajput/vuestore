@@ -7,8 +7,8 @@ import store from './store/store'
 import './assets/tailwind.css'
 // fontawesome 5
 import './assets/fontawesome5/css/all.min.css'
-
-import './assets/tailwind.css'
+// custom css styles
+import './assets/custom.scss'
 
 Vue.config.productionTip = false
 
