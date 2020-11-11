@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    
-    <div class="flex justify-evenly mx-auto my-24">
+    <!-- <p>Param: {{$route.params.section}}</p> -->
+    <div class="flex justify-evenly mx-auto my-64">
       <div class="bg-orange-600 h-64 w-64 box-drops"></div>
       <div class="bg-yellow-500 h-64 w-64 box-drops"></div>
       <div class="bg-green-500 h-64 w-64 box-drops"></div>
@@ -21,6 +21,11 @@ import HomeContactForm from '@/components/HomeContactForm.vue'
 
 export default {
   name: 'Home',
+  data: function(){
+    return {
+      requestedSection: this.$route.params.section
+    }
+  },
   components: {
     HomeTopSlider,
     HomeProductList,
