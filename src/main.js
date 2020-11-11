@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/routes'
 import store from './store/store'
+import axios from 'axios'
 
 // tailwind css
 import './assets/tailwind.css'
@@ -11,6 +12,7 @@ import './assets/fontawesome5/css/all.min.css'
 import './assets/custom.scss'
 
 Vue.config.productionTip = false
+axios.defaults.baseURL = 'https://vuestore-app.firebaseio.com'
 
 new Vue({
   router,
