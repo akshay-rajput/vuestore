@@ -1,6 +1,6 @@
 export default
 {
-	productList: [
+	productsArray: [
 		{
 			id: 1,
 			image: 'https://cdn.shopify.com/s/files/1/2060/6331/products/GlitchReverseDucks.png?v=1603996974',
