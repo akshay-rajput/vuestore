@@ -20,6 +20,9 @@ export default {
   components: {
     TheNav,
     TheFooter
+  },
+  created(){
+     this.$store.dispatch('action_initialiseProducts');
   }
 }
 </script>
