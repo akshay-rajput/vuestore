@@ -1,8 +1,4 @@
-$page-bg: #fafafa;
-$card-bg: ivory;
-$primary: #a288a6;
-$accent: #2a9d8f;
-$linkcolor: #502274;
+@import 'variables';
 
 body{
     background-color: $page-bg;
