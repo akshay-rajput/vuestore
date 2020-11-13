@@ -53,7 +53,7 @@ export default
 		},
 		{
 			id: 6,
-			image: 'https://cdn.shopify.com/s/files/1/2060/6331/products/Pump_Warheads_WM.png?v=1587659144',
+			image: 'https://cdn.shopify.com/s/files/1/2060/6331/products/GreensGuavaBerry_400x.png?v=1604593568',
 			name: 'Ghost Greens',
 			description: "GHOST® GREENS combines 19 individually sourced Greens and Reds with a full 100mg dose of Spectra™, Prebiotics, 10 Billion CFU Probiotic and the super-premium BioCore® Optimum Complete Digestive Enzymes...plus, we've partnered with the legends at ONE TREE PLANTED to plant a tree for every unit sold. 1 Tub = 1 Tree!",
 			details: "Fruits. Superfoods. Reds. Whatever you know them as, they're full of phytonutrients called polyphenols and carotenoids that contain a broad spectrum of antioxidants. Reds are just as important to get in as greens, and even though most brands skimp on them because they're expensive, GHOST pulled out all the stops with 9 premium super foods including Jabuticaba (fun to say and super good for you!), Camu Camu (the fruit so nice they named it twice) and Organic Goji Berry.",
