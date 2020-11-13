@@ -28,6 +28,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@700&family=Lemon&family=Luckiest+Guy&family=Montserrat&family=Oxygen&family=Space+Grotesk&display=swap');
+// font-family: 'Gorditas', cursive;
+// font-family: 'Lemon', cursive;
+// font-family: 'Luckiest Guy', cursive;
+// font-family: 'Montserrat', sans-serif;
+// font-family: 'Oxygen', sans-serif;
+// font-family: 'Space Grotesk', sans-serif;
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
