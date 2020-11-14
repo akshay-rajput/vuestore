@@ -2,9 +2,12 @@
     <div class="container mx-auto my-3 py-3 px-3 border border-blue-700">
         <div class="grid sm:grid-cols-2 gap-4 ">
             <div class="text-section py-10">
-                <h2 class="text-3xl break-words font-semibold leading-9 mb-10">
-                    Lorem ipsum dolor sit amet <br> consectetur. amet consectetur.
+                <h2 class="text-4xl break-words font-semibold leading-10 mb-2">
+                    GHOST is the world's first lifestyle sports nutrition brand.
                 </h2>
+                <h5 class="text-lg text-gray-700 mb-10">
+                    The name GHOST® and mantra "be seen" come from that feeling of being behind the scenes and wanting to be heard, wanting to make an impact; we're all ghosts. This is our time.
+                </h5>
                 <div class="slider-button-group">
                     <a href="javascript:void(0);" @click="showSlide(item)" v-for="item in slideProducts" :key="item.id"
                         class="btn-topslider" :class="{'btn-topslider-active' : item.isActive}">
@@ -15,7 +18,7 @@
                 </div>
             </div>
             <div class="image-section">
-                <img :src=sliderImage alt="" class="slideImage">
+                <img :src=sliderImage alt="" class="slideImage mx-auto sm:mt-10">
             </div>
         </div>
     </div>
