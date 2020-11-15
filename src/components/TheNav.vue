@@ -26,10 +26,13 @@
               <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('contact')" class="md:mr-3">Contact</a>
             </div>
             <div class="accountlinks">
-              <a href="javascript:void(0);" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
-              <a href="javascript:void(0);" class="btn-signup py-1 px-2 mx-2 text-white bg-gray-500 rounded-lg">Sign Up</a>
-              <a href="javascript:void(0);" class="text-blue bg-yellow-100">
-                Hi! {{ user ? user : ''}}<span class="fa fa-angle-down"></span>
+              <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
+              <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-signup py-1 px-2 mx-2 text-white bg-gray-500 rounded-lg">Sign Up</a>
+              <a href="javascript:void(0);" class=" bg-gray-400 rounded rounded-full p-2 mx-2">
+                <span class="fa fa-user"></span>
+              </a>
+              <a href="javascript:void(0);" class=" bg-gray-200 rounded rounded-full p-2">
+                <span class="fa fa-sign-out-alt"></span>
               </a>
             </div> 
           </div>
@@ -37,10 +40,37 @@
       </div>
     </nav>
 
+    <!-- signup modal -->
+    <vue-modal ref="signupModal">
+      <template v-slot:header>
+        <!-- <h3>Signup</h3> -->
+        <span class="">&nbsp;</span>
+      </template>
+
+      <template v-slot:body>
+        <the-signup></the-signup>
+      </template>
+    </vue-modal>
+
+    <!-- login modal -->
+    <vue-modal ref="loginModal">
+      <template v-slot:header>
+        <!-- <h3 class="hidden">Signup</h3> -->
+        <span class="">&nbsp;</span>
+      </template>
+
+      <template v-slot:body>
+        <the-login></the-login>
+      </template>
+    </vue-modal>
   </div>
 </template>
 
 <script>
+import TheSignup from '@/components/TheSignup.vue'
+import TheLogin from '@/components/TheLogin.vue'
+import vueModal from './TheModal'
+
 export default {
   name: 'TheNav',
   data: function(){
@@ -58,6 +88,11 @@ export default {
       // if homepage then use this to scroll below
       document.getElementById(section).scrollIntoView({behavior: 'smooth'})
     }
+  },
+  components: {
+    TheSignup,
+    TheLogin,
+    vueModal
   }
 }
 </script>

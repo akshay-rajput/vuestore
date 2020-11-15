@@ -1,9 +1,9 @@
 <template>
     <div class="container mx-auto">
-      <div class="text-gray-800 pb-8">
-        <img src="../assets/Ghost_Logo_grey.png" alt="ghost logo" class="mx-auto h-16">
-        <!-- <h3 class="text-2xl font-medium">Welcome back</h3> -->
-      </div>
+        <div class="text-gray-800 pb-8">
+            <img src="../assets/Ghost_Logo_grey.png" alt="ghost logo" class="mx-auto h-16">
+            <!-- <h3 class="text-2xl font-medium">Welcome back</h3> -->
+        </div>
       <form @submit.prevent="onSubmit">
         <div class="formgroup mb-3">
           <label for="user_email" class="text-xs leading-6 text-gray-700">Email</label>
@@ -32,7 +32,7 @@
             </span> -->
             
             <span class="">
-              <span class=" antialiased mx-2 tracking-wider">Signup</span>
+              <span class=" antialiased mx-2 tracking-wider">Login</span>
               <span class="fa fa-angle-right text-xs"></span>
             </span>
           </button>

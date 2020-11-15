@@ -4,13 +4,43 @@ body{
     background-color: $page-bg;
 }
 
-.box-drops{
-    border-radius: 50% 0 50% 50%;
-    transform: rotate(-45deg);
-}
-
 .navlinks, .accountlinks{
     font-size: 1.15rem;
 }
-    
 
+// form inputs
+.formgroup label, .formgroup input, .formgroup textarea{
+    display: block;
+    width: 100%;
+}
+.form-input{
+    // border: 1px solid #ccc;
+    box-shadow: 0px 0px 3px #aaa;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 6px;
+    border-radius: 5px;
+    background-color: #f6f6f6;
+
+    &:focus{
+        outline-color: $primary;
+    }
+
+    &::placeholder{
+        color: #999;
+    }
+}
+.btn-contactform, .btn-signup{
+    background-color: $primary;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    padding: 6px 0px;
+    border: 1px solid $primary;
+
+    &:hover{
+        transition: all 0.35s ease;
+        background-color: $linkcolor;
+    }
+}
