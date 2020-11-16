@@ -57,6 +57,23 @@ export default new Vuex.Store({
         })
         .catch(error => console.log("Error---: ", error))
     },
+    action_login({commit}, authData){
+      console.log("Action called: ", authData);
+      axios.post(':signInWithPassword?key=AIzaSyDpYBZSKJcU0BHUmOLlhBmnod6WwTdFljE', {
+        email: authData.email,
+        password: authData.password,
+        returnSecureToken: true
+      })
+      .then(response => {
+        console.log("Logged in: ", response);
+        commit('mut_authUser', {
+          token: response.data.idToken,
+          userId: response.data.localId
+        })
+      })
+      .catch(error => console.log("ErrorLogin---: ", error))
+    },
+
     action_storeUser(state, userData){
       global_axios.post('/users.json', userData)
         .then(res => console.log("res: storeuser: ",res))

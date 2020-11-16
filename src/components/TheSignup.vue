@@ -60,7 +60,7 @@ export default {
             console.log(formData)
 
             // call actions inside store.js
-            this.$store.dispatch('signup', formData);
+            this.$store.dispatch('action_signup', formData);
         }
     }
 }

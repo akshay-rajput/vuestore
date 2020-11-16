@@ -42,6 +42,7 @@
 </template>
 
 <script>
+// import axios from '../store/axios-instance'
 export default {
     data () {
         return {
@@ -56,11 +57,10 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            console.log("signup: ");
+            console.log("Login: ");
             console.log(formData)
-
-            // call actions inside store.js
-            this.$store.dispatch('signup', formData);
+            
+            this.$store.dispatch('action_login', formData);
         }
     }
 }
