@@ -16,6 +16,7 @@
           
           <!-- navlinks -->
           <div class="text-center flex items-center">
+            <!-- <div class="mx-3">{{current_user.email}}</div> -->
             <div class="navlinks text-center">
               <router-link v-if="$route.name != 'Home'" :to="{path: '/#products'}" class="md:mr-3">Products</router-link>
               <router-link v-if="$route.name != 'Home'" :to="{path: '/#contact'}" class="md:mr-3">Contact</router-link>
@@ -28,10 +29,10 @@
             <div class="accountlinks">
               <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
               <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-signup py-1 px-2 mx-2 text-white bg-gray-500 rounded-lg">Sign Up</a>
-              <a href="javascript:void(0);" class=" bg-gray-400 rounded rounded-full p-2 mx-2">
+              <a href="javascript:void(0);" class=" bg-gray-400 rounded-full p-2 mx-2">
                 <span class="fa fa-user"></span>
               </a>
-              <a href="javascript:void(0);" class=" bg-gray-200 rounded rounded-full p-2">
+              <a href="javascript:void(0);" class=" bg-gray-200 rounded-full p-2">
                 <span class="fa fa-sign-out-alt"></span>
               </a>
             </div> 
@@ -78,9 +79,12 @@ export default {
       user: ''
     }
   },
-  // props: {
-  //   msg: String
-  // }
+  // computed:{
+  //   // check if user data is fetched 
+  //   current_user(){
+  //     return this.$store.getters.getUserData;
+  //   }
+  // },
   methods: {
     gotosection(section){
       console.log("passd: ", section);
