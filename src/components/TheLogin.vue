@@ -60,7 +60,11 @@ export default {
             console.log("Login: ");
             console.log(formData)
             
-            this.$store.dispatch('action_login', formData);
+            this.$store.dispatch('action_login', formData).then(() => {
+              console.log("after dispatch");
+              // refresh page after login
+              // window.location.reload()
+            })
         }
     }
 }
