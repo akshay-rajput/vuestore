@@ -6,6 +6,10 @@
       </div>
       <form @submit.prevent="onSubmit">
         <div class="formgroup mb-3">
+          <label for="user_username" class="text-xs leading-6 text-gray-700">Username</label>
+          <input type="text" v-model="username" name="user_username" id="user_username" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
+        </div>
+        <div class="formgroup mb-3">
           <label for="user_email" class="text-xs leading-6 text-gray-700">Email</label>
           <input type="email" v-model="email" name="user_email" id="user_email" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
         </div>
@@ -45,6 +49,7 @@
 export default {
     data () {
         return {
+            username: '',
             email: '',
             password: ''
       }
@@ -53,6 +58,7 @@ export default {
     methods: {
         onSubmit () {
             const formData = {
+                username: this.username,
                 email: this.email,
                 password: this.password
             }
