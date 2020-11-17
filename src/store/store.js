@@ -60,6 +60,11 @@ export default new Vuex.Store({
         .catch(err => console.log("error in store product--: ", err))
     },
 
+    action_logoutTimer({commit}, expirationTime){
+      setTimeout(() => {
+        commit('mut_logout');
+      }, expirationTime * 1000);
+    },
     // user signup
     action_signup({commit, dispatch}, authData){
       axios.post(':signUp?key=AIzaSyDpYBZSKJcU0BHUmOLlhBmnod6WwTdFljE', {
@@ -75,6 +80,9 @@ export default new Vuex.Store({
           })
           // dispatch to store in db
           dispatch('action_storeUser', authData)
+
+          // dispatch to autologout
+          dispatch('action_logoutTimer', response.data.expiresIn);
         })
         .catch(error => console.log("Error---: ", error))
     },
@@ -108,6 +116,9 @@ export default new Vuex.Store({
         })
         // fetch userdata of logged in user
         dispatch('action_fetchUser')
+
+        // dispatch to autologout
+        dispatch('action_logoutTimer', response.data.expiresIn);
       })
       .catch(error => console.log("ErrorLogin---: ", error))
     },
