@@ -17,7 +17,7 @@
           <!-- navlinks -->
           <div class="text-center flex items-center">
             <!-- <div class="mx-3">{{current_user.email}}</div> -->
-            <div class="navlinks text-center">
+            <div class="navlinks text-center mr-4">
               <router-link v-if="$route.name != 'Home'" :to="{path: '/#products'}" class="md:mr-3">Products</router-link>
               <router-link v-if="$route.name != 'Home'" :to="{path: '/#contact'}" class="md:mr-3">Contact</router-link>
               <!-- <router-link :to="{name:'Cart', params: {section: 'cart'}}">Cart</router-link> -->
@@ -26,15 +26,26 @@
               <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('products')" class="md:mr-3">Products</a>
               <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('contact')" class="md:mr-3">Contact</a>
             </div>
-            <div class="accountlinks">
-              <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
-              <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-signup py-1 px-2 mx-2 text-white bg-gray-500 rounded-lg">Sign Up</a>
-              <a href="javascript:void(0);" class=" bg-gray-400 rounded-full p-2 mx-2">
-                <span class="fa fa-user"></span>
-              </a>
-              <a href="javascript:void(0);" class=" bg-gray-200 rounded-full p-2">
-                <span class="fa fa-sign-out-alt"></span>
-              </a>
+
+            <div>
+            <div class="sm:flex">
+              <div class="loginlinks" v-if="!isLoggedIn">
+                <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
+                <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-signup py-1 px-2 mx-2 bg-teal-700 rounded-lg">Sign Up</a>
+              </div>
+              <div class="accountlinks" v-if="isLoggedIn">
+                <router-link to='/cart' tag="a" class="bg-gray-300 rounded-full p-2 mx-2" title="Go to Cart">
+                  <span class="fa fa-cart-arrow-down"></span>
+                </router-link>
+                <a href="javascript:void(0);" class=" bg-gray-300 rounded-full p-2 mx-2" title="Account">
+                  <span class="fa fa-user"></span>
+                </a>
+                <a href="javascript:void(0);" @click="logoutUser" class="bg-gray-300 rounded-full p-2 mx-2" title="Logout">
+                  <span class="fa fa-sign-out-alt"></span>
+                </a>
+              </div>
+            </div>
+
             </div> 
           </div>
         </div>
@@ -91,6 +102,14 @@ export default {
       
       // if homepage then use this to scroll below
       document.getElementById(section).scrollIntoView({behavior: 'smooth'})
+    },
+    logoutUser(){
+      this.$store.dispatch('action_logout');
+    }
+  },
+  computed: {
+    isLoggedIn(){
+      return this.$store.getters.getLoginStatus;
     }
   },
   components: {
