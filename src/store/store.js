@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from './axios-instance';
 import global_axios from 'axios';
+import router from '../router/routes'
 
 import productlist from './productlist'
 
@@ -21,16 +22,28 @@ export default new Vuex.Store({
       state.productData = productlist.productsArray;
       // console.log("Array : ", state.productData.length);
     },
+
+    // store email used by user in state
     mut_loginUsed(state, authData){
       state.email_used_for_login = authData.email;
     },
+
+    // authenticate user by storing token in state
     mut_authUser(state, userData){
       state.idToken = userData.token;
       state.userId = userData.userId;
     },
+
+    // store current_user data in state
     mut_loggedInUser(state, fetchedUser){
       state.current_user = fetchedUser.data;
       console.log("Inside Mutation: ", state.current_user);
+    },
+
+    // on logout clear all tokens
+    mut_logout(state){
+      state.idToken = null;
+      state.userId = null;
     }
   },
   actions: {
@@ -123,6 +136,11 @@ export default new Vuex.Store({
           // console.log("Fetched Users: ");
         })
       }
+    },
+
+    action_logout({commit}){
+      commit('mut_logout');
+      router.replace('/');
     }
   },
   getters: {
@@ -131,6 +149,9 @@ export default new Vuex.Store({
     },
     getUserData: state => {
       return state.current_user;
+    },
+    getLoginStatus: state => {
+      return state.idToken !== null;
     }
   }
 })

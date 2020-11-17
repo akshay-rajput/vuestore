@@ -2,8 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
-// import products from '../components/HomeProductList.vue'
-// import Contact from '../components/HomeContactForm.vue'
+import current_store from '../store/store'
 
 Vue.use(VueRouter)
 
@@ -24,7 +23,16 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../views/Cart.vue')
+    component: () => import('../views/Cart.vue'),
+    beforeEnter(to, from, next){
+      if(current_store.state.idToken){
+        console.log("IdToken to goto cart page: ", current_store.state.idToken);
+        next()
+      }
+      else{
+        next('/')
+      }
+    }
   }
 ]
 
