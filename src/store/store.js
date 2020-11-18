@@ -5,6 +5,7 @@ import global_axios from 'axios';
 import router from '../router/routes'
 
 import productlist from './productlist'
+import { Date } from 'core-js';
 
 Vue.use(Vuex)
 
@@ -44,6 +45,10 @@ export default new Vuex.Store({
     mut_logout(state){
       state.idToken = null;
       state.userId = null;
+
+      // remove local token
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
     }
   },
   actions: {
@@ -62,6 +67,7 @@ export default new Vuex.Store({
 
     action_logoutTimer({commit}, expirationTime){
       setTimeout(() => {
+        console.log("Time expired : log out");
         commit('mut_logout');
       }, expirationTime * 1000);
     },
@@ -78,6 +84,15 @@ export default new Vuex.Store({
             token: response.data.idToken,
             userId: response.data.localId
           })
+          // Autologin
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('token', response.data.idToken);
+          const currentTime = new Date();
+          console.log("Current Time: ", currentTime.getTime());
+          const expiry = new Date(currentTime.getTime() + response.data.expiresIn)
+          console.log("expiration time: ", expiry);
+          localStorage.setItem('tokenExpiry', expiry);
+
           // dispatch to store in db
           dispatch('action_storeUser', authData)
 
@@ -114,6 +129,15 @@ export default new Vuex.Store({
           token: response.data.idToken,
           userId: response.data.localId
         })
+        // Autologin
+        localStorage.setItem('userId', response.data.localId);
+        localStorage.setItem('token', response.data.idToken);
+        const currentTime = new Date();
+        console.log("Current Time: ", currentTime.getTime());
+        const expiry = new Date(currentTime.getTime() + (response.data.expiresIn * 1000))
+        console.log("expiration time: ", expiry);
+        localStorage.setItem('tokenExpiry', expiry);
+
         // fetch userdata of logged in user
         dispatch('action_fetchUser')
 
@@ -149,9 +173,39 @@ export default new Vuex.Store({
       }
     },
 
+    action_autologin({commit}){
+      const localToken = localStorage.getItem('token');
+      if(!localToken){
+        return
+      }
+      else{
+        console.log("local token found AUTOLOGIN", localToken);
+        const tokenExpiry = localStorage.getItem('tokenExpiry');
+        const now = new Date()
+        if(now >= tokenExpiry){
+          console.log("~~~ Token Expired ~~~");
+          return
+        }
+        else{
+          const userId = localStorage.getItem('userId');
+          commit('mut_authUser', {
+            token: localToken,
+            userId: userId
+          })
+        }
+      }
+    },
     action_logout({commit}){
+      console.log("~~  logging out");
       commit('mut_logout');
-      router.replace('/');
+      
+      // avoid duplicate path error
+      const path = '/'
+      if (router.path !== path){
+        // this.$router.push(path)
+        router.replace('/');
+      }
+      // router.replace('/');
     }
   },
   getters: {

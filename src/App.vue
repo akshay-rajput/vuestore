@@ -23,6 +23,9 @@ export default {
   },
   created(){
      this.$store.dispatch('action_initialiseProducts');
+
+    //  check autologin
+    this.$store.dispatch('action_autologin');
   }
 }
 </script>
