@@ -3,7 +3,7 @@
     <!-- navbar for site -->
     <TheNav></TheNav>
 
-    <router-view/>
+    <router-view class="mt-24" />
     
     <!-- common footer -->
     <TheFooter></TheFooter>
@@ -39,11 +39,16 @@ export default {
 // font-family: 'Oxygen', sans-serif;
 // font-family: 'Space Grotesk', sans-serif;
 #app {
+  margin: 0;
+  padding: 0;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   // color: #2c3e50;
+}
+#app a:focus, #app button:focus{
+  outline: none;
 }
 
 // #nav {

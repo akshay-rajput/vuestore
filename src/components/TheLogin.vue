@@ -24,7 +24,7 @@
         <div class="">
           <!-- <button type="submit" class="button bg-purple-700 text-white">Signup</button> -->
 
-          <button type="submit" class="btn-signup my-4">
+          <button type="submit" class="btn-login my-4">
             <!-- when sending the message (disable mouse event on button) -->
             <!-- <span class="">
                 <span class="fa fa-circle-notch fa-spin"></span>

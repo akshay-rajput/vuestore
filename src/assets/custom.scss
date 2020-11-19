@@ -2,6 +2,7 @@
 
 body{
     background-color: $page-bg;
+    color: $text-color;
 }
 
 .navlinks, .accountlinks, .loginlinks{
@@ -30,17 +31,30 @@ body{
         color: #999;
     }
 }
-.btn-contactform, .btn-signup{
+.btn-app{
+    border-radius: 5px;
+    padding: 6px 12px;
+
+    @media (max-width: 480px) {
+        padding: 4px 8px;
+    }
+}
+.btn-contactform, .btn-login{
     background-color: $primary;
     color: white;
-    border-radius: 5px;
     width: 100%;
     text-align: center;
-    padding: 6px 0px;
     border: 1px solid $primary;
 
     &:hover{
-        transition: all 0.35s ease;
-        background-color: $linkcolor;
+        transition: all 0.35s ease-in-out;
+        // color: $primary;
+        background: $linkcolor;
+    }
+}
+.btn-signup{
+    color: $linkcolor;
+    &:hover{
+        color: $accent;
     }
 }

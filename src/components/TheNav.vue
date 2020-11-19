@@ -1,5 +1,5 @@
 <template>
-  <div class="maincontainer">
+  <div  class="nav-container fixed top-0 w-full">
     <!-- <span class="text-gray-700">This is navbar.... </span>     -->
     <nav id="navbar">
       <div class="container mx-auto">
@@ -17,13 +17,10 @@
           <!-- navlinks -->
           <div class="text-center flex items-center">
             <!-- <div class="mx-3">{{current_user.email}}</div> -->
-            
-
-            <div>
             <div class="sm:flex">
               <div class="loginlinks" v-if="!isLoggedIn">
-                <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-login py-1 px-2 mx-2 border border-gray-700 rounded-lg">Login</a>  
-                <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-signup py-1 px-2 mx-2 bg-teal-700 rounded-lg">Sign Up</a>
+                <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-app btn-signup mx-1 text-sm sm:mx-2 sm:text-lg">Sign Up</a>
+                <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-app btn-login mx-1 text-sm sm:mx-2 sm:text-lg">Login</a>  
               </div>
               
               <div class="accountlinks flex justify-center items-center" v-if="isLoggedIn">
@@ -41,23 +38,36 @@
                 </a>
                 
                 <div class="dropdown inline-block relative">
-                  <button class=" bg-gray-300 rounded-full p-2 mx-2 " title="Menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" stroke="currentColor">
+                  <button @click="toggleMenu" :class="{ active : isMenuOpen == true}" class="dropdown-toggle bg-gray-300 rounded-full p-2 mx-2" title="Menu">
+                    <!-- menu icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" stroke="currentColor" v-if="!isMenuOpen">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
+
+                    <!-- close icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" stroke="currentColor" v-if="isMenuOpen">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
-                  <div class="navlinks dropdown-menu absolute hidden text-center mr-4">
-                    <router-link v-if="$route.name != 'Home'" :to="{path: '/#products'}" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Products</router-link>
-                    <router-link v-if="$route.name != 'Home'" :to="{path: '/#contact'}" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Contact</router-link>
-                    <!-- <router-link :to="{name:'Cart', params: {section: 'cart'}}">Cart</router-link> -->
-
+                  <div class="navlinks dropdown-menu text-center" :class="{ active : isMenuOpen == true}">
+                    <router-link v-if="$route.name != 'Home'" :to="{path: '/#products'}" class="rounded-t py-2 px-4 text-sm sm:text-lg">
+                      <span class="fa fa-box-open text-sm"></span> Products
+                    </router-link>
+                    <router-link v-if="$route.name != 'Home'" :to="{path: '/#contact'}" class="rounded-t py-2 px-4 text-sm sm:text-lg">
+                      <span class="fa fa-envelope text-sm"></span> Contact
+                    </router-link>
+                    
                     <!-- if on homepage show these links instead to scroll to sections -->
-                    <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('products')" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Products</a>
-                    <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('contact')" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Contact</a>
+                    <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('products')" class="rounded-t py-2 px-5 text-sm sm:text-lg">
+                      <span class="fa fa-dumbbell text-sm"></span> Products 
+                    </a>
+                    <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('contact')" class="rounded-t py-2 px-5 text-sm sm:text-lg">
+                      <span class="fa fa-envelope text-sm"></span> Contact
+                    </a>
 
-                    <a href="javascript:void(0);" @click="logoutUser" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" title="Logout">
+                    <a href="javascript:void(0);" @click="logoutUser" class="rounded-t py-2 text-sm sm:text-lg" title="Logout">
+                      <span class="fa fa-sign-out-alt text-sm"></span>
                       Logout
-                      <!-- <span class="fa fa-sign-out-alt"></span> -->
                       <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg> -->
@@ -65,8 +75,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-
             </div> 
           </div>
         </div>
@@ -99,6 +107,7 @@
   </div>
 </template>
 
+<!-- Vuejs script -->
 <script>
 import TheSignup from '@/components/TheSignup.vue'
 import TheLogin from '@/components/TheLogin.vue'
@@ -108,8 +117,23 @@ export default {
   name: 'TheNav',
   data: function(){
     return{
-      user: ''
+      user: '',
+      isMenuOpen: false
     }
+  },
+  mounted() {
+    // execute below code on page load
+    var myNav = document.getElementById('navbar');
+    window.onscroll = function () { 
+        if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200 ) {
+            myNav.classList.add("nav-colored");
+            myNav.classList.remove("nav-default");
+        } 
+        else {
+            myNav.classList.add("nav-default");
+            myNav.classList.remove("nav-colored");
+        }
+    };
   },
   // computed:{
   //   // check if user data is fetched 
@@ -118,6 +142,10 @@ export default {
   //   }
   // },
   methods: {
+    toggleMenu(){
+      this.isMenuOpen = !this.isMenuOpen;
+      console.log("isMenuOpen: ", this.isMenuOpen);
+    },
     gotosection(section){
       console.log("passd: ", section);
       
@@ -143,13 +171,82 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#navbar{
-  box-shadow: 0px 0px 10px 0px #ccc;
+@import '../assets/variables';
+.nav-default{
+  background: $page-bg;
 }
-.dropdown:hover .dropdown-menu{
-  display: block;
+.nav-colored{
+  background: #fcf0fc;
 }
 .navlogo img{
   height: 50px;
+
+  @media (max-width: 480px) {
+    height: 40px;
+  }
+}
+.accountlinks{
+  a, button{
+    padding: 10px;
+    @media (max-width: 480px) {
+      padding: 5px;
+    } 
+  }
+  svg{ 
+    @media (max-width: 480px) {
+      transform: scale(0.8);
+    } 
+  }
+}
+.dropdown-menu::before {
+	// layout
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+	right: 4rem; // offset should move with padding of parent
+	border: .75rem solid transparent;
+	border-top: none;
+	// looks
+	border-bottom-color: #e2e8f0;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(#333, 0.1));
+}
+.dropdown-menu {
+  position: absolute;
+  right: -300px;
+  z-index: 998;
+  // color: $linkcolor;
+  // width: 250px;
+  width: max-content;
+  margin-top: 20px;
+  padding: 0px 50px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: right;
+  transition: 300ms right ease;
+  @media only screen and (max-width: 600px) {
+    // width: 250px;
+    width: max-content;
+    right: -300px;
+    // padding: 50px;
+  }
+  &.active {
+    right: -50px;
+  }
+  a{
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.dropdown-menu a, .accountlinks a, .accountlinks button{
+  background: #e2e8f0;
+  &:hover{
+    background: $light;
+    color: $linkcolor;
+    transition: all ease 0.35s;
+  }
 }
 </style>
