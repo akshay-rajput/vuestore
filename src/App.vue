@@ -3,7 +3,7 @@
     <!-- navbar for site -->
     <TheNav></TheNav>
 
-    <router-view class="mt-24" />
+    <router-view class="margin-topnav" />
     
     <!-- common footer -->
     <TheFooter></TheFooter>
@@ -31,25 +31,31 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@700&family=Lemon&family=Luckiest+Guy&family=Montserrat&family=Oxygen&family=Space+Grotesk&display=swap');
-// font-family: 'Gorditas', cursive;
-// font-family: 'Lemon', cursive;
-// font-family: 'Luckiest Guy', cursive;
-// font-family: 'Montserrat', sans-serif;
-// font-family: 'Oxygen', sans-serif;
-// font-family: 'Space Grotesk', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Poppins:wght@400;600&family=Source+Sans+Pro:wght@400;700&display=swap');
+// font-family: 'Carter One', cursive;
+// font-family: 'Poppins', sans-serif;
 #app {
   margin: 0;
   padding: 0;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  // color: #2c3e50;
+  // font-family: 'Oxygen', sans-serif;
+    
+  a:focus, button:focus{
+    outline: none;
+  }
+
+  .margin-topnav{
+    margin-top: 80px;
+
+    @media (max-width: 767px) {
+      margin-top: 72px;
+    }
+  }
+
+  
 }
-#app a:focus, #app button:focus{
-  outline: none;
-}
+
 
 // #nav {
 //   padding: 30px;

@@ -1,15 +1,16 @@
 <template>
-  <div  class="nav-container fixed top-0 w-full">
+  <div  class="nav-container bg-gray-800 fixed top-0 w-full">
     <!-- <span class="text-gray-700">This is navbar.... </span>     -->
     <nav id="navbar">
       <div class="container mx-auto">
         <!-- flex container for navbar -->
-        <div class="flex justify-between items-center py-4 px-3">
+        <div class="nav flex justify-between items-center py-4 px-3">
           <!-- site logo -->
           <div class="navlogo">
             <router-link :to="{name:'Home', params: {section: ''}}">
               <a class="">
-                <img src="../assets/ghost_logo_black.png" alt="VueStore Logo" class="">
+                <img src="../assets/ghost_logo_white.png" alt="VueStore Logo" class="">
+                <!-- <img src="../assets/Ghost_Logo_grey.png" alt="VueStore Logo" class=""> -->
               </a>
             </router-link>
           </div>
@@ -31,7 +32,7 @@
                   </svg>
                 </router-link>
                 <a href="javascript:void(0);" class=" bg-gray-300 rounded-full p-2 mx-2" title="Account">
-                  <!-- <span class="fa fa-user"></span> -->
+                  <!-- <span class="flaticon-user-1"></span> -->
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" width=24 height=24 viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -51,23 +52,23 @@
                   </button>
                   <div class="navlinks dropdown-menu text-center" :class="{ active : isMenuOpen == true}">
                     <router-link v-if="$route.name != 'Home'" :to="{path: '/#products'}" class="rounded-t py-2 px-4 text-sm sm:text-lg">
-                      <span class="fa fa-box-open text-sm"></span> Products
+                      <span class="flaticon-container text-sm"></span> Products
                     </router-link>
                     <router-link v-if="$route.name != 'Home'" :to="{path: '/#contact'}" class="rounded-t py-2 px-4 text-sm sm:text-lg">
-                      <span class="fa fa-envelope text-sm"></span> Contact
+                      <span class="flaticon-phone-call text-xs"></span> Contact
                     </router-link>
                     
                     <!-- if on homepage show these links instead to scroll to sections -->
                     <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('products')" class="rounded-t py-2 px-5 text-sm sm:text-lg">
-                      <span class="fa fa-dumbbell text-sm"></span> Products 
+                      Products <span class="flaticon flaticon-container text-sm"></span> 
                     </a>
                     <a href="javascript:void(0);" v-if="$route.name == 'Home'" @click="gotosection('contact')" class="rounded-t py-2 px-5 text-sm sm:text-lg">
-                      <span class="fa fa-envelope text-sm"></span> Contact
+                      Contact <span class="flaticon flaticon-phone-call text-xs"></span>
                     </a>
 
                     <a href="javascript:void(0);" @click="logoutUser" class="rounded-t py-2 text-sm sm:text-lg" title="Logout">
-                      <span class="fa fa-sign-out-alt text-sm"></span>
-                      Logout
+                      <!-- <span class="fa fa-sign-out-alt text-sm"></span> -->
+                      Logout <span class="flaticon flaticon-logout "></span>
                       <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg> -->
@@ -123,17 +124,18 @@ export default {
   },
   mounted() {
     // execute below code on page load
-    var myNav = document.getElementById('navbar');
-    window.onscroll = function () { 
-        if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200 ) {
-            myNav.classList.add("nav-colored");
-            myNav.classList.remove("nav-default");
-        } 
-        else {
-            myNav.classList.add("nav-default");
-            myNav.classList.remove("nav-colored");
-        }
-    };
+    console.log("App is mounted");
+    // var myNav = document.getElementById('navbar');
+    // window.onscroll = function () { 
+    //     if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200 ) {
+    //         myNav.classList.add("nav-compact");
+    //         myNav.classList.remove("nav-default");
+    //     } 
+    //     else {
+    //         myNav.classList.add("nav-default");
+    //         myNav.classList.remove("nav-compact");
+    //     }
+    // };
   },
   // computed:{
   //   // check if user data is fetched 
@@ -173,10 +175,7 @@ export default {
 <style scoped lang="scss">
 @import '../assets/variables';
 .nav-default{
-  background: $page-bg;
-}
-.nav-colored{
-  background: #fcf0fc;
+  background: $dark;
 }
 .navlogo img{
   height: 50px;
@@ -209,7 +208,7 @@ export default {
 	border: .75rem solid transparent;
 	border-top: none;
 	// looks
-	border-bottom-color: #e2e8f0;
+	border-bottom-color: lighten($color: $dark, $amount: 10%);
 	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(#333, 0.1));
 }
 .dropdown-menu {
@@ -242,11 +241,18 @@ export default {
 }
 
 .dropdown-menu a, .accountlinks a, .accountlinks button{
-  background: #e2e8f0;
+  // background: #e2e8f0;
+  color: white;
+  background:lighten($dark, 10%);
   &:hover{
     background: $light;
     color: $linkcolor;
     transition: all ease 0.35s;
   }
+}
+
+.dropdown-menu .flaticon::before{
+  font-size: 16px;
+  margin-left: 6px;
 }
 </style>
