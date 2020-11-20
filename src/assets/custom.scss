@@ -1,10 +1,15 @@
 @import 'variables';
-
+// font-family: 'Carter One', cursive;
 body{
     background-color: $page-bg;
     color: $text-color;
+    font-family: 'Poppins', sans-serif;
 }
-
+h1,h2,h3,h4,h5{
+    color: $dark;
+    font-family: 'Carter One', cursive;
+    // font-weight: 700;
+}
 .navlinks, .accountlinks, .loginlinks{
     font-size: 1.15rem;
 }
@@ -49,11 +54,12 @@ body{
     &:hover{
         transition: all 0.35s ease-in-out;
         // color: $primary;
+        border-color: $linkcolor;
         background: $linkcolor;
     }
 }
 .btn-signup{
-    color: $linkcolor;
+    color: $primary;
     &:hover{
         color: $accent;
     }
