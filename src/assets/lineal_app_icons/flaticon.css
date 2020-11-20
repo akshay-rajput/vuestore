@@ -1,0 +1,100 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 20/11/2020 11:54
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-logout:before { content: "\f100"; }
+.flaticon-logout-1:before { content: "\f101"; }
+.flaticon-computer:before { content: "\f102"; }
+.flaticon-cloud-computing:before { content: "\f103"; }
+.flaticon-tag:before { content: "\f104"; }
+.flaticon-browser:before { content: "\f105"; }
+.flaticon-love-message:before { content: "\f106"; }
+.flaticon-cloud-computing-1:before { content: "\f107"; }
+.flaticon-settings:before { content: "\f108"; }
+.flaticon-cloud-computing-2:before { content: "\f109"; }
+.flaticon-notes:before { content: "\f10a"; }
+.flaticon-bag:before { content: "\f10b"; }
+.flaticon-map:before { content: "\f10c"; }
+.flaticon-notes-1:before { content: "\f10d"; }
+.flaticon-servers:before { content: "\f10e"; }
+.flaticon-computer-1:before { content: "\f10f"; }
+.flaticon-email:before { content: "\f110"; }
+.flaticon-email-1:before { content: "\f111"; }
+.flaticon-shopping-cart:before { content: "\f112"; }
+.flaticon-shopping-cart-1:before { content: "\f113"; }
+.flaticon-shopping-bag:before { content: "\f114"; }
+.flaticon-new:before { content: "\f115"; }
+.flaticon-sale:before { content: "\f116"; }
+.flaticon-phone-call:before { content: "\f117"; }
+.flaticon-smartphone:before { content: "\f118"; }
+.flaticon-diamond:before { content: "\f119"; }
+.flaticon-credit-card:before { content: "\f11a"; }
+.flaticon-menu:before { content: "\f11b"; }
+.flaticon-visibility:before { content: "\f11c"; }
+.flaticon-placeholder:before { content: "\f11d"; }
+.flaticon-placeholder-1:before { content: "\f11e"; }
+.flaticon-layers:before { content: "\f11f"; }
+.flaticon-user:before { content: "\f120"; }
+.flaticon-reload:before { content: "\f121"; }
+.flaticon-robot:before { content: "\f122"; }
+.flaticon-iphone:before { content: "\f123"; }
+.flaticon-smartphone-1:before { content: "\f124"; }
+.flaticon-smart-tv:before { content: "\f125"; }
+.flaticon-photo-camera:before { content: "\f126"; }
+.flaticon-shield:before { content: "\f127"; }
+.flaticon-padlock:before { content: "\f128"; }
+.flaticon-lamp:before { content: "\f129"; }
+.flaticon-hand-shake:before { content: "\f12a"; }
+.flaticon-like:before { content: "\f12b"; }
+.flaticon-shopping-bag-1:before { content: "\f12c"; }
+.flaticon-shopping-cart-2:before { content: "\f12d"; }
+.flaticon-shirt:before { content: "\f12e"; }
+.flaticon-fast:before { content: "\f12f"; }
+.flaticon-delivery-box:before { content: "\f130"; }
+.flaticon-approved:before { content: "\f131"; }
+.flaticon-gift:before { content: "\f132"; }
+.flaticon-dollar:before { content: "\f133"; }
+.flaticon-dollar-1:before { content: "\f134"; }
+.flaticon-delete:before { content: "\f135"; }
+.flaticon-trash:before { content: "\f136"; }
+.flaticon-bin:before { content: "\f137"; }
+.flaticon-cancel:before { content: "\f138"; }
+.flaticon-delete-1:before { content: "\f139"; }
+.flaticon-wallet:before { content: "\f13a"; }
+.flaticon-dumbbell:before { content: "\f13b"; }
+.flaticon-menu-1:before { content: "\f13c"; }
+.flaticon-container:before { content: "\f13d"; }
+.flaticon-champagne:before { content: "\f13e"; }
+.flaticon-user-1:before { content: "\f13f"; }
+.flaticon-exit:before { content: "\f140"; }
+.flaticon-paper:before { content: "\f141"; }
+.flaticon-filter:before { content: "\f142"; }
+.flaticon-delivery:before { content: "\f143"; }
