@@ -55,7 +55,7 @@
                 </ul>
             </div>
             <div class="copyright text-center text-xs text-gray-600 pb-3">
-                All images & products featured belong to their respective copyright holders. This website is just for illustration purposes. 
+                <span class="font-semibold">Disclaimer: </span>All images & products featured belong to their respective copyright holders. This website is just for illustration purposes. 
             </div>
         </div>
     </div>
