@@ -176,6 +176,7 @@ export default {
 @import '../assets/variables';
 .nav-default{
   background: $dark;
+  z-index: 100;
 }
 .navlogo img{
   height: 50px;
