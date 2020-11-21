@@ -1,7 +1,7 @@
 <template>
     <div id="contact" class="container mx-auto border border-green-800">
-        <div class="flex border border-yellow-500">
-            <div class="contact-info sm:w-7/12">
+        <div class="grid sm:grid-cols-2 gap-12 border border-yellow-500">
+            <div class="contact-info ">
                 <!-- <img src="../assets/contactus.svg" alt="contact us" class="h-48 mx-auto"> -->
                 <div class="contact-info px-3 py-5">
                     <div class="contact-info-group font-semibold text-gray-700 mb-4">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="contact-form sm:w-5/12 px-4 py-6">
+            <div class="contact-form px-4 py-6">
                 
                 <form @submit.prevent="onSubmitContactForm">
                     <div class="formgroup mb-3">
