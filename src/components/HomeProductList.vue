@@ -1,24 +1,24 @@
 <template>
     <div class="container mx-auto my-3 py-3 px-3">
-        <div class="flex justify-between items-center">
-            <div class="section-heading">
-                <h2 class="my-2 text-4xl text-gray-700">Products</h2>
+        <div class="section-heading">
+            <h2 class="my-2 text-4xl text-gray-700">Products</h2>
+        </div>
+        <div class="flex justify-between items-center mb-8">
+            <div class="filter-info flex-grow">
+                <p class="text-gray-600 text-md">Showing 5 products from Merchandise.</p>
             </div>
             <div class="productlist-options">
                 <div class="filters">
-                    <label for="filter_products" class="bg-gray-400 border border-gray-400 hover:border-gray-500 p-2 rounded-r-none shadow text-gray-800" title="Filter Products">
+                    <label for="filter_products" class="bg-gray-300 border border-gray-400 hover:border-gray-500 p-2 rounded-r-none rounded-md shadow text-gray-800" title="Filter Products">
                         <span class="flaticon flaticon-filter font-semibold"></span>
                         <!-- <span class="fa fa-filter"></span> -->
                     </label>
-                    <div class="inline-block relative w-36 lg:w-64">
-                        <select name="filter_products" id="filter_products" class="appearance-none z-0 w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded-l-none shadow leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="all">All Products</option>
-                            <option value="powder">Protien Powder</option>
-                            <option value="merchandise">Merchandise</option>
+                    <div class="inline-block">
+                        <select name="" id="" class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none shadow leading-tight focus:outline-none">
+                            <option value="1">All Products</option>
+                            <option value="2">Protein Powder</option>
+                            <option value="3">Merchandise</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div>
                     </div>
                 </div>
             </div>
