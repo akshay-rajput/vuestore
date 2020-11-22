@@ -44,7 +44,7 @@ h1,h2,h3,h4,h5{
         padding: 4px 8px;
     }
 }
-.btn-contactform, .btn-login{
+.btn-login{
     background-color: $primary;
     color: white;
     width: 100%;
@@ -62,5 +62,19 @@ h1,h2,h3,h4,h5{
     color: $primary;
     &:hover{
         color: $accent;
+    }
+}
+.btn-contactform{
+    background-color: $accent;
+    color: white;
+    width: 100%;
+    text-align: center;
+    border: 1px solid $primary;
+
+    &:hover{
+        transition: all 0.35s ease-in-out;
+        // color: $primary;
+        border-color: $linkcolor;
+        background: $linkcolor;
     }
 }
