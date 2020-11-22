@@ -18,8 +18,8 @@
                             <div class="w-6 font-semibold">
                                 <span class="flaticon flaticon-phone-call text-sm"></span>
                             </div>
-                            <a href="tel:+1076548329764">
-                                <span class="px-2 break-words text-lg tracking-wider">(+107)6548329764</span>
+                            <a href="tel:+2856548329764">
+                                <span class="px-2 break-words text-lg tracking-wider">(+285)6548329764</span>
                             </a>
                         </div>
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
@@ -52,32 +52,37 @@
                     <div class="section-heading">
                         <h2 class="my-2 text-3xl text-gray-700">Drop a message</h2>
                     </div>
-                    <form @submit.prevent="onSubmitContactForm">
+                    <form @submit.prevent="onSubmitMessage">
                         <div class="formgroup mb-3">
                             <label for="contact_email" class="text-xs leading-6 text-gray-700">Email*</label>
-                            <input type="email" name="contact_email" id="contact_email" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
+                            <input type="email" v-model="contact_email" name="contact_email" id="contact_email" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
                         </div>
                         <div class="formgroup mb-3">
                             <label for="contact_subject" class="text-xs leading-6 text-gray-700">Subject*</label>
-                            <input type="text" name="contact_subject" id="contact_subject" placeholder="Purpose of your message" class="form-input focus:bg-white" required>
+                            <input type="text" v-model="contact_subject" name="contact_subject" id="contact_subject" placeholder="Purpose of your message" class="form-input focus:bg-white" required>
                         </div>
                         <div class="formgroup mb-3">
                             <label for="contact_message" class="text-xs leading-6 text-gray-700">Message*</label>
-                            <textarea name="contact_message" id="contact_message" rows="5" class="form-input focus:bg-white" placeholder="Write your message here." required></textarea>
+                            <textarea name="contact_message" v-model="contact_message" id="contact_message" rows="5" class="form-input focus:bg-white" placeholder="Write your message here." required></textarea>
                         </div>
-                        <button type="submit" class="btn-contactform">
+                        <button type="submit" class="btn-app btn-contactform" :class="messageSending ? 'disableSend': ''">
                             <!-- when sending the message (disable mouse event on button) -->
-                            <span class="">
+                            <span v-if="messageSending">
                                 <span class="fa fa-circle-notch fa-spin"></span>
                                 <span class="mx-2 font-semibold antialiased tracking-wider">Sending</span>
                             </span>
                             
-                            <span class="">
+                            <span  v-if="!messageSending">
                                 <span class="flaticon-email-1 text-xs"></span>
                                 <span class="font-semibold antialiased mx-2 tracking-wider">SEND</span>
                             </span>
                         </button>
                     </form>
+                    <div v-if="messageAlertShow" 
+                        class="message-alert bg-green-200 border-l-4 border-green-500 text-green-700 p-4 my-4" role="alert">
+                        <p> <span class="fa fa-check"></span>
+                            Your message was send successfully.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,8 +90,49 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    
+    data(){
+        return{
+            messageAlertShow: false,
+            messageSending: false,
+            contact_email: '',
+            contact_subject: '',
+            contact_message: ''
+        }
+    },
+    methods: {
+        onSubmitMessage(){
+            const formData = {
+                email : this.contact_email,
+                subject : this.contact_subject,
+                message : this.contact_message
+            }
+
+            // disable send button & display spinner
+            this.messageSending = true;
+
+            // post to db
+            // this.$store.dispatch('action_sendMessage', formData);
+            axios.post('/messages.json', formData)
+                .then(response => {
+                    // enable button
+                    this.messageSending = false;
+
+                    // show alert
+                    this.messageAlertShow = true;
+                    console.log("Message response: ", response);
+
+                    // hide alert after timeout
+                    setTimeout(() => {
+                        this.messageAlertShow = false;
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.log("Error in messaging: ", error);
+                })
+        }
+    }
 }
 </script>
 
@@ -94,4 +140,5 @@ export default {
     .flaticon::before{
         margin-left: 0px;
     } 
+
 </style>

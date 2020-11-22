@@ -206,7 +206,12 @@ export default new Vuex.Store({
         router.replace('/');
       }
       // router.replace('/');
-    }
+    },
+
+    // action_sendMessage(messageData){
+    //   // post formdata to db
+    //   console.log(messageData);
+    // }
   },
   getters: {
     getProducts: state => {
