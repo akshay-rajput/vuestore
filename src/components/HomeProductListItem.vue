@@ -1,6 +1,6 @@
 <template>
-    <div class="productcard border border-gray-400 rounded-md">
-        <div class="productcard-imagewrap relative rounded-md bg-gray-100">
+    <div class="productcard relative border border-gray-400 rounded-md">
+        <div class="productcard-imagewrap flex items-center rounded-md bg-gray-100">
             <img :src=item.image alt="Product image" class="productcard-image">
             <i class="wishlist cursor-pointer fa-heart text-red-700" 
                 :class="item.wishlisted ? 'fa': 'far'" @click="item.wishlisted = !item.wishlisted" title="Add to wishlist"></i>
@@ -94,6 +94,7 @@ export default {
     }
 }
 .productcard-description{
+    font-size: 0.8rem;
     height: 4.65rem;
     overflow: hidden;
     
