@@ -18,7 +18,7 @@
                         <a href="javascript:void(0);" @click="showSlide" class="btn-topslider" :class="isActive ? 'btn-topslider-active': ''"><span class="fa fa-dumbbell text-sm"></span> PUMP</a> -->
                     </div>
                 </div>
-                <div class="image-section md:py-5">
+                <div class="image-section md:pb-5 md:pt-2">
                     <div class="floating">
                         <img :src=sliderImage alt="" class="slideImage mx-auto sm:mt-10">
                     </div>
@@ -145,7 +145,7 @@ export default {
 
 @keyframes floating {
     from { transform: translate(0,  0px); }
-    65%  { transform: translate(0, 15px); }
+    55%  { transform: translate(0, 25px); }
     to   { transform: translate(0, -0px); }    
 }
 </style>
