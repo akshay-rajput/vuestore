@@ -174,6 +174,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/variables';
+.nav-container{
+  z-index: 6;
+}
 .nav-default{
   background: $dark;
   z-index: 100;
@@ -226,6 +229,7 @@ export default {
   justify-content: flex-start;
   text-align: right;
   transition: 300ms right ease;
+
   @media only screen and (max-width: 600px) {
     // width: 250px;
     width: max-content;
@@ -245,9 +249,11 @@ export default {
   // background: #e2e8f0;
   color: white;
   background:lighten($dark, 10%);
-  &:hover{
-    background: $light;
-    color: $linkcolor;
+  border: 1px solid lighten($dark, 10%);
+  &:hover, &.activelink{
+    // border: 1px solid lighten($color: $accent, $amount: 50%);
+    background: $accent;
+    // color: lighten($color: $accent, $amount: 50%);
     transition: all ease 0.35s;
   }
 }
