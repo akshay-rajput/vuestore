@@ -19,7 +19,10 @@
                     </div>
                 </div>
                 <div class="image-section md:py-5">
-                    <img :src=sliderImage alt="" class="slideImage mx-auto sm:mt-10">
+                    <div class="floating">
+                        <img :src=sliderImage alt="" class="slideImage mx-auto sm:mt-10">
+                    </div>
+                    <!-- <img :src=sliderImage alt="" class="slideImage mx-auto sm:mt-10"> -->
                 </div>
             </div>
         </div>
@@ -100,10 +103,10 @@ export default {
 
 .btn-topslider{
     padding: 12px 6px;
-    border: 2px solid #999;
+    border: 2px solid lighten($color: $dark, $amount: 10%);
     border-radius: 5px;
     font-weight: bold;
-    color: #999;
+    color: lighten($color: $dark, $amount: 40%);
     margin-right: 20px;
 
     @media (max-width: 992px) {
@@ -112,8 +115,11 @@ export default {
     }
 }
 .btn-topslider:hover, .btn-topslider-active{
-    border-color: $primary;
-    color: $primary;
+    // border-color: $primary;
+    // color: $primary;
+
+    border-color: lighten($color: $accent, $amount: 50%);
+    color: lighten($color: $accent, $amount: 50%);
 }    
 
 .slideImage{
@@ -126,5 +132,20 @@ export default {
     @media (min-width: 768px) and (max-width: 1199px) {
         height: 275px;
     }
+}
+
+.floating {  
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    // margin-left: 30px;
+    // margin-top: 5px;
+}
+
+@keyframes floating {
+    from { transform: translate(0,  0px); }
+    65%  { transform: translate(0, 15px); }
+    to   { transform: translate(0, -0px); }    
 }
 </style>
