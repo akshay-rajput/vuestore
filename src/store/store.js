@@ -37,8 +37,14 @@ export default new Vuex.Store({
 
     // store current_user data in state
     mut_loggedInUser(state, fetchedUser){
-      state.current_user = fetchedUser.data;
-      console.log("Inside Mutation: ", state.current_user);
+      if(fetchedUser != null){
+        state.current_user = fetchedUser.data;
+        console.log("Mutation: fetched User", fetchedUser.data);
+      }
+      else{
+        state.current_user = null
+      }
+      // console.log("Inside Mutation: ", state.current_user);
     },
 
     // on logout clear all tokens
@@ -150,7 +156,8 @@ export default new Vuex.Store({
     action_fetchUser({commit}){
       // console.log("Pass for fetch: ", authData);
       if(!this.state.idToken){
-        return
+        commit('mut_loggedInUser', null);
+        return false;
       }
       else{
         global_axios.get('/users.json')
@@ -160,12 +167,15 @@ export default new Vuex.Store({
           // loop through all users in database
           for (const recordId in allUsers) {
             const fetchedUser = allUsers[recordId];
-
+            
             // find logged in user
             if (fetchedUser.email == this.state.email_used_for_login) {
+              // insert firebase db record id in state
+              fetchedUser.userId = recordId;
               console.log("Fetched User: ", fetchedUser);
               // store logged in users info in state
               commit('mut_loggedInUser', {data: fetchedUser});
+              // return recordId;
             }
           }
           // console.log("Fetched Users: ");
@@ -208,10 +218,11 @@ export default new Vuex.Store({
       // router.replace('/');
     },
 
-    // action_sendMessage(messageData){
-    //   // post formdata to db
-    //   console.log(messageData);
-    // }
+    action_addToCart(state, payload){
+      // post product to users.cart
+      console.log('dispatched item: ', payload);
+      // commit('mut_addToCart');
+    }
   },
   getters: {
     getProducts: state => {
