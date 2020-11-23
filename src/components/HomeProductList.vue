@@ -14,17 +14,29 @@
                         <!-- <span class="fa fa-filter"></span> -->
                     </label>
                     <div class="inline-block">
-                        <select name="" id="" class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none shadow leading-tight focus:outline-none">
-                            <option value="1">All Products</option>
-                            <option value="2">Protein Powder</option>
-                            <option value="3">Merchandise</option>
+                        <select name="filter_products" id="filter_products" v-model="appliedFilter" 
+                                class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none shadow leading-tight focus:outline-none">
+                            <option value="all">All Products</option>
+                            <option value="Muscle Builder">Muscle Builder</option>
+                            <option value="Merchandise">Merchandise</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="products" class="grid sm:grid-cols-3 gap-12 my-2">
+        <!-- display all products -->
+        <div id="products" v-if="appliedFilter == 'all'" class="grid sm:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in productList" :key="item.id" :item=item ></home-product-list-item>
+        </div>
+        
+        <!-- display only muscle builders -->
+        <div id="products" v-if="appliedFilter == 'Muscle Builder'" class="grid sm:grid-cols-3 gap-12 my-2">
+            <home-product-list-item v-for="item in muscleBuilderList" :key="item.id" :item=item ></home-product-list-item>
+        </div>
+        
+        <!-- display merchandise -->
+        <div id="products" v-if="appliedFilter == 'Merchandise'" class="grid sm:grid-cols-3 gap-12 my-2">
+            <home-product-list-item v-for="item in merchandiseList" :key="item.id" :item=item ></home-product-list-item>
         </div>
     </div>
 </template>
@@ -33,19 +45,48 @@
 import HomeProductListItem from '@/components/HomeProductListItem.vue'
 
 export default {
-    // data: function(){
-    //     return{
-    //         list_of_products: []
-    //     }
-    // },
+    data: function(){
+        return{
+            appliedFilter: 'all'
+        }
+    },
     computed: {
         // getter for stocklist
         productList(){
             return this.$store.getters.getProducts;
+        },
+        muscleBuilderList(){
+            var muscleBuilders = this.productList.filter(function (eachproduct) {
+                return eachproduct.type == "Muscle Builder"
+            });
+            console.log("Muscle Builders: ", muscleBuilders);
+            return muscleBuilders;
+        },
+        merchandiseList(){
+            var merchandise = this.productList.filter(function (eachproduct) {
+                return eachproduct.type == "Merchandise"
+            });
+            console.log("Merch: ", merchandise);
+            return merchandise;    
         }
     },
     components: {
         HomeProductListItem
+    },
+    methods: {
+        applyFilter(){
+            console.log("APplying filter: ", this.appliedFilter);
+
+            if(this.appliedFilter == 'Muscle Builder'){
+                console.log('apply muscle builder');    
+            }
+            else if(this.appliedFilter == 'Merchandise'){
+                console.log("``````apply merchandise ``````");
+            }
+            else{
+                console.log(this.productList);
+            }
+        }
     }
 }
 </script>
