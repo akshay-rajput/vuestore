@@ -1,7 +1,7 @@
 <template>
     <div class="contact-container py-10 w-full bg-gray-200">
         <div id="contact" class="container mx-auto px-3">
-            <div class="grid sm:grid-cols-2 gap-12 ">
+            <div class="grid sm:grid-cols-2 sm:gap-12 ">
                 <div class="contact-info-section py-3 md:py-6">
                     <!-- <img src="../assets/contactus.svg" alt="contact us" class="h-48 mx-auto"> -->
                     <div class="section-heading">
@@ -12,7 +12,7 @@
                             <div class="w-6 font-semibold">
                                 <span class="flaticon flaticon-placeholder ml-0 text-sm"></span>
                             </div>
-                            <span class="px-2 break-words text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
+                            <span class="px-2 text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
                         </div>
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
                             <div class="w-6 font-semibold">
@@ -79,9 +79,9 @@
                         </button>
                     </form>
                     <div v-if="messageAlertShow" 
-                        class="message-alert bg-green-200 border-l-4 border-green-500 text-green-700 p-4 my-4" role="alert">
+                        class="message-alert bg-green-200 border-l-4 border-green-500 text-green-700 p-2 my-4 text-sm sm:text-md" role="alert">
                         <p> <span class="fa fa-check"></span>
-                            Your message was send successfully.</p>
+                            Your message was sent successfully.</p>
                     </div>
                 </div>
             </div>
@@ -140,5 +140,11 @@ export default {
     .flaticon::before{
         margin-left: 0px;
     } 
-
+    .contact-info{
+        word-break: break-all;
+    }
+    .message-alert{
+        position: absolute;
+        max-width: 90%;
+    }
 </style>
