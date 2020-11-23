@@ -28,7 +28,7 @@
                             <span class="fa fa-minus"></span>
                         </button>
                         
-                        <input type="text" name="product_quantity" id="product_quantity" value="1" 
+                        <input type="text" name="product_quantity" :id="item.id + 'product_quantity'"  value="1" 
                                 class="text-xl leading-4 font-bold text-center focus:outline-none cursor-default" readonly>
                         
                         <!-- plus qty -->
