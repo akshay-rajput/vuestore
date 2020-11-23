@@ -70,7 +70,7 @@ export default {
             const filteredProducts = this.$store.getters.getProducts.filter(function(product){
                 return product.type == 'Muscle Builder'
             });
-            console.log("here is filtered: ", filteredProducts);
+            console.log("TOPSection Products to show: ", filteredProducts);
             
             // return only 3 of filtered products
             const productsToShow = [];
@@ -90,7 +90,7 @@ export default {
                 
             }
 
-            console.log("Product to show: ", productsToShow);
+            console.log("TopProducts to show: ", productsToShow);
             return productsToShow;
         }
     }
