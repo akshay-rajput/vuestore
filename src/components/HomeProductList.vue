@@ -5,7 +5,10 @@
         </div>
         <div class="flex justify-between items-center mb-8">
             <div class="filter-info flex-grow">
-                <p class="text-gray-600 text-md">Showing 5 products from Merchandise.</p>
+                <p class="text-gray-600 text-md" v-if="appliedFilter != 'All Products'">
+                    Showing <span class="text-semibold" v-if="appliedFilter == 'Muscle Builder'">5</span>
+                    <span class="text-semibold" v-if="appliedFilter == 'Merchandise'">7</span>
+                     products from {{appliedFilter}}.</p>
             </div>
             <div class="productlist-options">
                 <div class="filters">
@@ -16,7 +19,7 @@
                     <div class="inline-block">
                         <select name="filter_products" id="filter_products" v-model="appliedFilter" 
                                 class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none shadow leading-tight focus:outline-none">
-                            <option value="all">All Products</option>
+                            <option value="All Products">All Products</option>
                             <option value="Muscle Builder">Muscle Builder</option>
                             <option value="Merchandise">Merchandise</option>
                         </select>
@@ -25,17 +28,17 @@
             </div>
         </div>
         <!-- display all products -->
-        <div id="products" v-if="appliedFilter == 'all'" class="grid sm:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'All Products'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in productList" :key="item.id" :item=item ></home-product-list-item>
         </div>
         
         <!-- display only muscle builders -->
-        <div id="products" v-if="appliedFilter == 'Muscle Builder'" class="grid sm:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'Muscle Builder'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in muscleBuilderList" :key="item.id" :item=item ></home-product-list-item>
         </div>
         
         <!-- display merchandise -->
-        <div id="products" v-if="appliedFilter == 'Merchandise'" class="grid sm:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'Merchandise'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in merchandiseList" :key="item.id" :item=item ></home-product-list-item>
         </div>
     </div>
@@ -47,7 +50,7 @@ import HomeProductListItem from '@/components/HomeProductListItem.vue'
 export default {
     data: function(){
         return{
-            appliedFilter: 'all'
+            appliedFilter: 'All Products'
         }
     },
     computed: {
