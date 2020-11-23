@@ -1,5 +1,5 @@
 <template>
-    <div class="productcard relative border border-gray-400 rounded-md">
+    <div class="productcard relative border border-gray-400 rounded-md mb-6 sm:mb-0">
         <div class="productcard-imagewrap flex items-center rounded-md bg-gray-100">
             <img :src=item.image alt="Product image" class="productcard-image">
             <i class="wishlist cursor-pointer fa-heart text-red-700" 
@@ -39,21 +39,17 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="productcard-buttons border-gray-400 border-t border-dashed flex justify-between">
-            <div class="">
-                <button class="btn-viewDetails">
-                    View Details >
-                </button>    
-            </div>
-            <div class="flex-grow">
-                <button class="btn-viewDetails w-full">
-                    Add to cart 
-                </button>    
-            </div>
-        </div> -->
         <div class="productcard-buttons">
-            <button class="btn-addToCart">
-                Add to cart
+            <button class="btn-addToCart" @click="addToCart">
+                <span v-if="addingToCart">
+                    <span class="fa fa-circle-notch fa-spin"></span>
+                    Adding to cart
+                </span>
+                
+                <span  v-if="!addingToCart">
+                    Add to cart
+                </span>
+                
             </button>
             <a href="javascript:void(0);" class="text-blue-600 hover:text-teal-600">View details <span class="fa fa-long-arrow-alt-right"></span></a>
         </div>
@@ -61,6 +57,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     props: {
         // title: String,
@@ -68,6 +65,44 @@ export default {
         // isPublished: Boolean,
         item: Object
     },
+    data(){
+        return{
+            addingToCart: false
+        }
+    },
+    methods: {
+        addToCart(){
+            console.log("adding " + this.item + ' to cart');
+            // this.$store.dispatch('action_sendMessage', this.item);
+
+            // get db userid of logged in user
+            // const userId = this.$store.state.current_user.userId;
+            const userId = localStorage.userId;
+            console.log("Inside Component USERID: ", userId);
+
+            this.addingToCart = true;
+            
+            const fbUserCartPath = '/users/'+userId+'/cart.json';
+            axios.post(fbUserCartPath, this.item)
+            .then(response => {
+                // enable button
+                this.addingToCart = false;
+
+                // show alert
+                // this.messageAlertShow = true;
+                console.log("Cart response: ", response);
+
+                // hide alert after timeout
+                // setTimeout(() => {
+                //     this.messageAlertShow = false;
+                // }, 3000);
+            })
+            .catch(error => {
+                console.log("Error in AddCart: ", error);
+            })
+            this.$store.dispatch( 'action_addToCart', this.item);
+        }
+    }
 }
 </script>
 
@@ -121,7 +156,7 @@ export default {
 }
 .product-quantity-control{
 
-    #product_quantity{
+    input{
         width: 40px;    
         border: 1px solid lighten($color: $dark, $amount: 50%);
     }
