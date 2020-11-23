@@ -172,6 +172,8 @@ export default new Vuex.Store({
             if (fetchedUser.email == this.state.email_used_for_login) {
               // insert firebase db record id in state
               fetchedUser.userId = recordId;
+              localStorage.setItem('userId', fetchedUser.userId);
+              
               console.log("Fetched User: ", fetchedUser);
               // store logged in users info in state
               commit('mut_loggedInUser', {data: fetchedUser});
