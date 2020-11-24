@@ -43,29 +43,37 @@
 
 <script>
 // import axios from '../store/axios-instance'
+import { eventBus } from '../main'
 export default {
-    data () {
-        return {
-            email: '',
-            password: ''
-      }
-    },
-
-    methods: {
-        onSubmit () {
-            const formData = {
-                email: this.email,
-                password: this.password
-            }
-            console.log("Login: ");
-            console.log(formData)
-            
-            this.$store.dispatch('action_login', formData).then(() => {
-              console.log("after dispatch");
-              // refresh page after login
-              // window.location.reload()
-            })
-        }
+  
+  // created() {
+  //     eventBus.$on('openModal', () => {
+  //         this.openModal();
+  //     })
+  // },
+  data () {
+      return {
+          email: '',
+          password: ''
     }
+  },
+
+  methods: {
+      onSubmit () {
+          const formData = {
+              email: this.email,
+              password: this.password
+          }
+          console.log("Login: ");
+          console.log(formData)
+          
+          this.$store.dispatch('action_login', formData).then(() => {
+            setTimeout(() => {
+              // close modal after 1sec
+              eventBus.$emit('closeModal');
+            }, 1000);
+          })
+      }
+  }
 }
 </script>
