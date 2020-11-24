@@ -57,6 +57,7 @@
 
 <script>
 import axios from 'axios';
+import {eventBus} from "../main";
 export default {
     props: {
         // title: String,
@@ -100,6 +101,7 @@ export default {
                 }, 1500);
             }
             else{
+                eventBus.$emit('openModal');
                 console.log("You need to login to add product to cart");
             }
         },
@@ -165,7 +167,8 @@ export default {
                 }
             }
             else{
-                this.$refs.signupModal.showModal();
+                // this.$refs.signupModal.openModal();
+                eventBus.$emit('openModal');
                 console.log("Cannot add to wishlist: please login");
             }
         }
