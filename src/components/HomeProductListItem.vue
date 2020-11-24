@@ -2,8 +2,8 @@
     <div class="productcard relative border border-gray-400 rounded-md mb-6 sm:mb-0">
         <div class="productcard-imagewrap flex items-center rounded-md bg-gray-100">
             <img :src=item.image alt="Product image" class="productcard-image">
-            <i class="wishlist cursor-pointer fa-heart text-red-700" 
-                :class="item.wishlisted ? 'fa': 'far'" @click="item.wishlisted = !item.wishlisted" title="Add to wishlist"></i>
+            <i class="wishlist cursor-pointer fa-heart text-red-700" @click="addToWishlist"
+                :class="item.wishlisted ? 'fa': 'far'" title="Add to wishlist"></i>
         </div>
         <div class="productcard-info px-2 pb-4">
             <div class="productcard-name py-1 mb-2">
@@ -24,15 +24,15 @@
                     <small class="text-gray-700 text-xs">Quantity</small>
                     <div class="product-quantity-control mt-1">
                         <!-- minus qty -->
-                        <button class="btn-quantity-minus">
+                        <button class="btn-quantity-minus" @click="decreaseQty">
                             <span class="fa fa-minus"></span>
                         </button>
                         
-                        <input type="text" name="product_quantity" :id="item.id + 'product_quantity'"  value="1" 
+                        <input type="text" name="product_quantity" :id="item.id + 'product_quantity'" v-model="productQty"
                                 class="text-xl leading-4 font-bold text-center focus:outline-none cursor-default" readonly>
                         
                         <!-- plus qty -->
-                        <button class="btn-quantity-plus">
+                        <button class="btn-quantity-plus" @click="increaseQty">
                             <span class="fa fa-plus"></span>
                         </button>
                     </div>
@@ -40,10 +40,9 @@
             </div>
         </div>
         <div class="productcard-buttons">
-            <button class="btn-addToCart" @click="addToCart">
+            <button class="btn-addToCart" :class="addingToCart ? 'disableBtn':''" @click="addToCart">
                 <span v-if="addingToCart">
-                    <span class="fa fa-circle-notch fa-spin"></span>
-                    Adding to cart
+                    <span class="fa fa-circle-notch fa-spin"></span> Waiting...
                 </span>
                 
                 <span  v-if="!addingToCart">
@@ -67,40 +66,108 @@ export default {
     },
     data(){
         return{
-            addingToCart: false
+            addingToCart: false,
+            productQty: 1
         }
     },
     methods: {
+        increaseQty(){
+            // increase if less than 5 quantity
+            if(this.productQty < 5){
+                this.productQty += 1;
+                console.log("Update: qty:", this.productQty);
+            }
+        },
+        decreaseQty(){
+            // decrease if more than 1 quantity
+            if(this.productQty > 1){
+                this.productQty -= 1;
+                console.log("Update: qty:", this.productQty);
+            }
+        },
         addToCart(){
-            console.log("adding " + this.item + ' to cart');
-            // this.$store.dispatch('action_sendMessage', this.item);
+            if(localStorage.token){
+                console.log("adding " + this.item + ' to cart');
 
-            // get db userid of logged in user
-            // const userId = this.$store.state.current_user.userId;
-            const userId = localStorage.userId;
-            console.log("Inside Component USERID: ", userId);
+                this.addingToCart = true;
 
-            this.addingToCart = true;
-            
-            const fbUserCartPath = '/users/'+userId+'/cart.json';
-            axios.post(fbUserCartPath, this.item)
-            .then(response => {
-                // enable button
-                this.addingToCart = false;
+                // add quantity to cart item
+                this.item.quantity = this.productQty;
 
-                // show alert
-                // this.messageAlertShow = true;
-                console.log("Cart response: ", response);
+                this.$store.dispatch( 'action_addToCart', this.item);
+                setTimeout(() => {
+                    this.addingToCart = false;
+                }, 1500);
+            }
+            else{
+                console.log("You need to login to add product to cart");
+            }
+        },
+        addToWishlist(){
+            // check if login
+            if(localStorage.token){
+                // toggle wishlist button
+                this.item.wishlisted = !this.item.wishlisted;
 
-                // hide alert after timeout
-                // setTimeout(() => {
-                //     this.messageAlertShow = false;
-                // }, 3000);
-            })
-            .catch(error => {
-                console.log("Error in AddCart: ", error);
-            })
-            this.$store.dispatch( 'action_addToCart', this.item);
+                // get db userid of logged in user
+                const userId = localStorage.userId;
+                console.log("store USERID: ", userId);
+                
+                // post product to firebase cart
+                const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
+                
+                // Add to wishlist
+                if(this.item.wishlisted){
+                    axios.post(fbUserWishlistPath, this.item)
+                    .then(response => {
+                        console.log("Wishlist response: ", response);
+                    })
+                    .catch(error => {
+                        console.log("Error in AddWishlist: ", error);
+                    })
+                }
+
+                // remove from wishlist
+                else{
+                    // path of wishlist
+                    const fbWishlistPath = '/users/'+userId+'/wishlist.json';
+                    
+                    // get wishlist
+                    axios.get(fbWishlistPath)
+                    .then(gotWishlist => {
+                        console.log("GOT WIshlist: ", gotWishlist);
+                        
+                        // find id of item in wishlist & remove that id.item
+                        const wishlistItems = gotWishlist.data;
+                        for (const recordId in wishlistItems) {
+
+                            const currentItem = wishlistItems[recordId];
+                            if (currentItem.id == this.item.id) {
+                                console.log("removing : ", currentItem.name);                            
+                                // path of item to be removed from wishlist
+                                const fbRemoveWishlistPath = '/users/'+userId+'/wishlist/'+recordId+'.json';
+                            
+                                axios.delete(fbRemoveWishlistPath, this.item)
+                                .then(response => {
+                                    console.log("RemoveWishlist response: ", response);
+                                })
+                                .catch(error => {
+                                    console.log("Error in RemoveWishlist: ", error);
+                                })
+                            }
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log("Error fetching wishlist", error);
+                    })
+                    
+                }
+            }
+            else{
+                this.$refs.signupModal.showModal();
+                console.log("Cannot add to wishlist: please login");
+            }
         }
     }
 }
@@ -191,6 +258,13 @@ export default {
         color: $accent;
         background: transparent;
         transition: all ease 0.35s;
+    }
+
+    &.disableBtn{
+        background: lighten($color: $accent, $amount: 5%);
+        border-color: lighten($color: $accent, $amount: 5%);
+        pointer-events: none;
+        cursor: not-allowed;
     }
 }
 </style>

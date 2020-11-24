@@ -15,6 +15,7 @@ export default new Vuex.Store({
     userId: null,
     email_used_for_login: '',
     current_user: {},
+    cart: [],
     productData: []
   },
   mutations: {
@@ -55,6 +56,13 @@ export default new Vuex.Store({
       // remove local token
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+    },
+
+    // store products inside cart in state
+    mut_addToCart(state, payload){
+      console.log("inside Mut_AddCart : ", payload);
+      state.cart.push(payload);
+      console.log("CART: ", state.cart);
     }
   },
   actions: {
@@ -220,11 +228,26 @@ export default new Vuex.Store({
       // router.replace('/');
     },
 
-    action_addToCart(state, payload){
-      // post product to users.cart
-      console.log('dispatched item: ', payload);
+    action_addToCart({commit}, payload){
+      // get db userid of logged in user
+      const userId = localStorage.userId;
+      console.log("store USERID: ", userId);
+      
+      // post product to firebase cart
+      const fbUserCartPath = '/users/'+userId+'/cart.json';
+      global_axios.post(fbUserCartPath, payload)
+      .then(response => {
+        console.log("Cart response: ", response);
+
+        // commit to state
+        commit('mut_addToCart', payload);
+      })
+      .catch(error => {
+          console.log("Error in AddCart: ", error);
+      })
       // commit('mut_addToCart');
-    }
+    },
+     
   },
   getters: {
     getProducts: state => {
