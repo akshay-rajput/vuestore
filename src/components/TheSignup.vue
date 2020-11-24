@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import {eventBus} from '../main'
 export default {
     data () {
         return {
@@ -67,6 +68,10 @@ export default {
 
             // call actions inside store.js
             this.$store.dispatch('action_signup', formData);
+            setTimeout(() => {
+              // close modal after 1sec
+              eventBus.$emit('closeModal');
+            }, 1000);
         }
     }
 }
