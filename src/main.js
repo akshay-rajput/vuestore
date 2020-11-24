@@ -13,6 +13,9 @@ import './assets/lineal_app_icons/flaticon.css'
 // custom css styles
 import './assets/custom.scss'
 
+// eventbus for modal events
+export const eventBus = new Vue();
+
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'https://vuestore-app.firebaseio.com'
 
