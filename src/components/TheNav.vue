@@ -1,5 +1,5 @@
 <template>
-  <div  class="nav-container bg-gray-800 fixed top-0 w-full">
+  <div  class="nav-container bg-gray-800 fixed top-0 w-full" ref="Navbar">
     <!-- <span class="text-gray-700">This is navbar.... </span>     -->
     <nav id="navbar">
       <div class="container mx-auto">
@@ -20,7 +20,7 @@
             <!-- <div class="mx-3">{{current_user.email}}</div> -->
             <div class="sm:flex">
               <div class="loginlinks" v-if="!isLoggedIn">
-                <a href="javascript:void(0);" @click="$refs.signupModal.openModal()"  class="btn-app btn-signup mx-1 text-sm sm:mx-2 sm:text-lg">Sign Up</a>
+                <a href="javascript:void(0);" @click="$refs.signupModal.openModal()" ref="signUpClick"  class="btn-app btn-signup mx-1 text-sm sm:mx-2 sm:text-lg">Sign Up</a>
                 <a href="javascript:void(0);" @click="$refs.loginModal.openModal()" class="btn-app btn-login mx-1 text-sm sm:mx-2 sm:text-lg">Login</a>  
               </div>
               
@@ -113,6 +113,7 @@
 import TheSignup from '@/components/TheSignup.vue'
 import TheLogin from '@/components/TheLogin.vue'
 import vueModal from './TheModal'
+
 
 export default {
   name: 'TheNav',

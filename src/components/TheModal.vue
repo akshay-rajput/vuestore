@@ -29,8 +29,23 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
 export default {
     name: 'modal',
+    created() {
+      eventBus.$on('openModal', () => {
+        // open login modal
+        this.$parent.$refs.loginModal.openModal();
+        // close signup modal
+        this.$parent.$refs.signupModal.closeModal();
+      }),
+      eventBus.$on('closeModal', () => {
+        // open login modal
+        this.$parent.$refs.loginModal.closeModal();
+        // close signup modal
+        this.$parent.$refs.signupModal.closeModal();
+      })
+    },
     data(){
         return{
             show_modal : false
