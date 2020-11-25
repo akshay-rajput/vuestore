@@ -1,8 +1,15 @@
 <template>
     <div>
         <!-- if cart is empty -->
-        <div v-if="!userCart" class="cart-empty flex justify-center items-center">
-            <img src="../../assets/emptycart.svg" alt="Cart is empty" class="h-64">
+        <div v-if="!userCart" class="cart-empty flex flex-col justify-center items-center">
+            <div class="py-8 text-center">
+                <img src="../../assets/emptycart.svg" alt="Cart is empty" class="h-48">
+                <h5 class="my-8 text-gray-600">Oop! It looks like your cart is empty.</h5>
+                <router-link :to="{path: '/#products'}" class="cart-backlink text-xl font-semibold text-purple-600 hover:text-teal-700">
+                    <span class="fa fa-long-arrow-alt-left"></span> 
+                    <span class="hover:underline ml-4">Go Back & Add products</span>
+                </router-link>
+            </div>
         </div>
         <!-- if cart is not empty -->
         <div v-if="userCart" class="cart-wrap justify-between">
@@ -80,6 +87,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/_variables.scss';
+    .cart-backlink{
+        transition: all ease 0.35s;
+        &:hover{
+            transform: scaleX(1.5);
+            
+        }
+    }
     .cart-wrap{
         display: flex;
         @media (min-width: 992px) {
