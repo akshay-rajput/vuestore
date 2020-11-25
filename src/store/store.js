@@ -215,17 +215,20 @@ export default new Vuex.Store({
         }
       }
     },
-    action_logout({commit}){
+    action_logout({commit, dispatch}){
       console.log("~~  logging out");
       commit('mut_logout');
       
       // avoid duplicate path error
       const path = '/'
       if (router.path !== path){
+        console.log('routing to homepage');
         // this.$router.push(path)
         router.replace('/');
       }
-      // router.replace('/');
+      
+      // initialise products again
+      dispatch('action_initialiseProducts');
     },
 
     action_addToCart({commit}, payload){
