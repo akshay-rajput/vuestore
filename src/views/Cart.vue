@@ -1,8 +1,5 @@
 <template>
     <div class="cartcontainer">
-        <p class="text-blue-400">
-            This is cart page ******
-        </p>
         <user-cart></user-cart>
     </div>
 </template>
@@ -18,3 +15,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.cartcontainer{
+  margin-top: 290px;
+  border: 5px dotted #ccc;
+  min-height: calc(100vh - 200px);
+}
+</style>
