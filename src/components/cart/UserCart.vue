@@ -1,57 +1,77 @@
 <template>
-    <div class="cart-wrap justify-between border border-blue-500">
-        <div class="cart-items px-3">
-            <cart-item></cart-item>
+    <div>
+        <!-- if cart is empty -->
+        <div v-if="!userCart" class="cart-empty flex justify-center items-center">
+            <img src="../../assets/emptycart.svg" alt="Cart is empty" class="h-64">
         </div>
-        <div class="cart-summary text-gray-300 text-left px-3 py-3 md:py-6">
-            <div class="summary-info">
-                <h4 class="text-gray-600 text-2xl mb-4">Payment Summary</h4>
-            
-                <div class="cart-couponcode mb-4 ">
-                    <label for="couponcode" class="text-gray-500 text-sm tracking-wider">Coupon Code?</label>
-                    <div class="couponcode-group flex ">
-                        <input type="text" name="couponcode" id="couponcode" class="text-gray-700 px-2 focus:outline-none focus:bg-white bg-gray-200" placeholder="Enter coupon code">
-                        <button class="btn-app btn-couponcode">Apply</button>
+        <!-- if cart is not empty -->
+        <div v-if="userCart" class="cart-wrap justify-between">
+            <div class="cart-items px-3 md:px-8 py-3 md:py-6">
+                <h4 class="text-gray-700 text-2xl mb-4">Your Cart</h4>
+                <!-- call cart item component -->
+                <cart-item></cart-item>
+                <cart-item></cart-item>
+                <cart-item></cart-item>
+                <cart-item></cart-item>
+                <cart-item></cart-item>
+                <cart-item></cart-item>
+            </div>
+            <div class="cart-summary text-gray-300 text-left px-3 py-3 md:py-6">
+                <div class="summary-info">
+                    <h4 class="text-gray-600 text-2xl mb-4">Payment Summary</h4>
+                
+                    <div class="cart-couponcode mb-4 ">
+                        <label for="couponcode" class="text-gray-500 text-sm tracking-wider">Coupon Code?</label>
+                        <div class="couponcode-group flex ">
+                            <input type="text" name="couponcode" id="couponcode" class="text-gray-700 px-2 focus:outline-none focus:bg-white bg-gray-200" placeholder="Enter coupon code">
+                            <button class="btn-app btn-couponcode">Apply</button>
+                        </div>
+                    </div>
+                    <!-- subtotal -->
+                    <div class="cart-subtotal flex justify-between mb-4 ">
+                        <span class="text-lg text-gray-400 mr-2">Subtotal</span>
+                        <span class="subtotal text-lg">2000 USD</span>
+                    </div>
+                    <!-- discount -->
+                    <div class="cart-discount flex justify-between mb-4 ">
+                        <span class="text-lg text-gray-400 mr-2">Discount</span>
+                        <span class="discount text-lg">
+                            -<span class="discount-value">35.05</span> USD
+                        </span>
+                    </div>
+                    <!-- shipping -->
+                    <div class="cart-shipping flex justify-between mb-4 ">
+                        <span class="text-lg text-gray-400 mr-2">Shipping</span>
+                        <span class="shipping text-lg">
+                            + <span class="shipping-charges">35.55</span> USD
+                        </span>
                     </div>
                 </div>
-                <!-- subtotal -->
-                <div class="cart-subtotal flex justify-between mb-4 border border-gray-400">
-                    <span class="text-lg text-gray-400 mr-2">Subtotal</span>
-                    <span class="subtotal text-lg">2000 USD</span>
-                </div>
-                <!-- discount -->
-                <div class="cart-discount flex justify-between mb-4 border border-gray-400">
-                    <span class="text-lg text-gray-400 mr-2">Discount</span>
-                    <span class="discount text-lg">
-                        -<span class="discount-value">35.05</span> USD
-                    </span>
-                </div>
-                <!-- shipping -->
-                <div class="cart-shipping flex justify-between mb-4 border border-gray-400">
-                    <span class="text-lg text-gray-400 mr-2">Shipping</span>
-                    <span class="shipping text-lg">
-                        + <span class="shipping-charges">35.55</span> USD
-                    </span>
-                </div>
-            </div>
 
-            <div class="summary-end border-t border-gray-400 border-dashed pt-3">
-                <!-- Grandtotal -->
-                <div class="cart-total flex justify-between mb-4 border border-gray-400">
-                    <span class="text-lg font-semibold tracking-wide text-gray-400 mr-2">Grand Total</span>
-                    <span class="total text-lg font-semibold tracking-wide">2152.05 USD</span>
+                <div class="summary-end border-t border-gray-400 border-dashed pt-3">
+                    <!-- Grandtotal -->
+                    <div class="cart-total flex justify-between mb-4">
+                        <span class="text-lg font-semibold tracking-wide text-gray-400 mr-2">Grand Total</span>
+                        <span class="total text-lg font-semibold tracking-wide">2152.05 USD</span>
+                    </div>
+                    <button class="btn-app btn-checkout">
+                        Checkout <span class="fa fa-long-arrow-alt-right"></span>
+                    </button>
                 </div>
-                <button class="btn-app btn-checkout">
-                    Checkout <span class="fa fa-long-arrow-alt-right"></span>
-                </button>
+                
             </div>
-            
         </div>
     </div>
+    
 </template>
 <script>
 import CartItem from './UserCartItem';
 export default {
+    data(){
+        return{
+            userCart: false
+        }
+    },
     components: {
         CartItem
     }
@@ -125,7 +145,6 @@ export default {
                 }
             }
         }
-
-        
     }
+
 </style>
