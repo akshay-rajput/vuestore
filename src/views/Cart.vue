@@ -18,8 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .cartcontainer{
-  margin-top: 290px;
-  border: 5px dotted #ccc;
+  // margin-top: 290px;
   min-height: calc(100vh - 200px);
 }
 </style>
