@@ -77,12 +77,13 @@ export default {
     components: {
         CartItem
     },
-    beforeCreate(){
+    created(){
         // on page load sync state.cart with database cart
         this.syncUserCart();
     },
     computed: {
         userCartItems(){
+            
             return this.$store.getters.getCartItems;
         }
     },
