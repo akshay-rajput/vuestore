@@ -62,14 +62,14 @@ export default new Vuex.Store({
     mut_addToCart(state, payload){
       // console.log("inside Mut_AddCart : ", payload);
       state.cart.push(payload);
-      console.log("CART: ", state.cart);
+      console.log("ADD CART mutation: ", state.cart);
     },
     // store products inside cart in state
     mut_syncCart(state, fetchedCart){
       // console.log("inside Mut_AddCart : ", payload);
       state.cart = fetchedCart;
       // state.cart.push(fetchedCart);
-      console.log("SYNC CART: ", state.cart);
+      console.log("SYNC CART Mutation: ", state.cart);
     }
   },
   actions: {
@@ -238,24 +238,75 @@ export default new Vuex.Store({
       dispatch('action_initialiseProducts');
     },
 
-    action_addToCart({commit}, payload){
+    action_addToCart({commit, dispatch}, payload){
       // get db userid of logged in user
       const userId = localStorage.userId;
       console.log("store USERID: ", userId);
-      
-      // post product to firebase cart
-      const fbUserCartPath = '/users/'+userId+'/cart.json';
-      global_axios.post(fbUserCartPath, payload)
-      .then(response => {
-        console.log("Cart response: ", response);
 
-        // commit to state
-        commit('mut_addToCart', payload);
-      })
-      .catch(error => {
-          console.log("Error in AddCart: ", error);
-      })
-      // commit('mut_addToCart');
+      console.log("BEforesync state.cart = ",this.state.cart);
+
+      // sync cart before adding new product
+      dispatch('action_syncCart').then(response => {
+        console.log("Response after sync dispatch== ", response);
+      });
+
+      // path of firebase cartdb
+      const fbUserCartPath = '/users/'+userId+'/cart.json';
+      
+      // check if adding a duplicate product to cart
+      const stateCart = this.state.cart;
+      console.log("After sync STATECART: ", this.state.cart);
+
+      // if cart already exists, check if adding duplicate
+      if(stateCart.length > 0){
+        stateCart.forEach(stateCartItem => {
+          console.log("Condition check: ", payload.id == stateCartItem.id);
+          
+          if(payload.id == stateCartItem.id){
+            payload.quantity += stateCartItem.quantity;
+            
+            // duplicate found, delete old record from db
+            dispatch('action_removeFromCart', payload);
+            
+            // add to cart with updated quantity
+            global_axios.post(fbUserCartPath, payload)
+              .then(response => {
+                console.log("Append to Cart response: ", response);
+    
+                // commit to state
+                commit('mut_addToCart', payload);
+            })
+            .catch(error => {
+                console.log("Error in AddCart: ", error);
+            })
+          }
+          else{
+            global_axios.post(fbUserCartPath, payload)
+            .then(response => {
+              console.log("~~ NOT DUPLICATE Cart response: ", response);
+    
+              // commit to state
+              commit('mut_addToCart', payload);
+            })
+            .catch(error => {
+                console.log("Error in AddCart: ", error);
+            })    
+          }
+        })
+      }
+      else{
+        global_axios.post(fbUserCartPath, payload)
+        .then(response => {
+          console.log("Added to CartEMPTY: ", response);
+
+          // commit to state
+          commit('mut_addToCart', payload);
+        })
+        .catch(error => {
+            console.log("Error in AddCart: ", error);
+        })
+        // was commit(mut addtocart) here....
+      }
     },
      
     action_syncCart({commit}){
@@ -273,9 +324,43 @@ export default new Vuex.Store({
             
             fetchedCart.push(fetchedCartItem);
         }
-        console.log("Sync cart: ", fetchedCart);
-
+        console.log("Inside sync action: ", fetchedCart);
         commit('mut_syncCart', fetchedCart);
+      })
+    },
+    action_removeFromCart(state, productToRemove){
+      // get db userid of logged in user
+      const userId = localStorage.userId;
+      console.log("store USERID: ", userId);
+
+      // path of firebase cartdb
+      const fbUserCartPath = '/users/'+userId+'/cart.json';
+
+      // get cartlist
+      global_axios.get(fbUserCartPath)
+      .then(gotUserCart => {
+        console.log("GOT userCartlist: ", gotUserCart.data);
+        
+        // find id of item in wishlist & remove that id.item
+        const db_userCartItems = gotUserCart.data;
+        for (const recordId in db_userCartItems) {
+
+            const currentItem = db_userCartItems[recordId];
+            if (currentItem.id == productToRemove.id) {
+                console.log("removing : ", currentItem.name);                            
+                // path of item to be removed from wishlist
+                const fbRemoveCartItemPath = '/users/'+userId+'/cart/'+recordId+'.json';
+            
+                global_axios.delete(fbRemoveCartItemPath, productToRemove)
+                .then(response => {
+                    console.log("Remove Cart item response: ", response);
+                })
+                .catch(error => {
+                    console.log("Error in Remove cart item: ", error);
+                })
+            }
+        }
+
       })
     }
   },
