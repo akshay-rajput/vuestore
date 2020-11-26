@@ -266,7 +266,9 @@ export default new Vuex.Store({
             payload.quantity += stateCartItem.quantity;
             
             // duplicate found, delete old record from db
-            dispatch('action_removeFromCart', payload);
+            dispatch('action_removeFromCart', payload).then(response => {
+              console.log("Response after sync dispatch: ", response);
+            });
             
             // add to cart with updated quantity
             global_axios.post(fbUserCartPath, payload)
@@ -337,38 +339,46 @@ export default new Vuex.Store({
       })
     },
     action_removeFromCart(state, productToRemove){
-      // get db userid of logged in user
-      const userId = localStorage.userId;
-      console.log("store USERID: ", userId);
+      return new Promise((resolve, reject) => {
+        // get db userid of logged in user
+        const userId = localStorage.userId;
+        console.log("store USERID: ", userId);
 
-      // path of firebase cartdb
-      const fbUserCartPath = '/users/'+userId+'/cart.json';
+        // path of firebase cartdb
+        const fbUserCartPath = '/users/'+userId+'/cart.json';
 
-      // get cartlist
-      global_axios.get(fbUserCartPath)
-      .then(gotUserCart => {
-        console.log("GOT userCartlist: ", gotUserCart.data);
-        
-        // find id of item in wishlist & remove that id.item
-        const db_userCartItems = gotUserCart.data;
-        for (const recordId in db_userCartItems) {
+        // get cartlist
+        global_axios.get(fbUserCartPath)
+        .then(gotUserCart => {
+          console.log("GOT userCartlist: ", gotUserCart.data);
+          
+          // find id of item in wishlist & remove that id.item
+          const db_userCartItems = gotUserCart.data;
+          for (const recordId in db_userCartItems) {
 
-            const currentItem = db_userCartItems[recordId];
-            if (currentItem.id == productToRemove.id) {
-                console.log("removing : ", currentItem.name);                            
-                // path of item to be removed from wishlist
-                const fbRemoveCartItemPath = '/users/'+userId+'/cart/'+recordId+'.json';
-            
-                global_axios.delete(fbRemoveCartItemPath, productToRemove)
-                .then(response => {
-                    console.log("Remove Cart item response: ", response);
-                })
-                .catch(error => {
-                    console.log("Error in Remove cart item: ", error);
-                })
-            }
-        }
+              const currentItem = db_userCartItems[recordId];
+              if (currentItem.id == productToRemove.id) {
+                  console.log("removing : ", currentItem.name);                            
+                  // path of item to be removed from wishlist
+                  const fbRemoveCartItemPath = '/users/'+userId+'/cart/'+recordId+'.json';
+              
+                  global_axios.delete(fbRemoveCartItemPath, productToRemove)
+                  .then(response => {
+                      console.log("Remove Cart item response: ", response);
+                  })
+                  .catch(error => {
+                      console.log("Error in Remove cart item: ", error);
+                  })
+              }
+          }
 
+          resolve(gotUserCart);
+          console.log("resolve GetUserCart");
+        })
+        .catch(error => {
+          console.log("reject GETUSERCART error: ");
+          reject(error);
+        })
       })
     }
   },
