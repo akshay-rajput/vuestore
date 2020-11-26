@@ -247,7 +247,7 @@ export default new Vuex.Store({
 
       // sync cart before adding new product
       dispatch('action_syncCart').then(response => {
-        console.log("Response after sync dispatch== ", response);
+        console.log("Response after sync dispatch: ", response);
       });
 
       // path of firebase cartdb
@@ -310,22 +310,30 @@ export default new Vuex.Store({
     },
      
     action_syncCart({commit}){
-      // get db userid of logged in user
-      const userId = localStorage.userId;
+      return new Promise((resolve, reject) => {
+        // get db userid of logged in user
+        const userId = localStorage.userId;
 
-      // post product to firebase cart
-      const fbUserCartPath = '/users/'+userId+'/cart.json';
+        // post product to firebase cart
+        const fbUserCartPath = '/users/'+userId+'/cart.json';
 
-      global_axios.get(fbUserCartPath)
-      .then(response => {
-        const fetchedCart = [];
-        for (const record in response.data) {
-            const fetchedCartItem = response.data[record];
-            
-            fetchedCart.push(fetchedCartItem);
-        }
-        console.log("Inside sync action: ", fetchedCart);
-        commit('mut_syncCart', fetchedCart);
+        global_axios.get(fbUserCartPath)
+        .then(response => {
+          const fetchedCart = [];
+          for (const record in response.data) {
+              const fetchedCartItem = response.data[record];
+              
+              fetchedCart.push(fetchedCartItem);
+          }
+          // console.log("Inside sync action: ", fetchedCart);
+          commit('mut_syncCart', fetchedCart);
+
+          resolve(response);
+          console.log("Resolved syncCArt");
+        })
+        .catch(error => {
+          reject(error);
+        })
       })
     },
     action_removeFromCart(state, productToRemove){
