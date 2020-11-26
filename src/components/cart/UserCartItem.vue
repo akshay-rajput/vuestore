@@ -1,7 +1,7 @@
 <template>
     <div class="cart-item-wrap">
         <div class="cart-item text-gray-800 border-t border-dashed border-gray-600 py-4">
-            <div class="cart-item-main md:mb-0">
+            <div class="cart-item-nameimage md:mb-0">
                 <div class="cart-item-image">
                     <img :src=cart_item.image alt="Product Image" class="rounded shadow">
                 </div>
@@ -63,7 +63,7 @@ export default {
             flex-direction: column;
         }
 
-        .cart-item-main{
+        .cart-item-nameimage{
             flex-grow: 2;
             display: flex;
         }
