@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- if cart is empty -->
-        <div v-if="!userCart" class="cart-empty flex flex-col justify-center items-center">
+        <div v-if="userCartItems.length < 1" class="cart-empty flex flex-col justify-center items-center">
             <div class="py-8 text-center">
                 <img src="../../assets/emptycart.svg" alt="Cart is empty" class="h-48">
                 <h5 class="my-8 text-gray-600">Oop! It looks like your cart is empty.</h5>
@@ -12,16 +12,11 @@
             </div>
         </div>
         <!-- if cart is not empty -->
-        <div v-if="userCart" class="cart-wrap justify-between">
+        <div v-if="userCartItems.length > 0" class="cart-wrap justify-between">
             <div class="cart-items px-3 md:px-8 py-3 md:py-6">
                 <h4 class="text-gray-700 text-2xl mb-4">Your Cart</h4>
                 <!-- call cart item component -->
-                <cart-item></cart-item>
-                <cart-item></cart-item>
-                <cart-item></cart-item>
-                <cart-item></cart-item>
-                <cart-item></cart-item>
-                <cart-item></cart-item>
+                <cart-item v-for="cart_item in userCartItems" :key="cart_item.id" :cart_item=cart_item ></cart-item>
             </div>
             <div class="cart-summary text-gray-300 text-left px-3 py-3 md:py-6">
                 <div class="summary-info">
@@ -81,6 +76,21 @@ export default {
     },
     components: {
         CartItem
+    },
+    beforeCreate(){
+        // on page load sync state.cart with database cart
+        this.syncUserCart();
+    },
+    computed: {
+        userCartItems(){
+            return this.$store.getters.getCartItems;
+        }
+    },
+    methods: {
+        syncUserCart(){
+            console.log("Dispatching SYNC CART");
+            this.$store.dispatch('action_syncCart');
+        }
     }
 }
 </script>
