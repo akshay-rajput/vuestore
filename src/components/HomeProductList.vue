@@ -53,6 +53,9 @@ export default {
             appliedFilter: 'All Products'
         }
     },
+    created(){
+        this.$store.dispatch('action_syncCart');
+    },
     computed: {
         // getter for stocklist
         productList(){
