@@ -32,20 +32,23 @@
                     <!-- subtotal -->
                     <div class="cart-subtotal flex justify-between mb-4 ">
                         <span class="text-lg text-gray-400 mr-2">Subtotal</span>
-                        <span class="subtotal text-lg">2000 USD</span>
+                        <span class="subtotal text-lg">{{cartSubTotal}} USD</span>
                     </div>
                     <!-- discount -->
                     <div class="cart-discount flex justify-between mb-4 ">
-                        <span class="text-lg text-gray-400 mr-2">Discount</span>
+                        <span class="text-lg text-gray-400 mr-2">
+                            Discount
+                            <span class="text-xs">(10%)</span>
+                        </span>
                         <span class="discount text-lg">
-                            -<span class="discount-value">35.05</span> USD
+                            - <span class="discount-value">{{cartDiscount}}</span> USD
                         </span>
                     </div>
                     <!-- shipping -->
                     <div class="cart-shipping flex justify-between mb-4 ">
                         <span class="text-lg text-gray-400 mr-2">Shipping</span>
                         <span class="shipping text-lg">
-                            + <span class="shipping-charges">35.55</span> USD
+                            + <span class="shipping-charges">10.00</span> USD
                         </span>
                     </div>
                 </div>
@@ -54,7 +57,7 @@
                     <!-- Grandtotal -->
                     <div class="cart-total flex justify-between mb-4">
                         <span class="text-lg font-semibold tracking-wide text-gray-400 mr-2">Grand Total</span>
-                        <span class="total text-lg font-semibold tracking-wide">2152.05 USD</span>
+                        <span class="total text-lg font-semibold tracking-wide">{{cartGrandTotal}} USD</span>
                     </div>
                     <button class="btn-app btn-checkout mb-2">
                         Checkout <span class="fa fa-long-arrow-alt-right"></span>
@@ -90,6 +93,19 @@ export default {
     computed: {
         userCartItems(){
             return this.$store.getters.getCartItems;
+        },
+        cartSubTotal(){
+            var subtotal = 0.0;
+            this.userCartItems.forEach(cartItem => {
+                subtotal += parseFloat((cartItem.price * cartItem.quantity));
+            });
+            return subtotal;
+        },
+        cartDiscount(){
+            return (this.cartSubTotal * 0.10).toFixed(2);
+        },
+        cartGrandTotal(){
+            return (this.cartSubTotal - this.cartDiscount + 10.00);
         }
     },
     methods: {
@@ -97,6 +113,7 @@ export default {
             console.log("Dispatching SYNC CART from component");
             this.$store.dispatch('action_syncCart');
         }
+
     }
 }
 </script>
@@ -126,7 +143,6 @@ export default {
         .cart-items{
             // width: 100vw;
             overflow-y: auto;
-            border: 2px solid black;
 
             @media (min-width: 992px) {
                 width: calc(100vw - 320px);
