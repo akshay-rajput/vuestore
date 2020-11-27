@@ -245,70 +245,113 @@ export default new Vuex.Store({
 
       console.log("BEforesync state.cart = ",this.state.cart);
 
-      // sync cart before adding new product
-      dispatch('action_syncCart').then(response => {
-        console.log("Response after sync dispatch: ", response);
-      });
-
       // path of firebase cartdb
       const fbUserCartPath = '/users/'+userId+'/cart.json';
       
-      // check if adding a duplicate product to cart
-      const stateCart = this.state.cart;
-      console.log("After sync STATECART: ", this.state.cart);
+      // sync cart before adding new product
+      dispatch('action_syncCart').then(response => {
+        console.log("1. Response after sync dispatch: ", response);
 
-      // if cart already exists, check if adding duplicate
-      if(stateCart.length > 0){
-        stateCart.forEach(stateCartItem => {
-          console.log("Condition check: ", payload.id == stateCartItem.id);
+        // check if adding a duplicate product to cart
+        const stateCart = this.state.cart;
+        var duplicateEntry = {};
+        console.log("2. After sync STATECART: ", this.state.cart);
+
+        // if cart already exists, check if adding duplicate
+        if(stateCart.length > 0){
+          duplicateEntry = stateCart.find(function(stateCartItem){
+            return stateCartItem.id == payload.id;
+          })
           
-          if(payload.id == stateCartItem.id){
-            payload.quantity += stateCartItem.quantity;
-            
-            // duplicate found, delete old record from db
-            dispatch('action_removeFromCart', payload).then(response => {
-              console.log("Response after sync dispatch: ", response);
-            });
-            
-            // add to cart with updated quantity
-            global_axios.post(fbUserCartPath, payload)
-              .then(response => {
-                console.log("Append to Cart response: ", response);
-    
-                // commit to state
-                commit('mut_addToCart', payload);
-            })
-            .catch(error => {
-                console.log("Error in AddCart: ", error);
-            })
+          if(duplicateEntry){
+            console.log("Duplicate: ", duplicateEntry.name);
+            payload.quantity += duplicateEntry.quantity;
+              
+              // duplicate found, delete old record from db
+              dispatch('action_removeFromCart', payload).then(response => {
+                console.log("4. Response after remove dispatch: ", response);
+
+                // after remove, add to cart with updated quantity
+                  global_axios.post(fbUserCartPath, payload)
+                  .then(response => {
+                    console.log("5. Append to Cart response: ", response);
+        
+                    // commit to state
+                    commit('mut_addToCart', payload);
+                })
+                .catch(error => {
+                    console.log("Error in AddCart: ", error);
+                })
+              });
+              
           }
           else{
             global_axios.post(fbUserCartPath, payload)
-            .then(response => {
-              console.log("~~ NOT DUPLICATE Cart response: ", response);
-    
-              // commit to state
-              commit('mut_addToCart', payload);
-            })
-            .catch(error => {
-                console.log("Error in AddCart: ", error);
-            })    
+              .then(response => {
+                console.log("~~ 4. NOT DUPLICATE Cart response: ", response);
+      
+                // commit to state
+                commit('mut_addToCart', payload);
+              })
+              .catch(error => {
+                  console.log("Error in AddCart: ", error);
+              })
           }
-        })
-      }
-      else{
-        global_axios.post(fbUserCartPath, payload)
-        .then(response => {
-          console.log("Added to CartEMPTY: ", response);
 
-          // commit to state
-          commit('mut_addToCart', payload);
-        })
-        .catch(error => {
-            console.log("Error in AddCart: ", error);
-        })
-        // was commit(mut addtocart) here....
-      }
+          // stateCart.forEach(stateCartItem => {
+          //   console.log("3. Condition check: ", payload.id == stateCartItem.id);
+            
+          //   if(stateCartItem.id == payload.id){
+          //     payload.quantity += stateCartItem.quantity;
+              
+          //     // duplicate found, delete old record from db
+          //     dispatch('action_removeFromCart', payload).then(response => {
+          //       console.log("4. Response after sync dispatch: ", response);
+          //     });
+              
+          //     // add to cart with updated quantity
+          //     global_axios.post(fbUserCartPath, payload)
+          //       .then(response => {
+          //         console.log("5. Append to Cart response: ", response);
+      
+          //         // commit to state
+          //         commit('mut_addToCart', payload);
+          //     })
+          //     .catch(error => {
+          //         console.log("Error in AddCart: ", error);
+          //     })
+          //   }
+          //   else{
+          //     global_axios.post(fbUserCartPath, payload)
+          //     .then(response => {
+          //       console.log("~~ 4. NOT DUPLICATE Cart response: ", response);
+      
+          //       // commit to state
+          //       commit('mut_addToCart', payload);
+          //     })
+          //     .catch(error => {
+          //         console.log("Error in AddCart: ", error);
+          //     })
+          //   }
+          //   // break;
+          // })
+        }
+        else{
+          global_axios.post(fbUserCartPath, payload)
+          .then(response => {
+            console.log("3. Added to CartEMPTY: ", response);
+
+            // commit to state
+            commit('mut_addToCart', payload);
+          })
+          .catch(error => {
+              console.log("Error in AddCart: ", error);
+          })
+          // was commit(mut addtocart) here....
+        }
+      });
+
+      
     },
      
     action_syncCart({commit}){
@@ -331,7 +374,7 @@ export default new Vuex.Store({
           commit('mut_syncCart', fetchedCart);
 
           resolve(response);
-          console.log("Resolved syncCArt");
+          console.log("0. Resolved syncCArt");
         })
         .catch(error => {
           reject(error);
@@ -350,7 +393,7 @@ export default new Vuex.Store({
         // get cartlist
         global_axios.get(fbUserCartPath)
         .then(gotUserCart => {
-          console.log("GOT userCartlist: ", gotUserCart.data);
+          console.log("4.1 GOT userCartlist: ", gotUserCart.data);
           
           // find id of item in wishlist & remove that id.item
           const db_userCartItems = gotUserCart.data;
@@ -373,7 +416,7 @@ export default new Vuex.Store({
           }
 
           resolve(gotUserCart);
-          console.log("resolve GetUserCart");
+          console.log("4.2 resolve GetUserCart");
         })
         .catch(error => {
           console.log("reject GETUSERCART error: ");
