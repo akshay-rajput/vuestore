@@ -3,7 +3,7 @@
         <div class="cart-item text-gray-800 border-t border-dashed border-gray-600 py-4">
             <div class="cart-item-nameimage md:mb-0">
                 <div class="cart-item-image">
-                    <img :src=cart_item.image alt="Product Image" class="rounded shadow">
+                    <img :src=cart_item.image alt="Product Image" class="rounded ">
                 </div>
                 <div class="cart-item-info">
                     <small class="hidden md:block md:invisible text-xs leading-6 tracking-wide text-gray-600">Product</small>
@@ -14,7 +14,7 @@
             <div class="cart-item-otherinfo">
                 <div class="cart-item-quantity">
                     <label for="cart-item-quantity" class="text-xs leading-6 tracking-wide text-gray-600">Quantity</label> <br>
-                    <select name="cart-item-quantity" id="cart-item-quantity"
+                    <select name="cart-item-quantity" id="cart-item-quantity" v-model="cart_item.quantity"
                             class="bg-white border border-gray-400 hover:border-gray-500 px-2 py-1 rounded shadow leading-tight focus:outline-none focus:border-gray-600">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -26,7 +26,7 @@
                 <div class="cart-item-price">
                     <small class="text-xs leading-6 tracking-wide text-gray-600">Price</small>
                     <h5 class="">
-                        <span class="cart-item-price-placeholder text-lg">{{cart_item.price}}</span> USD
+                        <span class="cart-item-price-placeholder text-lg">{{cart_item.price * cart_item.quantity}}</span> USD
                     </h5>
                 </div>
                 <div class="cart-item-actions">
@@ -60,7 +60,6 @@ export default {
             this.$store.dispatch('action_removeFromCart', this.cart_item)
                 .then(removalResponse => {
                     this.productExistsInCart = false;
-                    console.log("state cart update: ", this.$store.state.cart);
                     console.log("Removed now sync cart:", removalResponse);
                     // resolve(removalResponse);
                     this.$store.dispatch('action_syncCart');
@@ -108,7 +107,6 @@ export default {
         .cart-item-quantity, .cart-item-price, .cart-item-actions{
             width: 90px;
             padding: 0px 10px;
-            border: 1px dashed brown;
 
             // use space on larger devices
             @media (min-width: 1200px) {
