@@ -18,7 +18,7 @@
                 <!-- call cart item component -->
                 <cart-item v-for="cart_item in userCartItems" :key="cart_item.id" :cart_item=cart_item ></cart-item>
             </div>
-            <div class="cart-summary text-gray-300 text-left px-3 py-3 md:py-6">
+            <div class="cart-summary text-gray-300 text-left px-3 pt-3 md:pt-6">
                 <div class="summary-info">
                     <h4 class="text-gray-600 text-2xl mb-4">Payment Summary</h4>
                 
@@ -56,8 +56,14 @@
                         <span class="text-lg font-semibold tracking-wide text-gray-400 mr-2">Grand Total</span>
                         <span class="total text-lg font-semibold tracking-wide">2152.05 USD</span>
                     </div>
-                    <button class="btn-app btn-checkout">
+                    <button class="btn-app btn-checkout mb-2">
                         Checkout <span class="fa fa-long-arrow-alt-right"></span>
+                    </button>
+
+                    <button class="btn-app mb-3 text-center w-full">
+                        <router-link :to="{path: '/#products'}" class=" font-semibold text-teal-400 hover:text-purple-400">
+                            <span class="fa fa-long-arrow-alt-left mr-2"></span> Back to shop
+                        </router-link>
                     </button>
                 </div>
                 
@@ -83,13 +89,12 @@ export default {
     },
     computed: {
         userCartItems(){
-            
             return this.$store.getters.getCartItems;
         }
     },
     methods: {
         syncUserCart(){
-            console.log("Dispatching SYNC CART");
+            console.log("Dispatching SYNC CART from component");
             this.$store.dispatch('action_syncCart');
         }
     }
