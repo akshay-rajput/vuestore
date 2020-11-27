@@ -1,5 +1,5 @@
 <template>
-    <div class="cart-item-wrap">
+    <div class="cart-item-wrap" v-if="productExistsInCart">
         <div class="cart-item text-gray-800 border-t border-dashed border-gray-600 py-4">
             <div class="cart-item-nameimage md:mb-0">
                 <div class="cart-item-image">
@@ -34,7 +34,7 @@
                     <button class="cart-item-wishlist text-red-700 text-xl mr-6" title="Add to wishlist">
                         <span class="far fa-heart"></span>
                     </button>
-                    <button class="cart-item-remove text-red-700 text-xl" title="Remove product">
+                    <button @click="removeProduct" class="cart-item-remove text-red-700 text-xl" title="Remove product">
                         <span class="far fa-trash-alt"></span>
                     </button>
                 </div>
@@ -48,6 +48,24 @@ export default {
     props:{
         cart_item: Object
         // cart_item: Array
+    },
+    data(){
+        return{
+            productExistsInCart: true
+        }
+    },
+    methods: {
+        removeProduct(){
+            console.log("Delete this", this.cart_item);
+            this.$store.dispatch('action_removeFromCart', this.cart_item)
+                .then(removalResponse => {
+                    this.productExistsInCart = false;
+                    console.log("state cart update: ", this.$store.state.cart);
+                    console.log("Removed now sync cart:", removalResponse);
+                    // resolve(removalResponse);
+                    this.$store.dispatch('action_syncCart');
+                })
+        }
     }
 }
 </script>
