@@ -60,8 +60,19 @@ export default new Vuex.Store({
 
     // store products inside cart in state
     mut_addToCart(state, payload){
-      // console.log("inside Mut_AddCart : ", payload);
-      state.cart.push(payload);
+      // check if duplicate entry
+      var duplicateEntry = state.cart.find(function(stateCartItem){
+        return stateCartItem.id == payload.id;
+      })
+
+      if(duplicateEntry){
+        // update quantity of existing item
+        duplicateEntry.quantity = payload.quantity;
+      }
+      else{
+        // push whole item in state.cart
+        state.cart.push(payload);
+      }
       console.log("ADD CART mutation: ", state.cart);
     },
     // store products inside cart in state
@@ -241,9 +252,6 @@ export default new Vuex.Store({
     action_addToCart({commit, dispatch}, payload){
       // get db userid of logged in user
       const userId = localStorage.userId;
-      console.log("store USERID: ", userId);
-
-      console.log("BEforesync state.cart = ",this.state.cart);
 
       // path of firebase cartdb
       const fbUserCartPath = '/users/'+userId+'/cart.json';
@@ -275,7 +283,8 @@ export default new Vuex.Store({
                   global_axios.post(fbUserCartPath, payload)
                   .then(response => {
                     console.log("5. Append to Cart response: ", response);
-        
+                    
+                    console.log("commit payload: ", payload);
                     // commit to state
                     commit('mut_addToCart', payload);
                 })
@@ -297,44 +306,6 @@ export default new Vuex.Store({
                   console.log("Error in AddCart: ", error);
               })
           }
-
-          // stateCart.forEach(stateCartItem => {
-          //   console.log("3. Condition check: ", payload.id == stateCartItem.id);
-            
-          //   if(stateCartItem.id == payload.id){
-          //     payload.quantity += stateCartItem.quantity;
-              
-          //     // duplicate found, delete old record from db
-          //     dispatch('action_removeFromCart', payload).then(response => {
-          //       console.log("4. Response after sync dispatch: ", response);
-          //     });
-              
-          //     // add to cart with updated quantity
-          //     global_axios.post(fbUserCartPath, payload)
-          //       .then(response => {
-          //         console.log("5. Append to Cart response: ", response);
-      
-          //         // commit to state
-          //         commit('mut_addToCart', payload);
-          //     })
-          //     .catch(error => {
-          //         console.log("Error in AddCart: ", error);
-          //     })
-          //   }
-          //   else{
-          //     global_axios.post(fbUserCartPath, payload)
-          //     .then(response => {
-          //       console.log("~~ 4. NOT DUPLICATE Cart response: ", response);
-      
-          //       // commit to state
-          //       commit('mut_addToCart', payload);
-          //     })
-          //     .catch(error => {
-          //         console.log("Error in AddCart: ", error);
-          //     })
-          //   }
-          //   // break;
-          // })
         }
         else{
           global_axios.post(fbUserCartPath, payload)
@@ -349,9 +320,14 @@ export default new Vuex.Store({
           })
           // was commit(mut addtocart) here....
         }
+
+      });
+      
+      // sync cart AFTER adding new product
+      dispatch('action_syncCart').then(response => {
+        console.log("1. sync inside ADDCART: ", response);
       });
 
-      
     },
      
     action_syncCart({commit}){
@@ -371,9 +347,10 @@ export default new Vuex.Store({
               fetchedCart.push(fetchedCartItem);
           }
           // console.log("Inside sync action: ", fetchedCart);
+          
+          resolve(response);
           commit('mut_syncCart', fetchedCart);
 
-          resolve(response);
           console.log("0. Resolved syncCArt");
         })
         .catch(error => {
@@ -381,11 +358,11 @@ export default new Vuex.Store({
         })
       })
     },
-    action_removeFromCart(state, productToRemove){
+    action_removeFromCart({dispatch}, productToRemove){
       return new Promise((resolve, reject) => {
         // get db userid of logged in user
         const userId = localStorage.userId;
-        console.log("store USERID: ", userId);
+        console.log("passed to delete: ", productToRemove);
 
         // path of firebase cartdb
         const fbUserCartPath = '/users/'+userId+'/cart.json';
@@ -395,19 +372,24 @@ export default new Vuex.Store({
         .then(gotUserCart => {
           console.log("4.1 GOT userCartlist: ", gotUserCart.data);
           
-          // find id of item in wishlist & remove that id.item
+          // find id of item in cartlist & remove that id.item
           const db_userCartItems = gotUserCart.data;
           for (const recordId in db_userCartItems) {
 
               const currentItem = db_userCartItems[recordId];
               if (currentItem.id == productToRemove.id) {
                   console.log("removing : ", currentItem.name);                            
-                  // path of item to be removed from wishlist
+                  // path of item to be removed from cartlist
                   const fbRemoveCartItemPath = '/users/'+userId+'/cart/'+recordId+'.json';
               
                   global_axios.delete(fbRemoveCartItemPath, productToRemove)
                   .then(response => {
                       console.log("Remove Cart item response: ", response);
+
+                      // sync cart AFTER removing new product
+                      dispatch('action_syncCart').then(response => {
+                        console.log("1. sync inside REMOVE: ", response);
+                      });
                   })
                   .catch(error => {
                       console.log("Error in Remove cart item: ", error);
