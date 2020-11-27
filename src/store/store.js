@@ -405,6 +405,53 @@ export default new Vuex.Store({
           reject(error);
         })
       })
+    },
+    action_updateProduct(state, productToUpdate){
+      // get db userid of logged in user
+      const userId = localStorage.userId;
+      // path of firebase cartdb
+      const fbUserCartPath = '/users/'+userId+'/cart.json';
+
+      // get product cart items & find entry to update
+      global_axios.get(fbUserCartPath)
+        .then(response => {
+          // const fetchedCart = [];
+          for (const record in response.data) {
+              const fetchedCartItem = response.data[record];
+              
+              if(fetchedCartItem.id == productToUpdate.id){
+                console.log("found element");
+
+                // db path of cart item to update
+                const fbUserCartProductPath = '/users/'+userId+'/cart/'+record+'.json';
+
+                fetchedCartItem.quantity = productToUpdate.quantity;
+                fetchedCartItem.wishlisted = productToUpdate.wishlisted;
+
+                global_axios.put(fbUserCartProductPath, productToUpdate)
+                  .then(response => {
+                    console.log("6. Update to Cart response: ", response);
+                })
+                .catch(error => {
+                    console.log("Error in UpdateCart: ", error);
+                })
+
+              }
+              // fetchedCart.push(fetchedCartItem);
+          }
+          // console.log("Inside sync action: ", fetchedCart);
+          
+          // resolve(response);
+          // commit('mut_syncCart', fetchedCart);
+
+          console.log("0. Resolved syncCArt");
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      
+      // update to cart
+      // 
     }
   },
   getters: {

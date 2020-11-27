@@ -14,7 +14,7 @@
             <div class="cart-item-otherinfo">
                 <div class="cart-item-quantity">
                     <label for="cart-item-quantity" class="text-xs leading-6 tracking-wide text-gray-600">Quantity</label> <br>
-                    <select name="cart-item-quantity" id="cart-item-quantity" v-model="cart_item.quantity"
+                    <select name="cart-item-quantity" id="cart-item-quantity" v-model="cart_item.quantity" @change="updateProduct()"
                             class="bg-white border border-gray-400 hover:border-gray-500 px-2 py-1 rounded shadow leading-tight focus:outline-none focus:border-gray-600">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -31,8 +31,9 @@
                 </div>
                 <div class="cart-item-actions">
                     <small class="text-xs leading-6 tracking-wide text-gray-600">Actions</small> <br>
-                    <button class="cart-item-wishlist text-red-700 text-xl mr-6" title="Add to wishlist">
-                        <span class="far fa-heart"></span>
+                    <button class="cart-item-wishlist text-red-700 text-xl mr-6" title="Add to wishlist" @click="wishlistProduct">
+                        <span class="far fa-heart" v-if="!cart_item.wishlisted"></span>
+                        <span class="fa fa-heart" v-if="cart_item.wishlisted"></span>
                     </button>
                     <button @click="removeProduct" class="cart-item-remove text-red-700 text-xl" title="Remove product">
                         <span class="far fa-trash-alt"></span>
@@ -64,6 +65,15 @@ export default {
                     // resolve(removalResponse);
                     this.$store.dispatch('action_syncCart');
                 })
+        },
+
+        updateProduct(){
+            this.$store.dispatch('action_updateProduct', this.cart_item);
+        },
+
+        wishlistProduct(){
+            this.cart_item.wishlisted = !this.cart_item.wishlisted;
+            this.$store.dispatch('action_updateProduct', this.cart_item);
         }
     }
 }
