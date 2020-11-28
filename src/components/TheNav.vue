@@ -32,12 +32,11 @@
                   </svg>
                   <span class="cart-item-count">{{getCartItemCount}}</span>
                 </router-link>
-                <a href="javascript:void(0);" class=" bg-gray-300 rounded-full p-2 mx-2" title="Account">
-                  <!-- <span class="flaticon-user-1"></span> -->
+                <router-link to='/wishlist' tag="a" class=" bg-gray-300 rounded-full p-2 mx-2" title="Your Wishlist">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" width=24 height=24 viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                   </svg>
-                </a>
+                </router-link>
                 
                 <div class="dropdown inline-block relative">
                   <button @click="toggleMenu" :class="{ active : isMenuOpen == true}" class="dropdown-toggle bg-gray-300 rounded-full p-2 mx-2" title="Menu">
@@ -284,4 +283,5 @@ export default {
     font-size: 11px;
   }
 }
+
 </style>
