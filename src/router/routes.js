@@ -37,7 +37,8 @@ const routes = [
   },
   {
     path: '/wishlist',
-    name: UserWishlist,
+    name: 'Wishlist',
+    component: UserWishlist,
     beforeEnter(to, from, next){
       if(current_store.state.idToken){
         console.log("IdToken to goto Wishlist: ", current_store.state.idToken);
