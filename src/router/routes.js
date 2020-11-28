@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
+import UserWishlist from '../views/Wishlist.vue'
 import current_store from '../store/store'
 
 Vue.use(VueRouter)
@@ -27,6 +28,19 @@ const routes = [
     beforeEnter(to, from, next){
       if(current_store.state.idToken){
         console.log("IdToken to goto cart page: ", current_store.state.idToken);
+        next()
+      }
+      else{
+        next('/')
+      }
+    }
+  },
+  {
+    path: '/wishlist',
+    name: UserWishlist,
+    beforeEnter(to, from, next){
+      if(current_store.state.idToken){
+        console.log("IdToken to goto Wishlist: ", current_store.state.idToken);
         next()
       }
       else{
