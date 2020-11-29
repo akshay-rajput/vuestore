@@ -50,7 +50,7 @@
                 </span>
                 
             </button>
-            <a href="javascript:void(0);" class="text-blue-600 hover:text-teal-600">View details <span class="fa fa-long-arrow-alt-right"></span></a>
+            <router-link tag="a" :to="{name: 'Product', params: { id: item.id }}" class="text-blue-600 hover:text-teal-600">View details <span class="fa fa-long-arrow-alt-right"></span></router-link>
         </div>
     </div>
 </template>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import UserWishlist from '../views/Wishlist.vue'
+import Product from '../views/Product.vue'
 import current_store from '../store/store'
 
 Vue.use(VueRouter)
@@ -14,12 +15,9 @@ const routes = [
     component: Home,
   },
   {
-    path: '/product',
+    path: '/product/:productid',
     name: 'Product',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Product.vue')
+    component: Product
   },
   {
     path: '/cart',
