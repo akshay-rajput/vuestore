@@ -1,7 +1,36 @@
 <template>
   <div class="product">
-    <h1>This is a product page</h1>
-    <product-details></product-details>
+    <div class="container px-4 py-8 md:pb-16 mx-auto">
+        <product-details :product=productToShow></product-details>
+
+        <div class="other-product-list py-4 my-6 border-t border-dashed border-gray-500">
+          <h5 class="text-xl text-gray-700 mb-4">Other Products</h5>
+          <div class="flex flex-wrap justify-between items-center">
+            
+            <div class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
+              <div class="product-image-wrap bg-gray-200">
+                <img :src=otherProduct.image alt="Product image" class="h-32 mx-auto">
+              </div>
+              <div class="product-info-wrap ">
+                <div class="product-info-text px-2 mb-2">
+                  <h5 class="truncate text-lg leading-8" :title=otherProduct.name>{{otherProduct.name}}</h5>
+                  <small class="text-xs tracking-wide text-gray-500 font-semibold" >
+                    {{otherProduct.type}}
+                  </small>
+                  <h5 class="leading-8 mb-2">{{otherProduct.price}}.00 <span class="ml-1 text-sm text-gray-600">USD</span></h5>
+                </div>
+                
+                <button class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
+                  <!-- View Details -->
+                  VIEW DETAILS
+                </button>
+              </div>
+              
+            </div>
+
+          </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -13,6 +42,74 @@ export default {
   name: 'Product',
   components: {
     ProductDetails
+  },
+  computed: {
+    productToShow(){
+      const allProducts = this.$store.getters.getProducts;
+      const routeParameterId = this.$route.params.id;
+
+      const productArray = allProducts.filter(function(product){
+        return product.id == routeParameterId;
+      })
+
+      return productArray[0];
+    },
+    otherProducts(){
+        const allProducts = this.$store.getters.getProducts;
+        const routeParameterId = this.$route.params.id;
+
+        const otherProductList = allProducts.filter(function(product){
+            return product.id != routeParameterId;
+        })
+        
+        // return 5 items from other product list
+        if(routeParameterId <  Math.floor(otherProductList.length/2)){
+          return otherProductList.slice(routeParameterId, routeParameterId+5);
+        }
+        else{
+          return otherProductList.slice(routeParameterId-6, routeParameterId);
+        }
+    },
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/_variables.scss';
+
+  .other-product-card{
+    width: 200px;
+    border-radius: 5px;
+    background: white;
+    border: 1px solid #ddd;
+
+    .product-image-wrap{
+      border-radius: 5px;
+      padding-top: 5px;
+      padding-bottom: 20px;
+    }
+
+    .product-info-wrap{
+      margin-top: -10px;
+      padding-top: 5px;
+      border-radius: 5px;
+      background: white;
+      // border: 1px solid #ccc;
+      // border: 2px solid grey;
+      border-radius: 15px 15px 5px 5px;
+    }
+
+    .btn-viewDetails{
+      padding: 8px;
+      border-radius: 0px 0px 5px 5px;
+      background: $accent;
+      color: lighten($color: $accent, $amount: 50%);
+      transition: all ease 0.35s;
+
+      &:hover{
+        background: darken($color: $accent, $amount: 10%);
+      }
+
+    }
+  }
+</style>
