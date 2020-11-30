@@ -22,6 +22,10 @@ export default new Vuex.Store({
     mut_initProducts(state, productlist){
       // console.log("Mutation initProduct ",productlist.productsArray);
       state.productData = productlist.productsArray;
+
+      state.productData.forEach(product => {
+        product.quantity = 1;
+      });
       // console.log("Array : ", state.productData.length);
     },
 
@@ -75,7 +79,7 @@ export default new Vuex.Store({
       }
       console.log("ADD CART mutation: ", state.cart);
     },
-    // store products inside cart in state
+    // sync cart with db
     mut_syncCart(state, fetchedCart){
       // console.log("inside Mut_AddCart : ", payload);
       state.cart = fetchedCart;
