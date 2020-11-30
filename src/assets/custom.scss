@@ -44,6 +44,12 @@ h1,h2,h3,h4,h5{
         padding: 4px 8px;
     }
 }
+.btn-disabled{
+    background: lighten($color: $accent, $amount: 5%);
+    border-color: lighten($color: $accent, $amount: 5%);
+    pointer-events: none;
+    cursor: not-allowed;
+}
 .btn-login{
     background-color: $primary;
     color: white;
