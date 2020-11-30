@@ -1,10 +1,16 @@
 <template>
   <div class="product">
     <div class="container px-4 py-8 md:pb-16 mx-auto">
+        <div class="mb-4 backlink">
+          <router-link tag="a" :to="{path: '/#products'}" class="btn-back text-lg hover:text-teal-600 text-orange-500">
+            <span class="fa fa-long-arrow-alt-left"></span> Back to Products
+          </router-link>
+        </div>
+        
         <product-details :product=productToShow></product-details>
 
         <div class="other-product-list py-4 my-6 border-t border-dashed border-gray-500">
-          <h5 class="text-xl text-gray-700 mb-4">Other Products</h5>
+          <h5 class="text-xl text-gray-700 my-3">Other Products</h5>
           <div class="flex flex-wrap justify-between items-center">
             
             <div class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
@@ -13,7 +19,7 @@
               </div>
               <div class="product-info-wrap ">
                 <div class="product-info-text px-2 mb-2">
-                  <h5 class="truncate text-lg leading-8" :title=otherProduct.name>{{otherProduct.name}}</h5>
+                  <h5 class="truncate leading-8" :title=otherProduct.name>{{otherProduct.name}}</h5>
                   <small class="text-xs tracking-wide text-gray-500 font-semibold" >
                     {{otherProduct.type}}
                   </small>
@@ -22,7 +28,7 @@
                 
                 <button class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
                   <!-- View Details -->
-                  VIEW DETAILS
+                  VIEW
                 </button>
               </div>
               
@@ -63,7 +69,7 @@ export default {
         })
         
         // return 5 items from other product list
-        if(routeParameterId <  Math.floor(otherProductList.length/2)){
+        if(routeParameterId <=  Math.floor(otherProductList.length/2)){
           return otherProductList.slice(routeParameterId, routeParameterId+5);
         }
         else{
@@ -76,6 +82,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/_variables.scss';
+
+  .btn-back{
+    span{
+      transition: all ease 0.35s;
+    }
+    &:hover span{
+      transform: translateX(-5px);
+    }
+  }
 
   .other-product-card{
     width: 200px;
