@@ -15,7 +15,7 @@ const routes = [
     component: Home,
   },
   {
-    path: '/product/:productid',
+    path: '/product/:id',
     name: 'Product',
     component: Product
   },
@@ -25,7 +25,7 @@ const routes = [
     component: () => import('../views/Cart.vue'),
     beforeEnter(to, from, next){
       if(current_store.state.idToken){
-        console.log("IdToken to goto cart page: ", current_store.state.idToken);
+        console.log("Navigating to cart page");
         next()
       }
       else{
@@ -39,13 +39,18 @@ const routes = [
     component: UserWishlist,
     beforeEnter(to, from, next){
       if(current_store.state.idToken){
-        console.log("IdToken to goto Wishlist: ", current_store.state.idToken);
+        console.log("Navigating to Wishlist");
         next()
       }
       else{
         next('/')
       }
     }
+  },
+  {
+    path: '*',
+    name: 'PageNotFound',
+    component: Home
   }
 ]
 
