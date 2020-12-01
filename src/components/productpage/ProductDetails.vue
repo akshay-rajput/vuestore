@@ -1,9 +1,9 @@
 <template>
-    <div class="productpage bg-white sm:grid lg:grid-cols-2 gap-12">
-        <div class="product-image border border-green-500">
+    <div class="productpage py-8 mb-12 rounded-md bg-white sm:grid lg:grid-cols-2 gap-12">
+        <div class="product-image flex items-center justify-center">
             <img :src=product.image :alt=product.name class="mx-auto">
         </div>
-        <div class="product-info p-4 flex flex-col justify-between">
+        <div class="product-info border-l border-dashed border-gray-500 p-4 md:px-8 flex flex-col justify-between">
             <div class="product-info-group">
                 <div class="product-title mb-2">
                     <h4 class="text-2xl truncate tracking-wide">{{product.name}}</h4>
@@ -21,13 +21,6 @@
                             <span class="" v-if="shortDescription == true">See More</span>
                             <span class="" v-if="shortDescription == false">See Less</span>
                         </a>
-                        <!-- <span v-if="shortDescription == true" class="cursor-pointer" @click="showFullDescription">See More</span> 
-                        <span v-if="shortDescription == false" class="cursor-pointer" @click="showFullDescription">See Less</span> -->
-
-                        <!-- <div class="" v-if="!shortDescription">
-                            {{product.description}}
-                            {{product.details}}
-                        </div> -->
                     </div>
                 </div>
 
@@ -40,30 +33,38 @@
                     <div class="product-qty-group mx-12">
                         <label for="" class="text-xs text-gray-600 font-semibold">Quantity</label>
                         
-                        <div class="border border-black rounded-3xl">
-                            <button><span class="fa fa-chevron-left px-2 text-md"></span></button>
-                            <input type="text" name="product-quantity" id="product-quantity" readonly
-                                    class="w-8 border-r border-l border-gray-600 text-center text-lg pt-0 font-extrabold bg-gray-100" value="1">
-                            <button><span class="fa fa-chevron-right px-2 text-md"></span></button>
+                        <div class="">
+                            <button @click="decreaseQuantity" class="btn-quantity-control btn-quantity-less"><span class="fa fa-chevron-left "></span></button>
+
+                            <input type="text" name="product-quantity" id="product-quantity" 
+                                    :value="productQty_local"
+                                    class="w-10 text-center font-extrabold ">
+                            
+                            <button @click="increaseQuantity" :class="productQty_local == 5 ? 'btn-disabled': ''" class="btn-quantity-control btn-quantity-more"><span class="fa fa-chevron-right"></span></button>
                         </div>
                     </div>
 
                     <div class="product-total">
                         <label for="" class="text-xs text-gray-600 font-semibold">Total Price</label>
-                        <h5 class="text-2xl leading-7">{{product.price * product.quantity}} USD</h5>                    
+                        <h5 class="text-2xl leading-7">{{product.price * productQty_local}} USD</h5>                    
                     </div>
                 </div>
             </div>
 
             <div class="product-buttons flex justify-start items-center mt-8">
-                <button class="btn-app btn-addToWishlist text-xl" @click="addToWishlist">
+                <button class="btn-app btn-addToWishlist text-xl" @click="addToWishlist" title="Wishlist?">
                     <span class="far fa-heart" v-if="!product.wishlisted"></span>
                     <span class="fa fa-heart" v-if="product.wishlisted"></span>
                 </button>
 
-                <button class="btn-app btn-addToCart mx-4 relative">
-                    <span class="flaticon flaticon-shopping-bag-1 font-semibold"></span>
-                    <span class="flaticon- absolute cart-plus-icon"></span>
+                <button @click="addToCart" class="btn-app btn-addToCart mx-4 relative" title="Add to cart?">
+                    <span v-if="addingToCart">
+                        <span class="fa fa-circle-notch fa-spin font-semibold"></span>
+                    </span>
+                    <span v-if="!addingToCart">
+                        <span class="flaticon flaticon-shopping-bag-1 font-semibold"></span>
+                        <span class="flaticon- absolute cart-plus-icon"></span>
+                    </span>
                 </button>
 
                 <button class="btn-app btn-buyNow flex-grow text-lg leading-8">Buy Now</button>
@@ -74,17 +75,28 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {eventBus} from "../../main";
+
 export default {
     props: {
         product: Object,
-        
     },
     data(){
         return{
             shortDescription: Boolean,
-            dynamicDescription: ''
+            addingToCart: false,
+            dynamicDescription: '',
+            productQty_local: this.product.quantity
         }
     },
+    // watch: {
+    //     product: function(newValue) {
+    //         console.log("~~~ inside watcher");
+    //         this.productQty_local = newValue;
+    //     }
+        
+    // },
     mounted(){
         this.trim_description();
     },
@@ -120,8 +132,105 @@ export default {
             }
         },
 
+        increaseQuantity(){
+            this.$emit('increaseQty_prop');
+            // update local data
+            this.productQty_local = this.product.quantity;
+        },
+        decreaseQuantity(){
+            this.$emit('decreaseQty_prop');
+            // update local data
+            this.productQty_local = this.product.quantity;
+        },
+
+        addToCart(){
+            if(localStorage.token){
+                console.log("adding " + this.product + ' to cart');
+
+                this.addingToCart = true;
+
+                // const local_product_copy = this.product;
+                // this.product.quantity = this.productQty_local;
+                // add quantity to cart item
+                // local_product_copy.quantity = this.productQty;
+                console.log("check updated Prop here: ", this.product.quantity);
+
+                this.$store.dispatch( 'action_addToCart', this.product);
+                setTimeout(() => {
+                    this.addingToCart = false;
+                }, 1500);
+            }
+            else{
+                eventBus.$emit('openModal');
+                console.log("You need to login to add product to cart");
+            }
+        },
         addToWishlist(){
-            this.product.wishlisted = !this.product.wishlisted;
+            // check if login
+            if(localStorage.token){
+                // toggle wishlist button
+                this.product.wishlisted = !this.product.wishlisted;
+
+                // get db userid of logged in user
+                const userId = localStorage.userId;
+                console.log("store USERID: ", userId);
+                
+                // post product to firebase cart
+                const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
+                
+                // Add to wishlist
+                if(this.product.wishlisted){
+                    axios.post(fbUserWishlistPath, this.product)
+                    .then(response => {
+                        console.log("Wishlist response: ", response);
+                    })
+                    .catch(error => {
+                        console.log("Error in AddWishlist: ", error);
+                    })
+                }
+
+                // remove from wishlist
+                else{
+                    // path of wishlist
+                    const fbWishlistPath = '/users/'+userId+'/wishlist.json';
+                    
+                    // get wishlist
+                    axios.get(fbWishlistPath)
+                    .then(gotWishlist => {
+                        console.log("GOT WIshlist: ", gotWishlist);
+                        
+                        // find id of item in wishlist & remove that id.item
+                        const wishlistItems = gotWishlist.data;
+                        for (const recordId in wishlistItems) {
+
+                            const currentItem = wishlistItems[recordId];
+                            if (currentItem.id == this.product.id) {
+                                console.log("removing : ", currentItem.name);                            
+                                // path of item to be removed from wishlist
+                                const fbRemoveWishlistPath = '/users/'+userId+'/wishlist/'+recordId+'.json';
+                            
+                                axios.delete(fbRemoveWishlistPath, this.product)
+                                .then(response => {
+                                    console.log("RemoveWishlist response: ", response);
+                                })
+                                .catch(error => {
+                                    console.log("Error in RemoveWishlist: ", error);
+                                })
+                            }
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log("Error fetching wishlist", error);
+                    })
+                    
+                }
+            }
+            else{
+                // this.$refs.signupModal.openModal();
+                eventBus.$emit('openModal');
+                console.log("Cannot add to wishlist: please login");
+            }
         }
     }
 }
@@ -131,7 +240,7 @@ export default {
 @import '../../assets/_variables.scss';
 
 .productpage{
-    border: 1px dotted brown;
+    border: 1px solid #ddd;
 
     .product-image {
         padding: 10px;
@@ -139,6 +248,31 @@ export default {
         img{
             height: 350px;
         }
+    }
+
+    #product-quantity{
+        font-size: 17px;
+        border-bottom: 1px solid $accent;
+        border-top: 1px solid $accent;
+        cursor: default;
+    }
+
+    .btn-quantity-control{
+        padding: 1px 8px;
+        font-size: 16px;
+        color: $accent;
+        border: 1px solid $accent;
+
+        &:hover{
+            background: $accent;
+            color:white;
+        }
+    }
+    .btn-quantity-less{
+        border-radius: 50% 0px 0px 50%;
+    }
+    .btn-quantity-more{
+        border-radius: 0% 50% 50% 0%;
     }
 
     .btn-addToWishlist{
