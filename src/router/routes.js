@@ -62,8 +62,8 @@ const scrollBehavior = (to, from, savedPosition) => {
       console.log("scrolling to == ",to)
 
       // specify offset of the element
-      if (to.hash === '#anchor2') {
-        position.offset = { y: 100 }
+      if (to.hash === '#products') {
+        position.offset = { y: 10 }
       }
     }
     // check if any matched route config has meta that requires scrolling to top
