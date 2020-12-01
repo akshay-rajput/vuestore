@@ -7,7 +7,7 @@
           </router-link>
         </div>
         
-        <product-details :product=productToShow></product-details>
+        <product-details @increaseQty_prop="increaseQty" @decreaseQty_prop="decreaseQty" :product=productToShow></product-details>
 
         <div class="other-product-list py-4 my-6 border-t border-dashed border-gray-500">
           <h5 class="text-xl text-gray-700 my-3">Other Products</h5>
@@ -26,10 +26,11 @@
                   <h5 class="leading-8 mb-2">{{otherProduct.price}}.00 <span class="ml-1 text-sm text-gray-600">USD</span></h5>
                 </div>
                 
-                <button class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
+                <router-link tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
+                            class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
                   <!-- View Details -->
-                  VIEW
-                </button>
+                  VIEW {{otherProduct.id}}
+                </router-link>
               </div>
               
             </div>
@@ -57,7 +58,6 @@ export default {
       const productArray = allProducts.filter(function(product){
         return product.id == routeParameterId;
       })
-
       return productArray[0];
     },
     otherProducts(){
@@ -76,6 +76,21 @@ export default {
           return otherProductList.slice(routeParameterId-6, routeParameterId);
         }
     },
+  },
+  methods: {
+    increaseQty(){
+      // increase if less than 5 quantity
+      if(this.productToShow.quantity < 5){
+          this.productToShow.quantity += 1;
+      }
+    },
+    decreaseQty(){
+      // decrease if more than 1 quantity
+      if(this.productToShow.quantity > 1){
+          this.productToShow.quantity -= 1;
+      }
+    }
+
   }
 }
 </script>
