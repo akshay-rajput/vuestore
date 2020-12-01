@@ -37,6 +37,36 @@
 
           </div>
         </div>
+
+        <swiper :options="swiperOptions" 
+                @swiper="onSwiper" :scrollbar="{ draggable: true }"
+                @slideChange="onSlideChange">
+          <swiper-slide class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
+            
+            <div class="product-image-wrap bg-gray-200">
+              <img :src=otherProduct.image alt="Product image" class="h-32 mx-auto">
+            </div>
+
+            <div class="product-info-wrap ">
+              <div class="product-info-text px-2 mb-2">
+                <h5 class="truncate leading-8" :title=otherProduct.name>{{otherProduct.name}}</h5>
+                <small class="text-xs tracking-wide text-gray-500 font-semibold" >
+                  {{otherProduct.type}}
+                </small>
+                <h5 class="leading-8 mb-2">{{otherProduct.price}}.00 <span class="ml-1 text-sm text-gray-600">USD</span></h5>
+              </div>
+              
+              <router-link tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
+                          class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
+                <!-- View Details -->
+                VIEW {{otherProduct.id}}
+              </router-link>
+            </div>
+          </swiper-slide>
+          
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+
     </div>
   </div>
 </template>
@@ -45,10 +75,40 @@
 // @ is an alias to /src
 import ProductDetails from '@/components/productpage/ProductDetails.vue'
 
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+// import Swiper core and required components
+  import SwiperCore, { Navigation, Pagination, Scrollbar} from 'swiper';
+// import style (>= Swiper 6.x)
+import 'swiper/swiper-bundle.css'
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+
+ // install Swiper components
+SwiperCore.use([Navigation, Pagination, Scrollbar]);
+
 export default {
   name: 'Product',
+  data(){
+    return{
+      swiperOptions: {
+        // slidesPerView: 3,
+        // spaceBetween: 30,
+        // pagination: {
+        //   el: '.swiper-pagination',
+        //   clickable: true
+        // }
+        // Some Swiper option/callback...
+      }
+    }
+  },
+  mounted() {
+    // console.log('Current Swiper instance object', this.swiper)
+    // this.swiper.slideTo(3, 1000, true)
+  },
   components: {
-    ProductDetails
+    ProductDetails,
+    Swiper,
+    SwiperSlide
   },
   computed: {
     productToShow(){
@@ -76,6 +136,11 @@ export default {
           return otherProductList.slice(routeParameterId-6, routeParameterId);
         }
     },
+
+    // swiper carousel
+    swiper() {
+      return this.$refs.mySwiper.$swiper
+    }
   },
   methods: {
     increaseQty(){
@@ -89,15 +154,27 @@ export default {
       if(this.productToShow.quantity > 1){
           this.productToShow.quantity -= 1;
       }
-    }
+    },
 
+    // swiper methods
+    onSwiper(swiper) {
+      console.log(swiper)
+    },
+    onSlideChange() {
+      console.log('slide change')
+    },
+  },
+  directives: {
+    swiper: directive
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/_variables.scss';
-
+// for swiper
+// @import './base.scss';
+  
   .btn-back{
     span{
       transition: all ease 0.35s;
@@ -107,8 +184,8 @@ export default {
     }
   }
 
-  .other-product-card{
-    width: 200px;
+  .other-product-card.swiper-slide{
+    width: 200px !important;
     border-radius: 5px;
     background: white;
     border: 1px solid #ddd;
