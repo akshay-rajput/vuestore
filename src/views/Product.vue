@@ -11,7 +11,7 @@
 
         <div class="other-product-list py-4 my-6 border-t border-dashed border-gray-500">
           <h5 class="text-xl text-gray-700 my-3">Other Products</h5>
-          <div class="flex flex-wrap justify-between items-center">
+          <!-- <div class="flex flex-wrap justify-between items-center">
             
             <div class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
               <div class="product-image-wrap bg-gray-200">
@@ -28,14 +28,14 @@
                 
                 <router-link tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
                             class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
-                  <!-- View Details -->
+                  
                   VIEW {{otherProduct.id}}
                 </router-link>
               </div>
               
             </div>
 
-          </div>
+          </div> -->
         </div>
 
         <swiper :options="swiperOptions" 
@@ -59,12 +59,14 @@
               <router-link tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
                           class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
                 <!-- View Details -->
-                VIEW {{otherProduct.id}}
+                VIEW
               </router-link>
             </div>
           </swiper-slide>
           
           <div class="swiper-pagination" slot="pagination"></div>
+          <!-- <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div> -->
         </swiper>
 
     </div>
@@ -77,7 +79,8 @@ import ProductDetails from '@/components/productpage/ProductDetails.vue'
 
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 // import Swiper core and required components
-  import SwiperCore, { Navigation, Pagination, Scrollbar} from 'swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar} from 'swiper';
+
 // import style (>= Swiper 6.x)
 import 'swiper/swiper-bundle.css'
 import 'swiper/components/navigation/navigation.scss';
@@ -91,8 +94,48 @@ export default {
   data(){
     return{
       swiperOptions: {
-        // slidesPerView: 3,
-        // spaceBetween: 30,
+        // Enable lazy loading
+        lazy: true,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'progressbar'
+        },
+        // breakpoints: {
+        //   1200: {
+        //     slidesPerView: 5,
+        //     spaceBetween: 40
+        //   },
+        //   1024: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 40
+        //   },
+        //   768: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 30
+        //   },
+        //   640: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 20
+        //   },
+        //   320: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 10
+        //   }
+        // },
+        // centeredSlides: true,
+        freeMode: true,
+        slidesPerView: 'auto',
+        spaceBetween: 30,
+        grabCursor: true,
+        // mousewheel: true,
+        // keyboard: {
+        //   enabled: true,
+        // },
+        // navigation: {
+        //   nextEl: '.swiper-button-next',
+        //   prevEl: '.swiper-button-prev'
+        // }
         // pagination: {
         //   el: '.swiper-pagination',
         //   clickable: true
@@ -185,7 +228,7 @@ export default {
   }
 
   .other-product-card.swiper-slide{
-    width: 200px !important;
+    width: 220px !important;
     border-radius: 5px;
     background: white;
     border: 1px solid #ddd;
@@ -218,5 +261,12 @@ export default {
       }
 
     }
+  }
+
+  // scroll bar below slides
+  .swiper-container-horizontal > .swiper-pagination-progressbar, 
+  .swiper-container-vertical > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite{
+    bottom: 0;
+    top: auto;
   }
 </style>
