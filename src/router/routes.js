@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import UserWishlist from '../views/Wishlist.vue'
 import Product from '../views/Product.vue'
+import PageNotFound from '../views/404.vue'
 import current_store from '../store/store'
 
 Vue.use(VueRouter)
@@ -20,7 +21,7 @@ const routes = [
     component: Product
   },
   {
-    path: '/cart',
+    path: '/cart/',
     name: 'Cart',
     component: () => import('../views/Cart.vue'),
     beforeEnter(to, from, next){
@@ -50,7 +51,7 @@ const routes = [
   {
     path: '*',
     name: 'PageNotFound',
-    component: Home
+    component: PageNotFound
   }
 ]
 
