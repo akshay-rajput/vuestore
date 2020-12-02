@@ -90,13 +90,9 @@ export default {
             productQty_local: this.product.quantity
         }
     },
-    // watch: {
-    //     product: function(newValue) {
-    //         console.log("~~~ inside watcher");
-    //         this.productQty_local = newValue;
-    //     }
-        
-    // },
+    created(){
+        this.$store.dispatch('action_syncCart');
+    },
     mounted(){
         this.trim_description();
     },
