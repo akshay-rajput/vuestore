@@ -1,9 +1,9 @@
 <template>
-    <div class="productpage py-8 mb-12 rounded-md bg-white sm:grid lg:grid-cols-2 gap-12">
-        <div class="product-image flex items-center justify-center">
+    <div class="productpage bg-gray-100 mb-12 rounded-md sm:grid lg:grid-cols-2 gap-12">
+        <div class="product-image py-8 flex items-center justify-center">
             <img :src=product.image :alt=product.name class="mx-auto">
         </div>
-        <div class="product-info border-l border-dashed border-gray-500 p-4 md:px-8 flex flex-col justify-between">
+        <div class="product-info bg-white pt-4 pb-6 md:py-8 px-3 md:px-8 flex flex-col justify-between">
             <div class="product-info-group">
                 <div class="product-title mb-2">
                     <h4 class="text-2xl truncate tracking-wide">{{product.name}}</h4>
@@ -12,7 +12,7 @@
             
                 <div class="product-desc mb-4">
                     <label for="" class="text-xs text-gray-600 font-semibold">Description</label>
-                    <div class="product-desc-box leading-6 tracking-wide py-1 border-b border-t border-gray-300 border-dashed">
+                    <div class="product-desc-box text-sm md:text-lg leading-6 tracking-wide py-1 border-b border-t border-gray-300 border-dashed">
                         <span id="product-desc-short">
                             <!-- dynamic description -->
                             {{dynamicDescription}}
@@ -24,13 +24,13 @@
                     </div>
                 </div>
 
-                <div class="product-price-qty flex justify-start items-center mb-2">
-                    <div class="">
+                <div class="product-price-qty flex flex-wrap justify-start items-start mb-2">
+                    <div class="mb-2 md:mb-0">
                         <label for="" class="text-xs text-gray-600 font-semibold">Price</label>
-                        <h5 class="text-2xl leading-7">{{product.price}} USD</h5>
+                        <h5 class="text-lg md:text-2xl leading-4 md:leading-7">{{product.price}} USD</h5>
                     </div>
 
-                    <div class="product-qty-group mx-12">
+                    <div class="product-qty-group mb-2 md:mb-0 mx-12">
                         <label for="" class="text-xs text-gray-600 font-semibold">Quantity</label>
                         
                         <div class="">
@@ -46,7 +46,7 @@
 
                     <div class="product-total">
                         <label for="" class="text-xs text-gray-600 font-semibold">Total Price</label>
-                        <h5 class="text-2xl leading-7">{{product.price * productQty_local}} USD</h5>                    
+                        <h5 class="text-lg md:text-2xl leading-4 md:leading-7">{{product.price * productQty_local}} USD</h5>                    
                     </div>
                 </div>
             </div>
@@ -58,12 +58,12 @@
                 </button>
 
                 <button @click="addToCart" class="btn-app btn-addToCart mx-4 relative" title="Add to cart?">
-                    <span v-if="addingToCart">
+                    <span v-if="addingToCart" style="font-size: 20px;">
                         <span class="fa fa-circle-notch fa-spin font-semibold"></span>
                     </span>
                     <span v-if="!addingToCart">
                         <span class="flaticon flaticon-shopping-bag-1 font-semibold"></span>
-                        <span class="flaticon- absolute cart-plus-icon"></span>
+                        <!-- <span class="fa fa-plus absolute cart-plus-icon"></span> -->
                     </span>
                 </button>
 
@@ -243,6 +243,10 @@ export default {
 
         img{
             height: 350px;
+
+            @media (max-width: 767px) {
+                height: 200px;
+            }
         }
     }
 
@@ -251,6 +255,11 @@ export default {
         border-bottom: 1px solid $accent;
         border-top: 1px solid $accent;
         cursor: default;
+
+        @media (max-width:767px) {
+            font-size: 14px;
+            width: 30px;
+        }
     }
 
     .btn-quantity-control{
@@ -258,6 +267,10 @@ export default {
         font-size: 16px;
         color: $accent;
         border: 1px solid $accent;
+
+        @media (max-width:767px) {
+            font-size: 13px;
+        }
 
         &:hover{
             background: $accent;
