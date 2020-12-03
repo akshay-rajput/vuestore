@@ -2,15 +2,15 @@
   <div class="product">
     <div class="container px-4 py-8 md:pb-16 mx-auto">
         <div class="mb-4 backlink">
-          <router-link tag="a" :to="{path: '/#products'}" class="btn-back text-lg hover:text-teal-600 text-orange-500">
+          <router-link tag="a" :to="{path: '/#products'}" class="btn-back text-lg text-teal-500 hover:text-orange-500">
             <span class="fa fa-long-arrow-alt-left"></span> Back to Products
           </router-link>
         </div>
         
         <product-details @increaseQty_prop="increaseQty" @decreaseQty_prop="decreaseQty" :product=productToShow></product-details>
 
-        <div class="other-product-list py-4 my-6 border-t border-dashed border-gray-500">
-          <h5 class="text-xl text-gray-700 my-3">Other Products</h5>
+        <div class="other-product-list pt-4 pb-2 mt-6 border-t border-dashed border-gray-500">
+          <h5 class="text-xl text-gray-700 mt-3">Other Products</h5>
           <!-- <div class="flex flex-wrap justify-between items-center">
             
             <div class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
@@ -80,14 +80,14 @@ import ProductDetails from '@/components/productpage/ProductDetails.vue'
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 // import Swiper core and required components
 import SwiperCore, { Navigation, Pagination, Scrollbar} from 'swiper';
+// install Swiper components
+SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
 // import style (>= Swiper 6.x)
 import 'swiper/swiper-bundle.css'
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
- // install Swiper components
-SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
 export default {
   name: 'Product',
@@ -201,11 +201,11 @@ export default {
 
     // swiper methods
     onSwiper(swiper) {
-      console.log(swiper)
+      console.log("swiper load: ",swiper)
     },
-    onSlideChange() {
-      console.log('slide change')
-    },
+    // onSlideChange() {
+    //   // console.log('slide change')
+    // },
   },
   directives: {
     swiper: directive
