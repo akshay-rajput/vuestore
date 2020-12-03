@@ -5,7 +5,6 @@ import Home from '../views/Home.vue'
 import UserWishlist from '../views/Wishlist.vue'
 import Product from '../views/Product.vue'
 import PageNotFound from '../views/404.vue'
-import current_store from '../store/store'
 
 Vue.use(VueRouter)
 
@@ -18,19 +17,19 @@ const routes = [
   {
     path: '/product/:id',
     name: 'Product',
-    component: Product
+    component: Product,
   },
   {
     path: '/cart/',
     name: 'Cart',
     component: () => import('../views/Cart.vue'),
     beforeEnter(to, from, next){
-      if(current_store.state.idToken){
-        console.log("Navigating to cart page");
-        next()
+      if(!localStorage.getItem('token')){
+        console.log("IDtoken not found in ROUTES");
+        next('/')
       }
       else{
-        next('/')
+        next()
       }
     }
   },
@@ -39,12 +38,12 @@ const routes = [
     name: 'Wishlist',
     component: UserWishlist,
     beforeEnter(to, from, next){
-      if(current_store.state.idToken){
-        console.log("Navigating to Wishlist");
-        next()
+      if(!localStorage.getItem('token')){
+        console.log("IDtoken not found in ROUTES");
+        next('/')
       }
       else{
-        next('/')
+        next()
       }
     }
   },
