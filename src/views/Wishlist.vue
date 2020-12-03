@@ -32,15 +32,26 @@ export default {
   components: {
       UserWishlist
   },
+  created(){
+    // on page load sync state.cart with database cart
+    this.syncWishlist();
+  },
+  methods: {
+      syncWishlist(){
+        console.log("~~~~ SYNC Wishlist dispatch in component");
+        this.$store.dispatch('action_syncWishlist');
+    }
+  },
   computed:{
     // getter for stocklist
     wishlistProducts(){
-        const allProducts = this.$store.getters.getProducts;
+        const wishlistedProducts = this.$store.getters.getWishlist;
 
-        const wishlisted = allProducts.filter(function(product){
-            return product.wishlisted == true;
-        })
-        return wishlisted;
+        // const wishlisted = Products.filter(function(product){
+        //     return product.wishlisted == true;
+        // })
+        console.log("WIshlisted: ", wishlistedProducts);
+        return wishlistedProducts;
     },
   }
 }
