@@ -16,6 +16,7 @@ export default new Vuex.Store({
     email_used_for_login: '',
     current_user: {},
     cart: [],
+    wishlist: [],
     productData: []
   },
   mutations: {
@@ -85,6 +86,13 @@ export default new Vuex.Store({
       state.cart = fetchedCart;
       // state.cart.push(fetchedCart);
       console.log("SYNC CART Mutation: ", state.cart);
+    },
+    // sync wishlist with db
+    mut_syncWishlist(state, fetchedWishlist){
+      // console.log("inside Mut_AddCart : ", payload);
+      state.wishlist = fetchedWishlist;
+      // state.cart.push(fetchedCart);
+      console.log("SYNC Wishlist Mutation: ", state.wishlist);
     }
   },
   actions: {
@@ -391,6 +399,34 @@ export default new Vuex.Store({
           
       }
     },
+    action_syncWishlist({commit}){
+      return new Promise((resolve, reject) => {
+        // get db userid of logged in user
+        const userId = localStorage.userId;
+
+        // path of wishlist in DB
+        const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
+
+        global_axios.get(fbUserWishlistPath)
+        .then(response => {
+          const fetchedWishlist = [];
+          for (const record in response.data) {
+              const fetchedWishlistItem = response.data[record];
+              
+              fetchedWishlist.push(fetchedWishlistItem);
+          }
+          // console.log("Inside sync action: ", fetchedCart);
+          
+          resolve(response);
+          commit('mut_syncWishlist', fetchedWishlist);
+
+          console.log("0.1 Resolved syncWishlist");
+        })
+        .catch(error => {
+          reject(error);
+        })
+      })
+    },
     action_syncCart({commit}){
       return new Promise((resolve, reject) => {
         // get db userid of logged in user
@@ -527,6 +563,10 @@ export default new Vuex.Store({
     },
     getCartItems: state => {
       return state.cart;
+    },
+    getWishlist: state => {
+      console.log("getter wishlist: ", state.wishlist);
+      return state.wishlist;
     }
   }
 })
