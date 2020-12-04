@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="productcard-buttons">
+        <div class="productcard-buttons flex items-center text-right py-4 px-2">
             <button class="btn-addToCart" :class="addingToCart ? 'disableBtn':''" @click="addToCart">
                 <span v-if="addingToCart">
                     <span class="fa fa-circle-notch fa-spin"></span> Waiting...
@@ -48,9 +48,11 @@
                 <span  v-if="!addingToCart">
                     Add to cart
                 </span>
-                
             </button>
-            <router-link tag="a" :to="{name: 'Product', path: '/product/:id', params: { id: item.id }}" class="text-blue-600 hover:text-teal-600">View details <span class="fa fa-long-arrow-alt-right"></span></router-link>
+            <router-link tag="a" :to="{name: 'Product', path: '/product/:id', params: { id: item.id }}" class="btn-details">
+                <span class="mr-1">View</span>
+                <span class="text-sm fa fa-angle-right"></span>
+            </router-link>
         </div>
     </div>
 </template>
@@ -196,17 +198,29 @@ export default {
     }
 }
 
+.btn-details{
+    border-radius: 5px;
+    padding: 6px 12px;
+    border: 1px solid orange;
+    color: orange;
+    &:hover{
+        background: orange;
+        color: white;
+    }
+}
 .btn-addToCart{
-    margin-right: 8px;
-    padding: 8px 16px;
-    background: $accent;
+    margin-right: 6px;
+    padding: 6px 12px;
+    // background: $accent;
     border: 1px solid $accent;
-    color: white;
-    border-radius: 0px 0px 0px 4px;
+    color: $accent;
+    border-radius: 5px;
+    flex-grow: 1;
+    transition: all ease 0.35s;
 
     &:hover{
-        color: $accent;
-        background: transparent;
+        color: white;
+        background: $accent;
         transition: all ease 0.35s;
     }
 

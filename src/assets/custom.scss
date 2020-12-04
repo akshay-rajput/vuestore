@@ -26,7 +26,7 @@ h1,h2,h3,h4,h5{
     line-height: 1.5;
     padding: 6px;
     border-radius: 5px;
-    background-color: #f5effa;
+    background-color: #fcfcfc;
 
     &:focus{
         outline-color: $primary;
@@ -51,23 +51,23 @@ h1,h2,h3,h4,h5{
     cursor: not-allowed !important;
 }
 .btn-login{
-    background-color: $primary;
+    background-color: $accent;
     color: white;
     width: 100%;
     text-align: center;
-    border: 1px solid $primary;
+    // border: 1px solid $primary;
 
     &:hover{
         transition: all 0.35s ease-in-out;
         // color: $primary;
-        border-color: $linkcolor;
-        background: $linkcolor;
+        // border-color: $linkcolor;
+        background: darken($color: $accent, $amount: 10%);
     }
 }
 .btn-signup{
-    color: $primary;
+    color: $accent;
     &:hover{
-        color: $accent;
+        color: $primary;
     }
 }
 .btn-contactform{
