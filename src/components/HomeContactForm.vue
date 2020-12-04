@@ -5,29 +5,29 @@
                 <div class="contact-info-section py-3 md:py-6">
                     <!-- <img src="../assets/contactus.svg" alt="contact us" class="h-48 mx-auto"> -->
                     <div class="section-heading">
-                        <h2 class="my-2 text-3xl text-gray-700">Contact us</h2>
+                        <h2 class="my-2 text-2xl md:text-3xl text-gray-700">Contact us</h2>
                     </div>
                     <div class="contact-info py-5">
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
                             <div class="w-6 font-semibold">
-                                <span class="flaticon flaticon-placeholder ml-0 text-sm"></span>
+                                <span class="flaticon flaticon-placeholder ml-0"></span>
                             </div>
-                            <span class="px-2 text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
+                            <span class="px-2 md:text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
                         </div>
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
                             <div class="w-6 font-semibold">
-                                <span class="flaticon flaticon-phone-call text-sm"></span>
+                                <span class="flaticon flaticon-phone-call"></span>
                             </div>
-                            <a href="tel:+2856548329764">
-                                <span class="px-2 break-words text-lg tracking-wider">(+285)6548329764</span>
+                            <a href="tel:+2856548329764" class="hover:text-blue-500">
+                                <span class="px-2 break-words md:text-lg tracking-wider">(+285)6548329764</span>
                             </a>
                         </div>
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
                             <div class="w-6 font-semibold">
-                                <span class="flaticon flaticon-email text-sm"></span>
+                                <span class="flaticon flaticon-email"></span>
                             </div>
-                            <a href="mailto:support@ghostfitnessproducts.com">
-                                <span class="px-2 break-words text-lg">support@ghostfitnessproducts.com</span>
+                            <a href="mailto:support@ghostfitnessproducts.com" class="hover:text-blue-500">
+                                <span class="px-2 break-words md:text-lg">support@ghostfitnessproducts.com</span>
                             </a>
                         </div>
 
@@ -50,19 +50,19 @@
 
                 <div class="contact-form py-3 md:py-6">
                     <div class="section-heading">
-                        <h2 class="my-2 text-3xl text-gray-700">Drop a message</h2>
+                        <h2 class="my-2 text-2xl md:text-3xl text-gray-700">Drop a message</h2>
                     </div>
                     <form @submit.prevent="onSubmitMessage">
                         <div class="formgroup mb-3">
-                            <label for="contact_email" class="text-xs leading-6 text-gray-700">Email*</label>
+                            <label for="contact_email" class="text-xs leading-6 text-gray-800">Email*</label>
                             <input type="email" v-model="contact_email" name="contact_email" id="contact_email" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
                         </div>
                         <div class="formgroup mb-3">
-                            <label for="contact_subject" class="text-xs leading-6 text-gray-700">Subject*</label>
+                            <label for="contact_subject" class="text-xs leading-6 text-gray-800">Subject*</label>
                             <input type="text" v-model="contact_subject" name="contact_subject" id="contact_subject" placeholder="Purpose of your message" class="form-input focus:bg-white" required>
                         </div>
                         <div class="formgroup mb-3">
-                            <label for="contact_message" class="text-xs leading-6 text-gray-700">Message*</label>
+                            <label for="contact_message" class="text-xs leading-6 text-gray-800">Message*</label>
                             <textarea name="contact_message" v-model="contact_message" id="contact_message" rows="5" class="form-input focus:bg-white" placeholder="Write your message here." required></textarea>
                         </div>
                         <button type="submit" class="btn-app btn-contactform" :class="messageSending ? 'disableSend': ''">
@@ -73,7 +73,7 @@
                             </span>
                             
                             <span  v-if="!messageSending">
-                                <span class="flaticon-email-1 text-xs"></span>
+                                <span class="flaticon flaticon-email-1 text-xs"></span>
                                 <span class="font-semibold antialiased mx-2 tracking-wider">SEND</span>
                             </span>
                         </button>
@@ -137,6 +137,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .flaticon{
+        font-size: 12px;
+    }
     .flaticon::before{
         margin-left: 0px;
     } 
