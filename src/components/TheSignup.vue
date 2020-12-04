@@ -7,7 +7,7 @@
       <form @submit.prevent="onSubmit">
         <div class="formgroup mb-3">
           <label for="user_username" class="text-xs leading-6 text-gray-700">Username</label>
-          <input type="text" v-model="username" name="user_username" id="user_username" placeholder="john@xyz.com" class="form-input focus:bg-white" required>
+          <input type="text" v-model="username" name="user_username" id="user_username" placeholder="Enter your username" class="form-input focus:bg-white" required>
         </div>
         <div class="formgroup mb-3">
           <label for="user_email" class="text-xs leading-6 text-gray-700">Email</label>
@@ -28,13 +28,7 @@
         <div class="">
           <!-- <button type="submit" class="button bg-purple-700 text-white">Signup</button> -->
 
-          <button type="submit" class="btn-signup my-4">
-            <!-- when sending the message (disable mouse event on button) -->
-            <!-- <span class="">
-                <span class="fa fa-circle-notch fa-spin"></span>
-                <span class="mx-2 font-semibold antialiased tracking-wider">Sending</span>
-            </span> -->
-            
+          <button type="submit" class="btn-app btn-signup my-4">
             <span class="">
               <span class=" antialiased mx-2 tracking-wider">Signup</span>
               <span class="fa fa-angle-right text-xs"></span>
@@ -76,3 +70,17 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+  .btn-signup{
+    background: teal;
+    width: 100%;
+    color: white;
+    transition: all ease 0.35s;
+
+    &:hover{
+      color:white;
+      background: darken($color: teal, $amount: 10%);
+    }
+  }
+</style>

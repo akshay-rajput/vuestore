@@ -24,13 +24,7 @@
         <div class="">
           <!-- <button type="submit" class="button bg-purple-700 text-white">Signup</button> -->
 
-          <button type="submit" class="btn-login my-4">
-            <!-- when sending the message (disable mouse event on button) -->
-            <!-- <span class="">
-                <span class="fa fa-circle-notch fa-spin"></span>
-                <span class="mx-2 font-semibold antialiased tracking-wider">Sending</span>
-            </span> -->
-            
+          <button type="submit" class="btn-app btn-login my-4">
             <span class="">
               <span class=" antialiased mx-2 tracking-wider">Login</span>
               <span class="fa fa-angle-right text-xs"></span>
@@ -46,11 +40,6 @@
 import { eventBus } from '../main'
 export default {
   
-  // created() {
-  //     eventBus.$on('openModal', () => {
-  //         this.openModal();
-  //     })
-  // },
   data () {
       return {
           email: '',
@@ -77,3 +66,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
