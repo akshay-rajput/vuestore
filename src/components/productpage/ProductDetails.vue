@@ -67,7 +67,7 @@
                     </span>
                 </button>
 
-                <button class="btn-app btn-buyNow flex-grow text-lg leading-8">Buy Now</button>
+                <button @click="buyNow" class="btn-app btn-buyNow flex-grow text-lg leading-8">Buy Now</button>
             </div>
         </div>
         
@@ -144,11 +144,7 @@ export default {
                 console.log("adding " + this.product + ' to cart');
 
                 this.addingToCart = true;
-
-                // const local_product_copy = this.product;
-                // this.product.quantity = this.productQty_local;
-                // add quantity to cart item
-                // local_product_copy.quantity = this.productQty;
+                
                 console.log("check updated Prop here: ", this.product.quantity);
 
                 this.$store.dispatch( 'action_addToCart', this.product);
@@ -227,7 +223,23 @@ export default {
                 eventBus.$emit('openModal');
                 console.log("Cannot add to wishlist: please login");
             }
-        }
+        },
+
+        buyNow(){
+            if(localStorage.token){
+                console.log("buying " + this.item);
+
+                // add quantity to cart item
+                // this.item.quantity = this.productQty;
+
+                // this.$store.dispatch( 'action_addToCart', this.item);
+                this.$router.push({ name: 'Cart' })
+            }
+            else{
+                eventBus.$emit('openModal');
+                console.log("You need to login to add product to cart");
+            }
+        },
     }
 }
 </script>
