@@ -1,11 +1,11 @@
 <template>
     <div class="container mx-auto my-3 py-3 px-3">
         <div class="section-heading">
-            <h2 class="my-2 text-4xl text-gray-700">Products</h2>
+            <h2 class="my-2 text-2xl md:text-4xl text-gray-700">Products</h2>
         </div>
         <div class="flex justify-between items-center mb-8">
             <div class="filter-info flex-grow">
-                <p class="text-gray-600 text-md" v-if="appliedFilter != 'All Products'">
+                <p class="hidden md:inline-flex text-gray-600 text-sm md:text-md" v-if="appliedFilter != 'All Products'">
                     Showing <span class="text-semibold" v-if="appliedFilter == 'Muscle Builder'">5</span>
                     <span class="text-semibold" v-if="appliedFilter == 'Merchandise'">7</span>
                      products from {{appliedFilter}}.</p>
@@ -18,7 +18,7 @@
                     </label>
                     <div class="inline-block">
                         <select name="filter_products" id="filter_products" v-model="appliedFilter" 
-                                class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none shadow leading-tight focus:outline-none">
+                                class=" w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 rounded-md rounded-l-none leading-tight focus:outline-none">
                             <option value="All Products">All Products</option>
                             <option value="Muscle Builder">Muscle Builder</option>
                             <option value="Merchandise">Merchandise</option>
