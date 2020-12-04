@@ -1,29 +1,23 @@
 <template>
     <div class="productcard flex-col md:flex-row relative border border-gray-400 rounded-md mb-6 sm:mb-0" v-if="item.wishlisted">
-        <div class="productcard-imagewrap text-center rounded-md bg-gray-100">
+        
+        <div class="productcard-imagewrap flex rounded-md bg-gray-100">
             <img :src=item.image alt="Product image" class="productcard-image mx-auto">
             <i class="visible md:invisible wishlist cursor-pointer fa-heart text-red-700" @click="removeFromWishlist"
                 :class="item.wishlisted ? 'fa': 'far'" title="Remove from wishlist"></i>
         </div>
-        <div class="productcard-info px-3 pb-4 pt-3 flex-grow">
+        
+        <div class="productcard-info px-3 pb-4 pt-3">
+            <!-- name & price -->
             <div class="productcart-topinfo flex justify-between mb-2">
                 <div class="productcard-name py-1">
-                    <h4 class="truncate tracking-wider text-lg md:text-2xl" :title=item.name>{{item.name}}</h4>
+                    <h4 class="break-words tracking-wider text-lg md:text-xl" :title=item.name>{{item.name}}</h4>
                     <small class="text-sm font-semibold text-gray-600">{{item.type}}</small>
                 </div>
                 <div class="productcard-price py-1">
                     <!-- <small for="" class="text-gray-700 text-xs">Price</small> -->
                     <h5 class="text-gray-700 py-1"><span class="text-gray-700 pr-1">$</span>{{item.price}}</h5>
                 </div>
-            </div>
-            <!-- <div class="productcard-description mb-2">
-                <p class="fade-text tracking-wide text-gray-600 text-justify">
-                    <span class=" text-gray-900 border-dashed border-b border-gray-400">Description:</span>
-                {{item.description}}  
-                </p>
-            </div> -->
-            <div class="productcard-price flex justify-between items-center">
-                
             </div>
             
             <div class="productcard-buttons flex flex-col md:flex-row mt-2 md:mt-0 justify-between md:items-center">
@@ -85,10 +79,11 @@ export default {
                 // toggle wishlist button
                 this.item.wishlisted = !this.item.wishlisted;
 
-                this.$store.dispatch('action_updateProduct', this.item);
-                
+                this.$store.dispatch('action_addToWishlist', this.item);                
             }
-        }
+        },
+
+        
     }
 }
 </script>
@@ -104,14 +99,14 @@ export default {
 }
 .productcard-imagewrap{
     // height: 200px;
-    max-width: 200px;
+    width: 125px;
     .productcard-image{
         max-height: 190px;
         margin: auto;
     }
 
     @media (max-width: 767px) {
-        max-width: 100%;
+        width: 100%;
         padding: 10px 0px;
     }
 
@@ -123,13 +118,24 @@ export default {
     }
 }
 .productcard-info{
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
+    // align side by side on tab & up
+    @media (min-width: 767px) {
+        min-width: calc(100% - 150px);
+        flex-grow: 1;
+    }
+
+    // .productcard-name{
+    //     // width: calc(100% - 45px);
+    //     border: 1px solid green;
+    // }
     
     .productcard-price h5{
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         line-height: 1.75rem;
     }
 
