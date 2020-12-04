@@ -341,63 +341,83 @@ export default new Vuex.Store({
       });
 
     },
-    action_addToWishlist(state, product){
+    action_addToWishlist({dispatch}, product){
 
       console.log("Passed product for wishlist", product);
       // get db userid of logged in user
       const userId = localStorage.userId;
-      console.log("store USERID: ", userId);
       
-      // post product to firebase cart
-      const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
-      
-      // Add to wishlist
-      if(product.wishlisted){
+      // dispatch('action_syncWishlist').then(response =>{
+        
+
+      // })
+      // console.log("response sync wishlist: ", response);
+
+          // post product to firebase cart
+        const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
+        
+        // Add to wishlist
+        if(product.wishlisted){
+          console.log("Product is wishlisted: Adding to wishlist");
           global_axios.post(fbUserWishlistPath, product)
           .then(response => {
               console.log("Wishlist response: ", response);
+
+              // sync again after adding/removing from wishlist
+              dispatch('action_syncWishlist').then(response => {
+                console.log("1. sync after ADD wishlist: ", response);
+              });
           })
           .catch(error => {
               console.log("Error in AddWishlist: ", error);
           })
-      }
+        }
 
-      // remove from wishlist
-      else{
-          // path of wishlist
-          const fbWishlistPath = '/users/'+userId+'/wishlist.json';
-          
-          // get wishlist
-          global_axios.get(fbWishlistPath)
-          .then(gotWishlist => {
-              console.log("GOT WIshlist: ", gotWishlist);
-              
-              // find id of item in wishlist & remove that id.item
-              const wishlistItems = gotWishlist.data;
-              for (const recordId in wishlistItems) {
+        // remove from wishlist
+        else{
+          console.log("---- remove " + product.name+ " from wishlist");
+            // path of wishlist
+            const fbWishlistPath = '/users/'+userId+'/wishlist.json';
+            
+            // get wishlist
+            global_axios.get(fbWishlistPath)
+            .then(gotWishlist => {
+                console.log("GOT Wishlist from DB: ", gotWishlist);
+                
+                // find id of item in wishlist & remove that id.item
+                const wishlistItems = gotWishlist.data;
+                for (const recordId in wishlistItems) {
 
-                  const currentItem = wishlistItems[recordId];
-                  if (currentItem.id == product.id) {
-                      console.log("removing : ", currentItem.name);                            
-                      // path of item to be removed from wishlist
-                      const fbRemoveWishlistPath = '/users/'+userId+'/wishlist/'+recordId+'.json';
-                  
-                      global_axios.delete(fbRemoveWishlistPath, product)
-                      .then(response => {
+                    const currentItem = wishlistItems[recordId];
+                    if (currentItem.id == product.id) {
+                        console.log("removing from wishlist: ", currentItem.name);                            
+                        // path of item to be removed from wishlist
+                        const fbRemoveWishlistPath = '/users/'+userId+'/wishlist/'+recordId+'.json';
+                    
+                        global_axios.delete(fbRemoveWishlistPath, product)
+                        .then(response => {
                           console.log("RemoveWishlist response: ", response);
-                      })
-                      .catch(error => {
-                          console.log("Error in RemoveWishlist: ", error);
-                      })
-                  }
-              }
 
-          })
-          .catch(error => {
-              console.log("Error fetching wishlist", error);
-          })
-          
-      }
+                          // sync again after adding/removing from wishlist
+                          dispatch('action_syncWishlist').then(response => {
+                            console.log("1. sync after REMOVE wishlist: ", response);
+                          });
+                        })
+                        .catch(error => {
+                            console.log("Error in RemoveWishlist: ", error);
+                        })
+                    }
+                }
+                
+                
+            })
+            .catch(error => {
+                console.log("Error fetching wishlist", error);
+            })
+            
+        }
+      
+      
     },
     action_syncWishlist({commit}){
       return new Promise((resolve, reject) => {
