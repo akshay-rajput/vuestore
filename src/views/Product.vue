@@ -40,7 +40,7 @@
 
         <swiper :options="swiperOptions" 
                 @swiper="onSwiper" :scrollbar="{ draggable: true }"
-                @slideChange="onSlideChange">
+                >
           <swiper-slide class="other-product-card my-4" v-for="otherProduct in otherProducts" :key="otherProduct.id">
             
             <div class="product-image-wrap bg-gray-200">
@@ -56,7 +56,7 @@
                 <h5 class="leading-8 mb-2">{{otherProduct.price}}.00 <span class="ml-1 text-sm text-gray-600">USD</span></h5>
               </div>
               
-              <router-link tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
+              <router-link @click.native="changeProductToShow(otherProduct)" tag="button" :to="{name: 'Product', params: { id: otherProduct.id }}" 
                           class="btn-viewDetails font-semibold text-sm tracking-wider w-full">
                 <!-- View Details -->
                 VIEW
@@ -199,6 +199,10 @@ export default {
       }
     },
 
+    changeProductToShow(otherProduct){
+      // this.productToShow = otherProduct;
+      console.log("Show this product now: ", otherProduct.name);
+    },
     // swiper methods
     onSwiper(swiper) {
       console.log("swiper load: ",swiper)
@@ -207,6 +211,7 @@ export default {
     //   // console.log('slide change')
     // },
   },
+  
   directives: {
     swiper: directive
   }
