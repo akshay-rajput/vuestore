@@ -139,12 +139,6 @@ export default {
     //     }
     // };
   },
-  // computed:{
-  //   // check if user data is fetched 
-  //   current_user(){
-  //     return this.$store.getters.getUserData;
-  //   }
-  // },
   methods: {
     toggleMenu(){
       this.isMenuOpen = !this.isMenuOpen;
