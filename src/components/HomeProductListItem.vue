@@ -214,14 +214,14 @@ export default {
     padding: 6px 12px;
     // background: $accent;
     border: 1px solid $accent;
-    color: $accent;
+    color: white;
+    background: $accent;
     border-radius: 5px;
     flex-grow: 1;
     transition: all ease 0.35s;
 
     &:hover{
-        color: white;
-        background: $accent;
+        background: darken($color: $accent, $amount: 10%);
         transition: all ease 0.35s;
     }
 
