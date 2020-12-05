@@ -25,7 +25,7 @@
                     <div class="product-quantity-control mt-1">
                         <!-- minus qty -->
                         <button class="btn-quantity-minus" @click="decreaseQty">
-                            <span class="fa fa-minus"></span>
+                            <span class="fa fa-chevron-left"></span>
                         </button>
                         
                         <input type="text" name="product_quantity" :id="item.id + 'product_quantity'" v-model="productQty"
@@ -33,7 +33,7 @@
                         
                         <!-- plus qty -->
                         <button class="btn-quantity-plus" @click="increaseQty">
-                            <span class="fa fa-plus"></span>
+                            <span class="fa fa-chevron-right"></span>
                         </button>
                     </div>
                 </div>
@@ -177,17 +177,18 @@ export default {
 
     input{
         width: 40px;    
-        border: 1px solid lighten($color: $dark, $amount: 50%);
+        background: transparent;
+        // border-bottom: 1px solid lighten($color: $dark, $amount: 50%);
     }
 
     .btn-quantity-minus, .btn-quantity-plus{
-        background: lighten($color: $dark, $amount: 50%);
-        color: white;
+        // background: lighten($color: $dark, $amount: 70%);
+        color: #aaa;
         padding: 1px 4px;
-        font-size: 1.25rem;
+        font-size: 1.2rem;
 
         &:hover{
-            background: $accent;
+            color: orange;
         }
     }
     .btn-quantity-minus{
@@ -201,10 +202,10 @@ export default {
 .btn-details{
     border-radius: 5px;
     padding: 6px 12px;
-    border: 1px solid orange;
-    color: orange;
+    border: 1px solid #777;
+    color: #777;
     &:hover{
-        background: orange;
+        background: $dark;
         color: white;
     }
 }
