@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <div class="container mx-auto px-3 pt-4 md:pt-12 pb-0 text-gray-500">
-            <div class="flex flex-wrap justify-between items-center py-3">
+            <div class="md:flex flex-wrap justify-between items-center py-3">
                 <div class="author-links mb-4">
                     <p class="text-gray-600 text-sm mb-2">Reach out to developer</p>
                     <!-- Place this tag where you want the button to render. -->
@@ -24,7 +24,12 @@
         </div>
         
         <div class="copyright md:text-center text-xs text-gray-500 p-3 border-t border-dashed border-gray-600">
-            <span class="font-semibold leading-6">Disclaimer: </span>All images & products featured belong to their respective copyright holders. <br> This website is just for illustration purposes. 
+            <div class="container mx-auto">
+                <div class="mb-2">
+                    <span class="font-semibold">Disclaimer: </span>All images & products featured belong to their respective copyright holders.
+                </div>
+                <p class="tracking-wider">This website is just for illustration purposes.</p> 
+            </div>
         </div>
     </div>
 </template>
