@@ -12,7 +12,7 @@
                             <div class="w-6 font-semibold">
                                 <span class="flaticon flaticon-placeholder ml-0"></span>
                             </div>
-                            <span class="px-2 md:text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
+                            <span class="px-2 break-normal md:text-lg">Office no. 2, Janice Complex, Janice Street, Yemen road, Yemen - 121121</span>
                         </div>
                         <div class="contact-info-group flex items-baseline text-gray-600 mb-4">
                             <div class="w-6 font-semibold">
