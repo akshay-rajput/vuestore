@@ -25,9 +25,10 @@
                     <div class="cart-couponcode mb-4 ">
                         <label for="couponcode" class="text-gray-500 text-sm tracking-wider">Coupon Code?</label>
                         <div class="couponcode-group flex ">
-                            <input type="text" name="couponcode" id="couponcode" class="text-gray-700 px-2 focus:outline-none focus:bg-white bg-gray-200" placeholder="Enter coupon code">
-                            <button class="btn-app btn-couponcode">Apply</button>
+                            <input v-model="coupon" type="text" name="couponcode" id="couponcode" class="text-gray-700 px-2 focus:outline-none focus:bg-white bg-gray-200" placeholder="Enter coupon code">
+                            <button class="btn-app btn-couponcode" @click="applyCoupon">Apply</button>
                         </div>
+                        <p v-if="couponAlert" class="p-1 my-1 rounded bg-red-300 text-red-700 text-sm">Wrong coupon code entered.</p>
                     </div>
                     <!-- subtotal -->
                     <div class="cart-subtotal flex justify-between mb-4 ">
@@ -80,7 +81,9 @@ import CartItem from './UserCartItem';
 export default {
     data(){
         return{
-            userCart: false
+            userCart: false,
+            coupon: '',
+            couponAlert: false
         }
     },
     components: {
@@ -112,8 +115,20 @@ export default {
         syncUserCart(){
             console.log("Dispatching SYNC CART from component");
             this.$store.dispatch('action_syncCart');
+        },
+        applyCoupon(){
+            if(this.coupon != ''){
+                this.couponAlert = true;
+                setTimeout(() => {
+                    this.couponAlert = false;
+                    this.coupon = ''
+                }, 1200);
+            }
+            else{
+                console.log("Empty coupon");
+            }
         }
-
+        
     }
 }
 </script>
