@@ -65,14 +65,14 @@ export default {
             var muscleBuilders = this.productList.filter(function (eachproduct) {
                 return eachproduct.type == "Muscle Builder"
             });
-            console.log("Muscle Builders: ", muscleBuilders);
+            // console.log("Muscle Builders: ", muscleBuilders);
             return muscleBuilders;
         },
         merchandiseList(){
             var merchandise = this.productList.filter(function (eachproduct) {
                 return eachproduct.type == "Merchandise"
             });
-            console.log("Merch: ", merchandise);
+            // console.log("Merch: ", merchandise);
             return merchandise;    
         }
     },
@@ -83,15 +83,15 @@ export default {
         applyFilter(){
             console.log("APplying filter: ", this.appliedFilter);
 
-            if(this.appliedFilter == 'Muscle Builder'){
-                console.log('apply muscle builder');    
-            }
-            else if(this.appliedFilter == 'Merchandise'){
-                console.log("``````apply merchandise ``````");
-            }
-            else{
-                console.log(this.productList);
-            }
+            // if(this.appliedFilter == 'Muscle Builder'){
+            //     console.log('apply muscle builder');    
+            // }
+            // else if(this.appliedFilter == 'Merchandise'){
+            //     console.log("``````apply merchandise ``````");
+            // }
+            // else{
+            //     console.log(this.productList);
+            // }
         }
     }
 }

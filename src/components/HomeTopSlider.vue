@@ -59,8 +59,8 @@ export default {
           this.slideProducts.forEach(product => {
               product.isActive = (product.name == selectedSlide.name);
           })
-          console.log("Method showslide: ", selectedSlide.name);
-          console.log("updated computed ", this.slideProducts);
+        //   console.log("Method showslide: ", selectedSlide.name);
+        //   console.log("updated computed ", this.slideProducts);
       }  
     // toggle slider buttons
     },
@@ -70,7 +70,7 @@ export default {
             const filteredProducts = this.$store.getters.getProducts.filter(function(product){
                 return product.type == 'Muscle Builder'
             });
-            console.log("TOPSection Products to show: ", filteredProducts);
+            // console.log("TOPSection Products to show: ", filteredProducts);
             
             // return only 3 of filtered products
             const productsToShow = [];
@@ -90,7 +90,7 @@ export default {
                 
             }
 
-            console.log("TopProducts to show: ", productsToShow);
+            // console.log("TopProducts to show: ", productsToShow);
             return productsToShow;
         }
     }

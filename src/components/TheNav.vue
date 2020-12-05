@@ -126,7 +126,7 @@ export default {
   },
   mounted() {
     // execute below code on page load
-    console.log("App is mounted");
+    //console.log("App is mounted");
     // var myNav = document.getElementById('navbar');
     // window.onscroll = function () { 
     //     if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200 ) {
@@ -142,10 +142,10 @@ export default {
   methods: {
     toggleMenu(){
       this.isMenuOpen = !this.isMenuOpen;
-      console.log("isMenuOpen: ", this.isMenuOpen);
+      //console.log("isMenuOpen: ", this.isMenuOpen);
     },
     gotosection(section){
-      console.log("passd: ", section);
+      //console.log("passd: ", section);
       
       // if homepage then use this to scroll below
       document.getElementById(section).scrollIntoView({behavior: 'smooth'})
@@ -159,7 +159,7 @@ export default {
       return this.$store.getters.getLoginStatus;
     },
     getCartItemCount(){
-      console.log("getting cart count");
+      //console.log("getting cart count");
       return this.$store.getters.getCartItems.length;
     }
   },

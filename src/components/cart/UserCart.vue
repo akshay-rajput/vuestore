@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         syncUserCart(){
-            console.log("Dispatching SYNC CART from component");
+            // console.log("Dispatching SYNC CART from component");
             this.$store.dispatch('action_syncCart');
         },
         applyCoupon(){
@@ -124,9 +124,9 @@ export default {
                     this.coupon = ''
                 }, 1200);
             }
-            else{
-                console.log("Empty coupon");
-            }
+            // else{
+            //     console.log("Empty coupon");
+            // }
         }
         
     }

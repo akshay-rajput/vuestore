@@ -45,7 +45,7 @@ export default new Vuex.Store({
     mut_loggedInUser(state, fetchedUser){
       if(fetchedUser != null){
         state.current_user = fetchedUser.data;
-        console.log("Mutation: fetched User", fetchedUser.data);
+        // console.log("Mutation: fetched User", fetchedUser.data);
       }
       else{
         state.current_user = null
@@ -78,21 +78,21 @@ export default new Vuex.Store({
         // push whole item in state.cart
         state.cart.push(payload);
       }
-      console.log("ADD CART mutation: ", state.cart);
+      // console.log("ADD CART mutation: ", state.cart);
     },
     // sync cart with db
     mut_syncCart(state, fetchedCart){
       // console.log("inside Mut_AddCart : ", payload);
       state.cart = fetchedCart;
       // state.cart.push(fetchedCart);
-      console.log("SYNC CART Mutation: ", state.cart);
+      // console.log("SYNC CART Mutation: ", state.cart);
     },
     // sync wishlist with db
     mut_syncWishlist(state, fetchedWishlist){
       // console.log("inside Mut_AddCart : ", payload);
       state.wishlist = fetchedWishlist;
       // state.cart.push(fetchedCart);
-      console.log("SYNC Wishlist Mutation: ", state.wishlist);
+      // console.log("SYNC Wishlist Mutation: ", state.wishlist);
     }
   },
   actions: {
@@ -111,7 +111,7 @@ export default new Vuex.Store({
 
     action_logoutTimer({commit}, expirationTime){
       setTimeout(() => {
-        console.log("Time expired : log out");
+        // console.log("Time expired : log out");
         commit('mut_logout');
       }, expirationTime * 1000);
     },
@@ -123,7 +123,7 @@ export default new Vuex.Store({
         returnSecureToken: true
       })
         .then(response => {
-          console.log("Response: ", response);
+          // console.log("Response: ", response);
           commit('mut_authUser', {
             token: response.data.idToken,
             userId: response.data.localId
@@ -132,9 +132,9 @@ export default new Vuex.Store({
           localStorage.setItem('userId', response.data.localId);
           localStorage.setItem('token', response.data.idToken);
           const currentTime = new Date();
-          console.log("Current Time: ", currentTime.getTime());
+          // console.log("Current Time: ", currentTime.getTime());
           const expiry = new Date(currentTime.getTime() + response.data.expiresIn)
-          console.log("expiration time: ", expiry);
+          // console.log("expiration time: ", expiry);
           localStorage.setItem('tokenExpiry', expiry);
 
           // dispatch to store in db
@@ -152,8 +152,8 @@ export default new Vuex.Store({
       }
       else{
         global_axios.post('/users.json', userData)
-        .then(res => console.log("res: storeuser: ",res))
-        .catch(err => console.log("error--: ", err))
+        // .then(res => console.log("res: storeuser: ",res))
+        // .catch(err => console.log("error--: ", err))
       }
     },
     
@@ -168,7 +168,7 @@ export default new Vuex.Store({
         returnSecureToken: true
       })
       .then(response => {
-        console.log("Logged in: ", response);
+        // console.log("Logged in: ", response);
         commit('mut_authUser', {
           token: response.data.idToken,
           userId: response.data.localId
@@ -177,9 +177,9 @@ export default new Vuex.Store({
         localStorage.setItem('userId', response.data.localId);
         localStorage.setItem('token', response.data.idToken);
         const currentTime = new Date();
-        console.log("Current Time: ", currentTime.getTime());
+        // console.log("Current Time: ", currentTime.getTime());
         const expiry = new Date(currentTime.getTime() + (response.data.expiresIn * 1000))
-        console.log("expiration time: ", expiry);
+        // console.log("expiration time: ", expiry);
         localStorage.setItem('tokenExpiry', expiry);
 
         // fetch userdata of logged in user
@@ -188,7 +188,7 @@ export default new Vuex.Store({
         // dispatch to autologout
         dispatch('action_logoutTimer', response.data.expiresIn);
       })
-      .catch(error => console.log("ErrorLogin---: ", error))
+      // .catch(error => console.log("ErrorLogin---: ", error))
     },
 
     action_fetchUser({commit}){
@@ -212,7 +212,7 @@ export default new Vuex.Store({
               fetchedUser.userId = recordId;
               localStorage.setItem('userId', fetchedUser.userId);
               
-              console.log("Fetched User: ", fetchedUser);
+              // console.log("Fetched User: ", fetchedUser);
               // store logged in users info in state
               commit('mut_loggedInUser', {data: fetchedUser});
               // return recordId;
@@ -229,11 +229,11 @@ export default new Vuex.Store({
         return
       }
       else{
-        console.log("local token found AUTOLOGIN", localToken);
+        // console.log("local token found AUTOLOGIN", localToken);
         const tokenExpiry = localStorage.getItem('tokenExpiry');
         const now = new Date()
         if(now >= tokenExpiry){
-          console.log("~~~ Token Expired ~~~");
+          // console.log("~~~ Token Expired ~~~");
           return
         }
         else{
@@ -246,13 +246,13 @@ export default new Vuex.Store({
       }
     },
     action_logout({commit, dispatch}){
-      console.log("~~  logging out");
+      // console.log("~~  logging out");
       commit('mut_logout');
       
       // avoid duplicate path error
       const path = '/'
       if (router.path !== path){
-        console.log('routing to homepage');
+        // console.log('routing to homepage');
         // this.$router.push(path)
         router.replace('/');
       }
@@ -275,7 +275,7 @@ export default new Vuex.Store({
         // check if adding a duplicate product to cart
         const stateCart = this.state.cart;
         var duplicateEntry = {};
-        console.log("2. After sync STATECART: ", this.state.cart);
+        // console.log("2. After sync STATECART: ", this.state.cart);
 
         // if cart already exists, check if adding duplicate
         if(stateCart.length > 0){
@@ -382,7 +382,7 @@ export default new Vuex.Store({
             // get wishlist
             global_axios.get(fbWishlistPath)
             .then(gotWishlist => {
-                console.log("GOT Wishlist from DB: ", gotWishlist);
+                // console.log("GOT Wishlist from DB: ", gotWishlist);
                 
                 // find id of item in wishlist & remove that id.item
                 const wishlistItems = gotWishlist.data;
@@ -487,7 +487,7 @@ export default new Vuex.Store({
         // get cartlist
         global_axios.get(fbUserCartPath)
         .then(gotUserCart => {
-          console.log("4.1 GOT userCartlist: ", gotUserCart.data);
+          // console.log("4.1 GOT userCartlist: ", gotUserCart.data);
           
           // find id of item in cartlist & remove that id.item
           const db_userCartItems = gotUserCart.data;
@@ -495,7 +495,7 @@ export default new Vuex.Store({
 
               const currentItem = db_userCartItems[recordId];
               if (currentItem.id == productToRemove.id) {
-                  console.log("removing : ", currentItem.name);                            
+                  // console.log("removing : ", currentItem.name);                            
                   // path of item to be removed from cartlist
                   const fbRemoveCartItemPath = '/users/'+userId+'/cart/'+recordId+'.json';
               
@@ -515,10 +515,10 @@ export default new Vuex.Store({
           }
 
           resolve(gotUserCart);
-          console.log("4.2 resolve GetUserCart");
+          // console.log("4.2 resolve GetUserCart");
         })
         .catch(error => {
-          console.log("reject GETUSERCART error: ");
+          // console.log("reject GETUSERCART error: ");
           reject(error);
         })
       })
@@ -537,7 +537,7 @@ export default new Vuex.Store({
               const fetchedCartItem = response.data[record];
               
               if(fetchedCartItem.id == productToUpdate.id){
-                console.log("found element");
+                // console.log("found element");
 
                 // db path of cart item to update
                 const fbUserCartProductPath = '/users/'+userId+'/cart/'+record+'.json';
@@ -561,7 +561,7 @@ export default new Vuex.Store({
           // resolve(response);
           // commit('mut_syncCart', fetchedCart);
 
-          console.log("0. Resolved syncCArt");
+          // console.log("0. Resolved syncCArt");
         })
         .catch(error => {
           console.log(error);
@@ -585,7 +585,7 @@ export default new Vuex.Store({
       return state.cart;
     },
     getWishlist: state => {
-      console.log("getter wishlist: ", state.wishlist);
+      // console.log("getter wishlist: ", state.wishlist);
       return state.wishlist;
     }
   }

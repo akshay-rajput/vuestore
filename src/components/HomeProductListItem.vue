@@ -78,19 +78,19 @@ export default {
             // increase if less than 5 quantity
             if(this.productQty < 5){
                 this.productQty += 1;
-                console.log("Update: qty:", this.productQty);
+                // console.log("Update: qty:", this.productQty);
             }
         },
         decreaseQty(){
             // decrease if more than 1 quantity
             if(this.productQty > 1){
                 this.productQty -= 1;
-                console.log("Update: qty:", this.productQty);
+                // console.log("Update: qty:", this.productQty);
             }
         },
         addToCart(){
             if(localStorage.token){
-                console.log("adding " + this.item + ' to cart');
+                // console.log("adding " + this.item + ' to cart');
 
                 this.addingToCart = true;
 
@@ -104,7 +104,7 @@ export default {
             }
             else{
                 eventBus.$emit('openModal');
-                console.log("You need to login to add product to cart");
+                // console.log("You need to login to add product to cart");
             }
         },
         addToWishlist(){
@@ -118,7 +118,7 @@ export default {
             else{
                 // this.$refs.signupModal.openModal();
                 eventBus.$emit('openModal');
-                console.log("Cannot add to wishlist: please login");
+                // console.log("Cannot add to wishlist: please login");
             }
         }
     }

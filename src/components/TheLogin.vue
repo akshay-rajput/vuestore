@@ -53,8 +53,8 @@ export default {
               email: this.email,
               password: this.password
           }
-          console.log("Login: ");
-          console.log(formData)
+          // console.log("Login: ");
+          // console.log(formData)
           
           this.$store.dispatch('action_login', formData).then(() => {
             setTimeout(() => {

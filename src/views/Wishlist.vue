@@ -38,7 +38,7 @@ export default {
   },
   methods: {
       syncWishlist(){
-        console.log("~~~~ SYNC Wishlist dispatch in component");
+        // console.log("~~~~ SYNC Wishlist dispatch in component");
         this.$store.dispatch('action_syncWishlist');
     }
   },
@@ -50,7 +50,7 @@ export default {
         // const wishlisted = Products.filter(function(product){
         //     return product.wishlisted == true;
         // })
-        console.log("WIshlisted: ", wishlistedProducts);
+        // console.log("WIshlisted: ", wishlistedProducts);
         return wishlistedProducts;
     },
   }

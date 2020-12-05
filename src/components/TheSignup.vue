@@ -57,8 +57,8 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            console.log("signup: ");
-            console.log(formData)
+            // console.log("signup: ");
+            // console.log(formData)
 
             // call actions inside store.js
             this.$store.dispatch('action_signup', formData);

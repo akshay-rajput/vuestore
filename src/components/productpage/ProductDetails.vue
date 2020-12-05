@@ -101,7 +101,7 @@ export default {
             var fullDesc = this.product.description + " " + this.product.details;
             var shortDesc = fullDesc.substring(0,200)+' ... ';
 
-            console.log("fullDesc Length: ", fullDesc.length);
+            // console.log("fullDesc Length: ", fullDesc.length);
 
             if(fullDesc.length > 240){
                 this.shortDescription = true;
@@ -141,11 +141,11 @@ export default {
 
         addToCart(){
             if(localStorage.token){
-                console.log("adding " + this.product + ' to cart');
+                // console.log("adding " + this.product + ' to cart');
 
                 this.addingToCart = true;
                 
-                console.log("check updated Prop here: ", this.product.quantity);
+                // console.log("check updated Prop here: ", this.product.quantity);
 
                 this.$store.dispatch( 'action_addToCart', this.product);
                 setTimeout(() => {
@@ -154,7 +154,7 @@ export default {
             }
             else{
                 eventBus.$emit('openModal');
-                console.log("You need to login to add product to cart");
+                // console.log("You need to login to add product to cart");
             }
         },
         addToWishlist(){
@@ -165,7 +165,7 @@ export default {
 
                 // get db userid of logged in user
                 const userId = localStorage.userId;
-                console.log("store USERID: ", userId);
+                // console.log("store USERID: ", userId);
                 
                 // post product to firebase cart
                 const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
@@ -189,7 +189,7 @@ export default {
                     // get wishlist
                     axios.get(fbWishlistPath)
                     .then(gotWishlist => {
-                        console.log("GOT WIshlist: ", gotWishlist);
+                        // console.log("GOT WIshlist: ", gotWishlist);
                         
                         // find id of item in wishlist & remove that id.item
                         const wishlistItems = gotWishlist.data;
@@ -197,7 +197,7 @@ export default {
 
                             const currentItem = wishlistItems[recordId];
                             if (currentItem.id == this.product.id) {
-                                console.log("removing : ", currentItem.name);                            
+                                // console.log("removing : ", currentItem.name);                            
                                 // path of item to be removed from wishlist
                                 const fbRemoveWishlistPath = '/users/'+userId+'/wishlist/'+recordId+'.json';
                             
@@ -221,13 +221,13 @@ export default {
             else{
                 // this.$refs.signupModal.openModal();
                 eventBus.$emit('openModal');
-                console.log("Cannot add to wishlist: please login");
+                // console.log("Cannot add to wishlist: please login");
             }
         },
 
         buyNow(){
             if(localStorage.token){
-                console.log("buying " + this.item);
+                // console.log("buying " + this.item);
 
                 // add quantity to cart item
                 // this.item.quantity = this.productQty;
@@ -237,7 +237,7 @@ export default {
             }
             else{
                 eventBus.$emit('openModal');
-                console.log("You need to login to add product to cart");
+                // console.log("You need to login to add product to cart");
             }
         },
     }

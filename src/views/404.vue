@@ -40,7 +40,7 @@ export default {
         this.$store.dispatch('action_syncCart');
     },
     mounted(){
-        console.log("Mounted error page");
+        console.log("Mounted 404 page");
         // add lottieplayer script to head of document
         // let lottiePlayerScript = document.createElement('script')
         // lottiePlayerScript.setAttribute('src', 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js')

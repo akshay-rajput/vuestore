@@ -128,9 +128,9 @@ export default {
                         this.messageAlertShow = false;
                     }, 3000);
                 })
-                .catch(error => {
-                    console.log("Error in messaging: ", error);
-                })
+                // .catch(error => {
+                //     //console.log("Error in messaging: ", error);
+                // })
         }
     }
 }

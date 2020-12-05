@@ -25,7 +25,7 @@ const routes = [
     component: () => import('../views/Cart.vue'),
     beforeEnter(to, from, next){
       if(!localStorage.getItem('token')){
-        console.log("IDtoken not found in ROUTES");
+        // console.log("IDtoken not found in ROUTES");
         next('/')
       }
       else{
@@ -39,7 +39,7 @@ const routes = [
     component: UserWishlist,
     beforeEnter(to, from, next){
       if(!localStorage.getItem('token')){
-        console.log("IDtoken not found in ROUTES");
+        // console.log("IDtoken not found in ROUTES");
         next('/')
       }
       else{
@@ -64,7 +64,7 @@ const scrollBehavior = (to, from, savedPosition) => {
     // scroll to anchor by returning the selector
     if (to.hash) {
       position.selector = to.hash;
-      console.log("scrolling to == ",to)
+      // console.log("scrolling to == ",to)
 
       // specify offset of the element
       if (to.hash === '#products') {

@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         addToCart(){
-            console.log("WishlistPage: adding " + this.item + ' to cart');
+            // console.log("WishlistPage: adding " + this.item + ' to cart');
 
             this.addingToCart = true;
 
