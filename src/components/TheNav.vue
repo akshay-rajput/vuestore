@@ -217,7 +217,7 @@ export default {
 }
 .dropdown-menu {
   position: absolute;
-  right: -300px;
+  right: -3000px;
   z-index: 998;
   // color: $linkcolor;
   // width: 250px;
