@@ -28,17 +28,17 @@
             </div>
         </div>
         <!-- display all products -->
-        <div id="products" v-if="appliedFilter == 'All Products'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'All Products'" class="sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in productList" :key="item.id" :item=item ></home-product-list-item>
         </div>
         
         <!-- display only muscle builders -->
-        <div id="products" v-if="appliedFilter == 'Muscle Builder'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'Muscle Builder'" class="sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in muscleBuilderList" :key="item.id" :item=item ></home-product-list-item>
         </div>
         
         <!-- display merchandise -->
-        <div id="products" v-if="appliedFilter == 'Merchandise'" class="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-12 my-2">
+        <div id="products" v-if="appliedFilter == 'Merchandise'" class="sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-12 my-2">
             <home-product-list-item v-for="item in merchandiseList" :key="item.id" :item=item ></home-product-list-item>
         </div>
     </div>
