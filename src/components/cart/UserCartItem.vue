@@ -7,7 +7,7 @@
                 </div>
                 <div class="cart-item-info">
                     <small class="hidden md:block md:invisible text-xs leading-6 tracking-wide text-gray-600">Product</small>
-                    <h5 class="cart-item-name text-lg">{{cart_item.name}}</h5>
+                    <h5 class="cart-item-name break-words text-lg">{{cart_item.name}}</h5>
                     <small class="font-semibold text-gray-600">{{cart_item.type}}</small>
                 </div>
             </div>
@@ -82,7 +82,7 @@ export default {
 <style lang="scss" scoped>
     .cart-item{
         display: flex;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         flex-direction: row;
         
         // mobile layout
