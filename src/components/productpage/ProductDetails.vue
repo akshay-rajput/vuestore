@@ -227,12 +227,7 @@ export default {
 
         buyNow(){
             if(localStorage.token){
-                // console.log("buying " + this.item);
-
-                // add quantity to cart item
-                // this.item.quantity = this.productQty;
-
-                // this.$store.dispatch( 'action_addToCart', this.item);
+                this.$store.dispatch( 'action_addToCart', this.product);
                 this.$router.push({ name: 'Cart' })
             }
             else{
