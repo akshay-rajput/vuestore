@@ -1,5 +1,6 @@
 <template>
     <div class="productcard relative border border-gray-400 rounded-md mb-6 sm:mb-0">
+        <!-- Local: {{isWishlisted}} <br> -->
         <div class="productcard-imagewrap flex items-center rounded-md bg-gray-100">
             <img :src=item.image alt="Product image" class="productcard-image">
             <i class="wishlist cursor-pointer fa-heart text-red-700" @click="addToWishlist"
@@ -70,7 +71,7 @@ export default {
     data(){
         return{
             addingToCart: false,
-            productQty: 1
+            productQty: 1,
         }
     },
     methods: {
@@ -111,9 +112,10 @@ export default {
             // check if login
             if(localStorage.token){
                 // toggle wishlist button
-                this.item.wishlisted = !this.item.wishlisted;
+                // this.isWishlisted = !this.isWishlisted;
+                this.$emit('wishlistProp');
 
-                 this.$store.dispatch( 'action_addToWishlist', this.item);                
+                this.$store.dispatch( 'action_addToWishlist', this.item);                
             }
             else{
                 // this.$refs.signupModal.openModal();
