@@ -346,12 +346,6 @@ export default new Vuex.Store({
       console.log("Passed product for wishlist", product);
       // get db userid of logged in user
       const userId = localStorage.userId;
-      
-      // dispatch('action_syncWishlist').then(response =>{
-        
-
-      // })
-      // console.log("response sync wishlist: ", response);
 
           // post product to firebase cart
         const fbUserWishlistPath = '/users/'+userId+'/wishlist.json';
@@ -366,6 +360,7 @@ export default new Vuex.Store({
               // sync again after adding/removing from wishlist
               dispatch('action_syncWishlist').then(response => {
                 console.log("1. sync after ADD wishlist: ", response);
+                console.log("STATE WISHLIST: ", this.state.wishlist);
               });
           })
           .catch(error => {
@@ -399,8 +394,9 @@ export default new Vuex.Store({
                           console.log("RemoveWishlist response: ", response);
 
                           // sync again after adding/removing from wishlist
-                          dispatch('action_syncWishlist').then(response => {
-                            console.log("1. sync after REMOVE wishlist: ", response);
+                          dispatch('action_syncWishlist').then(() => {
+                            console.log("1. sync after REMOVE wishlist: ", this.state.wishlist);
+                            console.log("STATE WISHLIST: ", this.state.wishlist);
                           });
                         })
                         .catch(error => {
@@ -414,10 +410,7 @@ export default new Vuex.Store({
             .catch(error => {
                 console.log("Error fetching wishlist", error);
             })
-            
         }
-      
-      
     },
     action_syncWishlist({commit}){
       return new Promise((resolve, reject) => {
@@ -569,7 +562,26 @@ export default new Vuex.Store({
       
       // update to cart
       // 
-    }
+    },
+    // action_userProducts({commit}){
+    //   const initProducts = this.$store.getters.getProducts;
+    //   const userWishlist = this.$store.state.wishlist;
+    //   if(localStorage.userId){
+          
+    //       initProducts.forEach(product => {
+    //           userWishlist.forEach(wishlistedProduct => {
+    //               if(product.id == wishlistedProduct.id){
+    //                   product.wishlisted = wishlistedProduct.wishlisted;
+    //               }
+    //           });
+    //       });
+    //       return initProducts;
+          
+    //   }
+    //   else{
+    //       return initProducts;
+    //   }
+    // }
   },
   getters: {
     getProducts: state => {
