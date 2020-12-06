@@ -29,7 +29,7 @@
         </div>
         <!-- display all products -->
         <div id="products" v-if="appliedFilter == 'All Products'" class="sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-12 my-2">
-            <home-product-list-item v-for="item in productList" :key="item.id" :item=item ></home-product-list-item>
+            <home-product-list-item @wishlistProp = "item.wishlisted = !item.wishlisted" v-for="item in productList" :key="item.id" :item=item ></home-product-list-item>
         </div>
         
         <!-- display only muscle builders -->
@@ -55,11 +55,49 @@ export default {
     },
     created(){
         this.$store.dispatch('action_syncCart');
+        
+        if(localStorage.userId){
+            this.$store.dispatch('action_syncWishlist');
+        }
     },
     computed: {
         // getter for stocklist
         productList(){
-            return this.$store.getters.getProducts;
+            const initProducts = this.$store.getters.getProducts;
+            const userWishlist = this.$store.state.wishlist;
+
+            // copy initial product list to user productlist
+            const userProducts = JSON.parse(JSON.stringify(initProducts));
+            
+            // if logged in, display wishlist status
+            if(localStorage.userId){
+                let wishlisted_ids = [];
+
+                userProducts.forEach(product => {
+                    userWishlist.forEach(wishlistedProduct => {
+
+                        if(product.id == wishlistedProduct.id){
+                            wishlisted_ids.push(product.id);
+                            // product.wishlisted = wishlistedProduct.wishlisted;
+                        }
+                        else{
+                            product.wishlisted = false;
+                        }
+                    });
+                });
+
+                wishlisted_ids.forEach(w_id => {
+                    var product_id = userProducts.findIndex(element => element.id === w_id);
+
+                    userProducts[product_id].wishlisted = true;
+                });
+                return userProducts;
+                
+            }
+            // user is not logged in, load default product list
+            else{
+                return initProducts;
+            }
         },
         muscleBuilderList(){
             var muscleBuilders = this.productList.filter(function (eachproduct) {
