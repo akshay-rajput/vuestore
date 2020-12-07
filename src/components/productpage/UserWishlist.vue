@@ -28,7 +28,10 @@
                 </div>
                 
                 <div class="text-right">
-                    <button class="font-semibold text-purple-600 hover:text-teal-600 mr-6">View details </button>
+                    <router-link tag="a" :to="{name: 'Product', path: '/product/:id', params: { id: item.id }}"  
+                                class="font-semibold text-purple-600 hover:text-teal-600 mr-6">
+                        View details 
+                    </router-link>
                     
                     <button class="btn-addToCart" :class="addingToCart ? 'disableBtn':''" @click="addToCart">
                         <span v-if="addingToCart">
