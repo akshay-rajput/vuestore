@@ -16,7 +16,7 @@
                 <div class="site-credits">
                     <span class="fa fa-code"></span> by 
                     <h5 class="inline">
-                        <a href="https://root-0.github.io/" target="_blank" title="Developer website"
+                        <a href="https://akshayr.netlify.app/" target="_blank" title="Developer website"
                             rel="noreferrer noopener" class="hover:text-orange-300 text-teal-400">Akshay</a>
                     </h5>
                 </div>
