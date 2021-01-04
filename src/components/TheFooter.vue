@@ -6,7 +6,7 @@
                     <p class="text-gray-600 text-sm mb-2">Reach out to developer</p>
                     <!-- Place this tag where you want the button to render. -->
                     <div class="dev-buttons flex items-center">
-                        <a class="github-button" href="https://github.com/root-0" data-size="large" aria-label="Follow @root-0 on GitHub">Follow Me</a>
+                        <a class="github-button" href="https://github.com/akshay-rajput" data-size="large" aria-label="Follow @root-0 on GitHub">Profile</a>
                     
                         <a href="https://www.linkedin.com/in/akshay-rajput/" rel="noopener noreferrer" class="btn-linkedin">
                             Connect | <span class="fab fa-linkedin text-"></span>
