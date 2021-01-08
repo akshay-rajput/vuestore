@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@lottiefiles/lottie-player": "^0.5.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "swiper": "^6.3.5",
     "tailwindcss": "^1.9.6",
